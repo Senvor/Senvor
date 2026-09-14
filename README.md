@@ -59,18 +59,11 @@ i don't learn by following tutorials. i learn by shipping something, watching it
 
 ## skills
 
-```
-language / tool        level
-─────────────────────────────────────────
-HTML                   ████████████  solid
-CSS                    ████████████  solid
-GDScript               █████████░░░  comfortable
-JavaScript             ████████░░░░  growing
-Pixel Art              ████████░░░░  growing
-Graphic Design         ████████████  solid
-CAD                    █████░░░░░░░  learning
-Java                   ████░░░░░░░░  early
-```
+<div align="center">
+
+![skills](https://raw.githubusercontent.com/Senvor/Senvor/output/skills.svg)
+
+</div>
 
 ---
 
