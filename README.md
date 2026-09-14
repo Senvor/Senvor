@@ -1,40 +1,100 @@
-# Senvor's Portfolio
+```
+░██████╗███████╗███╗░░██╗██╗░░░██╗░█████╗░██████╗░
+██╔════╝██╔════╝████╗░██║██║░░░██║██╔══██╗██╔══██╗
+╚█████╗░█████╗░░██╔██╗██║╚██╗░██╔╝██║░░██║██████╔╝
+░╚═══██╗██╔══╝░░██║╚████║░╚████╔╝░██║░░██║██╔══██╗
+██████╔╝███████╗██║░╚███║░░╚██╔╝░░╚█████╔╝██║░░██║
+╚═════╝░╚══════╝╚═╝░░╚══╝░░░╚═╝░░░╚════╝░╚═╝░░╚═╝
+```
 
-Welcome to my digital space! This is where I showcase who I am and what I do. Think of it as your gateway to exploring my world as a creative coder and graphic designer.
+<div align="center">
 
-## What Does This Website Do?
+*developer. designer. building things that outlast me.*
 
-This portfolio is your one-stop destination to get to know me better. When you land on this site, you'll immediately see who I am and what I'm all about. It's designed to give you a quick, visually engaging introduction to me and my passions, followed by easy ways to connect with me across different platforms. No clutter, no confusion—just a clean, modern space that reflects my creative personality.
+[![](https://img.shields.io/badge/-portfolio-E0632B?style=for-the-badge&labelColor=E0632B)](https://s3nvor.vercel.app/)
+[![](https://img.shields.io/badge/-github-0F130C?style=for-the-badge&logo=github&logoColor=EFE8D8&labelColor=0F130C)](https://github.com/Senvor)
+[![](https://img.shields.io/badge/-reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white&labelColor=FF4500)](https://reddit.com/user/senvor)
+[![](https://img.shields.io/badge/-discord-5865F2?style=for-the-badge&logo=discord&logoColor=white&labelColor=5865F2)](https://discord.com/users/s3nvor)
+[![](https://img.shields.io/badge/-x-000000?style=for-the-badge&logo=x&logoColor=white&labelColor=000000)](https://x.com/s3nvor)
+[![](https://img.shields.io/badge/-instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=E4405F)](https://instagram.com/s3nvor)
+[![](https://img.shields.io/badge/-youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white&labelColor=FF0000)](https://youtube.com/@s3nvor)
 
-## Cool Features You'll Notice
-
-**🎨 Beautiful, Modern Design**
-The site uses a sleek purple gradient theme with smooth animations and hover effects. Everything moves and transitions beautifully, making the experience feel polished and professional without being over-the-top.
-
-**📱 Works Everywhere**
-Whether you're visiting from your desktop, tablet, or phone, the website adapts perfectly. The layout rearranges itself to give you the best viewing experience on any screen size.
-
-**⚡ Fast & Lightweight**
-This isn't loaded down with heavy frameworks or plugins. It's just clean HTML and CSS that loads instantly. You're not waiting around—you can start exploring right away.
-
-**🔗 Easy to Find Me**
-All my social media links are right there on the page—Discord, X, Instagram, and YouTube. Click once and you're connected. No hunting around for my profiles.
-
-**✨ Smooth Animations**
-Scroll through the site and notice how elements fade in smoothly, how cards react when you hover over them, and how the whole experience feels alive. These little touches make browsing enjoyable.
-
-## About Me
-
-I'm **Senvor**, and I live at the intersection of code and creativity. I love writing clean, efficient code that solves real problems, and I'm equally passionate about creating stunning visuals that grab attention and communicate ideas effectively. This portfolio is a reflection of both those passions coming together.
-
-## Connect With Me
-
-If you want to chat, collaborate, or just say hello:
-- **Discord** - senvor_
-- **X** - senvor_
-- **Instagram** - senvor.yt
-- **YouTube** - senvormc
+</div>
 
 ---
 
-**© 2026 Senvor. All rights reserved.**
+## who i am
+
+self-taught. no degree, no bootcamp — just a lot of broken projects and the stubbornness to fix them.
+
+i build things at the intersection of code and design. sometimes it's a game about inherited consequences. sometimes it's a website. sometimes it's something that doesn't have a name yet.
+
+i don't learn by following tutorials. i learn by shipping something, watching it break, and figuring out why.
+
+---
+
+## currently building
+
+```
+╔═════════════════════════════════════════════════════╗
+║                                                     ║
+║   E V O G E N                                       ║
+║                                                     ║
+║   a generational life-sim in Godot                  ║
+║                                                     ║
+║   when your character dies, you don't restart.      ║
+║   you inherit their legacy and keep playing as      ║
+║   their descendant — traits, mutations, and past    ║
+║   choices carry forward across generations.         ║
+║                                                     ║
+║   ── currently ──────────────────────────────────   ║
+║   building the data layer: Character resource       ║
+║   per life + Bloodline manager for the family tree  ║
+║                                                     ║
+║   progress  [=======>                    ]  ~25%    ║
+║                                                     ║
+╚═════════════════════════════════════════════════════╝
+```
+---
+
+## skills
+
+```
+language / tool        level
+─────────────────────────────────────────
+HTML                   ████████████  solid
+CSS                    ████████████  solid
+GDScript               █████████░░░  comfortable
+JavaScript             ████████░░░░  growing
+Pixel Art              ████████░░░░  growing
+Graphic Design         ████████████  solid
+CAD                    █████░░░░░░░  learning
+Java                   ████░░░░░░░░  early
+```
+
+---
+
+## projects
+
+| project | what it is | status |
+|---|---|---|
+| [Evogen](https://github.com/Senvor/Evogen) | generational life-sim in Godot — legacy over respawn | 🔨 in progress |
+| [Cockroach Janta Party](https://github.com/Senvor/cockroach-janta-party) | informational site about the CJP movement | ✅ shipped · [live](https://cockroach-janta-party-six.vercel.app) |
+| [Obsidian](https://github.com/Senvor/Obsidian) | obsidian-themed keyboard project | 📐 planned |
+
+---
+
+## github
+
+<div align="center">
+
+[![GitHub streak](https://streak-stats.demolab.com?user=Senvor&theme=dark&background=0F130C&ring=E0632B&fire=E0632B&currStreakLabel=E0632B&sideLabels=EFE8D8&dates=A8A697&border=3E4A34&stroke=3E4A34&sideNums=EFE8D8&currStreakNum=EFE8D8)](https://github.com/Senvor)
+
+</div>
+
+---
+<div align="center">
+
+*every project is a generation. this one's still alive.*
+
+</div>
