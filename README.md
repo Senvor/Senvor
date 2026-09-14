@@ -88,11 +88,12 @@ Java                   ████░░░░░░░░  early
 
 <div align="center">
 
-[![GitHub streak](https://streak-stats.demolab.com?user=Senvor&theme=dark&background=0F130C&ring=E0632B&fire=E0632B&currStreakLabel=E0632B&sideLabels=EFE8D8&dates=A8A697&border=3E4A34&stroke=3E4A34&sideNums=EFE8D8&currStreakNum=EFE8D8)](https://github.com/Senvor)
+![snake](https://raw.githubusercontent.com/Senvor/Senvor/output/snake-dark.svg)
 
 </div>
 
 ---
+
 <div align="center">
 
 *every project is a generation. this one's still alive.*
