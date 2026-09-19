@@ -70,19 +70,6 @@ Traits, mutations, relationships, and past choices carry forward through the fam
 
 </div>
 
-## `Projects`
-
-<div align="center">
-
-| **project** | **what it is** | **status** |
-|:---:|:---|:---:|
-| 🧬 **[Evogen](https://github.com/Senvor/Evogen)** | Generational life-sim in Godot — legacy over respawn | `🔨 building` |
-| 🌐 **[Senvor](https://github.com/Senvor/Senvor)** | Personal website and digital home | `● live` |
-| 🗳️ **[Cockroach Janta Party](https://github.com/Senvor/cockroach-janta-party)** | Informational site about the CJP movement | `✅ [live](https://cockroach-janta-party-six.vercel.app)` |
-| ⌨️ **[Obsidian](https://github.com/Senvor/Obsidian)** | Obsidian-themed keyboard project | `📐 planned` |
-
-</div>
-
 ## `Github Activity`
 
 <div align="center">
