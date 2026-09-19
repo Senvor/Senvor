@@ -72,33 +72,16 @@ Traits, mutations, relationships, and past choices carry forward through the fam
 
 ## `Projects`
 
-<table>
-<tr>
-<th>project</th>
-<th>description</th>
-<th>status</th>
-</tr>
-<tr>
-<td><a href="https://github.com/Senvor/Evogen"><strong>Evogen</strong></a></td>
-<td>Generational life-sim in Godot — legacy over respawn</td>
-<td>🔨 building</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Senvor/Senvor"><strong>Senvor</strong></a></td>
-<td>Personal website and digital home</td>
-<td>🌐 live</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Senvor/cockroach-janta-party"><strong>Cockroach Janta Party</strong></a></td>
-<td>Informational site about the CJP movement</td>
-<td>✅ <a href="https://cockroach-janta-party-six.vercel.app">live</a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/Senvor/Obsidian"><strong>Obsidian</strong></a></td>
-<td>Obsidian-themed keyboard project</td>
-<td>📐 planned</td>
-</tr>
-</table>
+<div align="center">
+
+| **project** | **what it is** | **status** |
+|:---:|:---|:---:|
+| 🧬 **[Evogen](https://github.com/Senvor/Evogen)** | Generational life-sim in Godot — legacy over respawn | `🔨 building` |
+| 🌐 **[Senvor](https://github.com/Senvor/Senvor)** | Personal website and digital home | `● live` |
+| 🗳️ **[Cockroach Janta Party](https://github.com/Senvor/cockroach-janta-party)** | Informational site about the CJP movement | `✅ [live](https://cockroach-janta-party-six.vercel.app)` |
+| ⌨️ **[Obsidian](https://github.com/Senvor/Obsidian)** | Obsidian-themed keyboard project | `📐 planned` |
+
+</div>
 
 ## `Github Activity`
 
