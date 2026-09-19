@@ -23,7 +23,7 @@
 
 ---
 
-## `who i am`
+## `Who I Am`
 
 > self-taught. no degree, no bootcamp — just a lot of broken projects and the stubbornness to fix them.
 
@@ -31,7 +31,7 @@ I build at the intersection of **code and design**. Sometimes it's a game about 
 
 I don't learn by following tutorials. I learn by shipping something, watching it break, and figuring out why.
 
-## `currently building`
+## `Currently Building`
 
 <div align="center">
 
@@ -45,7 +45,7 @@ I don't learn by following tutorials. I learn by shipping something, watching it
 
 </div>
 
-## `skills`
+## `Skills`
 
 <div align="center">
 
@@ -53,7 +53,7 @@ I don't learn by following tutorials. I learn by shipping something, watching it
 
 </div>
 
-## `projects`
+## `Projects`
 
 | project | what it is | status |
 |:---|:---|:---:|
@@ -61,7 +61,7 @@ I don't learn by following tutorials. I learn by shipping something, watching it
 | [**Cockroach Janta Party**](https://github.com/Senvor/cockroach-janta-party) | Informational site about the CJP movement | ✅ [live](https://cockroach-janta-party-six.vercel.app) |
 | [**Obsidian**](https://github.com/Senvor/Obsidian) | Obsidian-themed keyboard project | 📐 planned |
 
-## `github activity`
+## `Github Activity`
 
 <div align="center">
 
