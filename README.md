@@ -56,7 +56,7 @@ Traits, mutations, relationships, and past choices carry forward through the fam
 
 **progress**
 
-`███████░░░░░░░░░░░░░░░░░` **25%**
+`■■■■■■■■■■■■■■■■■■■■■■■■■` **25%**
 
 </td>
 </tr>
