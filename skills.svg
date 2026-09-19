@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  width="520" height="420" viewBox="0 0 520 420">
+
+  <rect width="520" height="420" rx="6" fill="#0F130C"/>
+  <rect width="520" height="420" rx="6"
+    fill="none" stroke="#3E4A34" stroke-width="1"/>
+
+  <text x="24" y="30"
+    font-family="monospace" font-size="11" fill="#E0632B"
+    letter-spacing="3">SKILLS</text>
+  <line x1="24" y1="38" x2="496" y2="38"
+    stroke="#E0632B" stroke-width="1" opacity="0.3"/>
+
+  
+  <g>
+    <!-- skill name — always visible, no animation -->
+    <text x="24" y="72"
+      font-family="monospace" font-size="13" fill="#EFE8D8">HTML</text>
+
+    <!-- level — always visible -->
+    <text x="402" y="72"
+      font-family="monospace" font-size="11" fill="#A8A697">solid</text>
+
+    <!-- bar background — always visible -->
+    <rect x="220" y="66" width="170" height="7"
+      rx="3" fill="#2A3525"/>
+
+    <!-- bar fill — animates width from 0 -->
+    <rect x="220" y="66" width="0" height="7"
+      rx="3" fill="#E0632B">
+      <animate attributeName="width"
+        from="0" to="170"
+        dur="600ms" begin="0ms"
+        calcMode="spline" keySplines="0.4 0 0.2 1"
+        fill="freeze"/>
+    </rect>
+
+    <!-- row divider -->
+    <line x1="24" y1="91"
+      x2="496" y2="91"
+      stroke="#3E4A34" stroke-width="0.5"/>
+  </g>
+  <g>
+    <!-- skill name — always visible, no animation -->
+    <text x="24" y="112"
+      font-family="monospace" font-size="13" fill="#EFE8D8">CSS</text>
+
+    <!-- level — always visible -->
+    <text x="402" y="112"
+      font-family="monospace" font-size="11" fill="#A8A697">solid</text>
+
+    <!-- bar background — always visible -->
+    <rect x="220" y="106" width="170" height="7"
+      rx="3" fill="#2A3525"/>
+
+    <!-- bar fill — animates width from 0 -->
+    <rect x="220" y="106" width="0" height="7"
+      rx="3" fill="#E0632B">
+      <animate attributeName="width"
+        from="0" to="170"
+        dur="600ms" begin="150ms"
+        calcMode="spline" keySplines="0.4 0 0.2 1"
+        fill="freeze"/>
+    </rect>
+
+    <!-- row divider -->
+    <line x1="24" y1="131"
+      x2="496" y2="131"
+      stroke="#3E4A34" stroke-width="0.5"/>
+  </g>
+  <g>
+    <!-- skill name — always visible, no animation -->
+    <text x="24" y="152"
+      font-family="monospace" font-size="13" fill="#EFE8D8">GDScript</text>
+
+    <!-- level — always visible -->
+    <text x="402" y="152"
+      font-family="monospace" font-size="11" fill="#A8A697">comfortable</text>
+
+    <!-- bar background — always visible -->
+    <rect x="220" y="146" width="170" height="7"
+      rx="3" fill="#2A3525"/>
+
+    <!-- bar fill — animates width from 0 -->
+    <rect x="220" y="146" width="0" height="7"
+      rx="3" fill="#E0632B">
+      <animate attributeName="width"
+        from="0" to="128"
+        dur="600ms" begin="300ms"
+        calcMode="spline" keySplines="0.4 0 0.2 1"
+        fill="freeze"/>
+    </rect>
+
+    <!-- row divider -->
+    <line x1="24" y1="171"
+      x2="496" y2="171"
+      stroke="#3E4A34" stroke-width="0.5"/>
+  </g>
+  <g>
+    <!-- skill name — always visible, no animation -->
+    <text x="24" y="192"
+      font-family="monospace" font-size="13" fill="#EFE8D8">JavaScript</text>
+
+    <!-- level — always visible -->
+    <text x="402" y="192"
+      font-family="monospace" font-size="11" fill="#A8A697">growing</text>
+
+    <!-- bar background — always visible -->
+    <rect x="220" y="186" width="170" height="7"
+      rx="3" fill="#2A3525"/>
+
+    <!-- bar fill — animates width from 0 -->
+    <rect x="220" y="186" width="0" height="7"
+      rx="3" fill="#E0632B">
+      <animate attributeName="width"
+        from="0" to="113"
+        dur="600ms" begin="450ms"
+        calcMode="spline" keySplines="0.4 0 0.2 1"
+        fill="freeze"/>
+    </rect>
+
+    <!-- row divider -->
+    <line x1="24" y1="211"
+      x2="496" y2="211"
+      stroke="#3E4A34" stroke-width="0.5"/>
+  </g>
+  <g>
+    <!-- skill name — always visible, no animation -->
+    <text x="24" y="232"
+      font-family="monospace" font-size="13" fill="#EFE8D8">Pixel Art</text>
+
+    <!-- level — always visible -->
+    <text x="402" y="232"
+      font-family="monospace" font-size="11" fill="#A8A697">growing</text>
+
+    <!-- bar background — always visible -->
+    <rect x="220" y="226" width="170" height="7"
+      rx="3" fill="#2A3525"/>
+
+    <!-- bar fill — animates width from 0 -->
+    <rect x="220" y="226" width="0" height="7"
+      rx="3" fill="#E0632B">
+      <animate attributeName="width"
+        from="0" to="113"
+        dur="600ms" begin="600ms"
+        calcMode="spline" keySplines="0.4 0 0.2 1"
+        fill="freeze"/>
+    </rect>
+
+    <!-- row divider -->
+    <line x1="24" y1="251"
+      x2="496" y2="251"
+      stroke="#3E4A34" stroke-width="0.5"/>
+  </g>
+  <g>
+    <!-- skill name — always visible, no animation -->
+    <text x="24" y="272"
+      font-family="monospace" font-size="13" fill="#EFE8D8">Graphic Design</text>
+
+    <!-- level — always visible -->
+    <text x="402" y="272"
+      font-family="monospace" font-size="11" fill="#A8A697">solid</text>
+
+    <!-- bar background — always visible -->
+    <rect x="220" y="266" width="170" height="7"
+      rx="3" fill="#2A3525"/>
+
+    <!-- bar fill — animates width from 0 -->
+    <rect x="220" y="266" width="0" height="7"
+      rx="3" fill="#E0632B">
+      <animate attributeName="width"
+        from="0" to="170"
+        dur="600ms" begin="750ms"
+        calcMode="spline" keySplines="0.4 0 0.2 1"
+        fill="freeze"/>
+    </rect>
+
+    <!-- row divider -->
+    <line x1="24" y1="291"
+      x2="496" y2="291"
+      stroke="#3E4A34" stroke-width="0.5"/>
+  </g>
+  <g>
+    <!-- skill name — always visible, no animation -->
+    <text x="24" y="312"
+      font-family="monospace" font-size="13" fill="#EFE8D8">CAD</text>
+
+    <!-- level — always visible -->
+    <text x="402" y="312"
+      font-family="monospace" font-size="11" fill="#A8A697">learning</text>
+
+    <!-- bar background — always visible -->
+    <rect x="220" y="306" width="170" height="7"
+      rx="3" fill="#2A3525"/>
+
+    <!-- bar fill — animates width from 0 -->
+    <rect x="220" y="306" width="0" height="7"
+      rx="3" fill="#E0632B">
+      <animate attributeName="width"
+        from="0" to="71"
+        dur="600ms" begin="900ms"
+        calcMode="spline" keySplines="0.4 0 0.2 1"
+        fill="freeze"/>
+    </rect>
+
+    <!-- row divider -->
+    <line x1="24" y1="331"
+      x2="496" y2="331"
+      stroke="#3E4A34" stroke-width="0.5"/>
+  </g>
+  <g>
+    <!-- skill name — always visible, no animation -->
+    <text x="24" y="352"
+      font-family="monospace" font-size="13" fill="#EFE8D8">Java</text>
+
+    <!-- level — always visible -->
+    <text x="402" y="352"
+      font-family="monospace" font-size="11" fill="#A8A697">early</text>
+
+    <!-- bar background — always visible -->
+    <rect x="220" y="346" width="170" height="7"
+      rx="3" fill="#2A3525"/>
+
+    <!-- bar fill — animates width from 0 -->
+    <rect x="220" y="346" width="0" height="7"
+      rx="3" fill="#E0632B">
+      <animate attributeName="width"
+        from="0" to="57"
+        dur="600ms" begin="1050ms"
+        calcMode="spline" keySplines="0.4 0 0.2 1"
+        fill="freeze"/>
+    </rect>
+
+    <!-- row divider -->
+    <line x1="24" y1="371"
+      x2="496" y2="371"
+      stroke="#3E4A34" stroke-width="0.5"/>
+  </g>
+
+  <!-- blinking cursor -->
+  <text x="24" y="412"
+    font-family="monospace" font-size="12" fill="#E0632B">
+    <animate attributeName="opacity"
+      values="1;0;1" dur="900ms"
+      begin="1900ms" repeatCount="indefinite"/>
+    _
+  </text>
+</svg>
