@@ -49,7 +49,7 @@ I don't learn by following tutorials. I learn by shipping something, watching it
 
 <div align="center">
 
-![skills](https://raw.githubusercontent.com/Senvor/Senvor/output/skills.svg)
+![skills](https://raw.githubusercontent.com/Senvor/Senvor/output/skills.svg?v=2)
 
 </div>
 
