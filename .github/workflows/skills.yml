@@ -2,14 +2,24 @@ name: Generate Skills SVG
 
 on:
   workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/scripts/generate-skills.js'
+      - '.github/workflows/skills.yml'
+
   schedule:
-    - cron: '0 1 * * 0'
+    - cron: '0 1 * * *'
 
 jobs:
   generate:
     runs-on: ubuntu-latest
+
     permissions:
       contents: write
+
     steps:
       - uses: actions/checkout@v4
 
