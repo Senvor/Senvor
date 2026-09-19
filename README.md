@@ -1,4 +1,6 @@
-```
+<div align="center">
+
+```text
 ░██████╗███████╗███╗░░██╗██╗░░░██╗░█████╗░██████╗░
 ██╔════╝██╔════╝████╗░██║██║░░░██║██╔══██╗██╔══██╗
 ╚█████╗░█████╗░░██╔██╗██║╚██╗░██╔╝██║░░██║██████╔╝
@@ -7,57 +9,43 @@
 ╚═════╝░╚══════╝╚═╝░░╚══╝░░░╚═╝░░░╚════╝░╚═╝░░╚═╝
 ```
 
-<div align="center">
+### developer · designer · building things that outlast me
 
-*developer. designer. building things that outlast me.*
-
-[![](https://img.shields.io/badge/-portfolio-E0632B?style=for-the-badge&labelColor=E0632B)](https://s3nvor.vercel.app/)
-[![](https://img.shields.io/badge/-github-0F130C?style=for-the-badge&logo=github&logoColor=EFE8D8&labelColor=0F130C)](https://github.com/Senvor)
-[![](https://img.shields.io/badge/-reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white&labelColor=FF4500)](https://reddit.com/user/senvor)
-[![](https://img.shields.io/badge/-discord-5865F2?style=for-the-badge&logo=discord&logoColor=white&labelColor=5865F2)](https://discord.com/users/s3nvor)
-[![](https://img.shields.io/badge/-x-000000?style=for-the-badge&logo=x&logoColor=white&labelColor=000000)](https://x.com/s3nvor)
-[![](https://img.shields.io/badge/-instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=E4405F)](https://instagram.com/s3nvor)
-[![](https://img.shields.io/badge/-youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white&labelColor=FF0000)](https://youtube.com/@s3nvor)
+[![Portfolio](https://img.shields.io/badge/portfolio-E0632B?style=for-the-badge)](https://s3nvor.vercel.app/)
+[![GitHub](https://img.shields.io/badge/github-0F130C?style=for-the-badge&logo=github&logoColor=EFE8D8)](https://github.com/Senvor)
+[![Reddit](https://img.shields.io/badge/reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://reddit.com/user/senvor)
+[![Discord](https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/users/s3nvor)
+[![X](https://img.shields.io/badge/x-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/s3nvor)
+[![Instagram](https://img.shields.io/badge/instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/s3nvor)
+[![YouTube](https://img.shields.io/badge/youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@s3nvor)
 
 </div>
 
 ---
 
-## who i am
+## `who i am`
 
-self-taught. no degree, no bootcamp — just a lot of broken projects and the stubbornness to fix them.
+> self-taught. no degree, no bootcamp — just a lot of broken projects and the stubbornness to fix them.
 
-i build things at the intersection of code and design. sometimes it's a game about inherited consequences. sometimes it's a website. sometimes it's something that doesn't have a name yet.
+I build at the intersection of **code and design**. Sometimes it's a game about inherited consequences. Sometimes it's a website. Sometimes it's something that doesn't have a name yet.
 
-i don't learn by following tutorials. i learn by shipping something, watching it break, and figuring out why.
+I don't learn by following tutorials. I learn by shipping something, watching it break, and figuring out why.
 
----
+## `currently building`
 
-## currently building
+<div align="center">
 
-```
-╔═════════════════════════════════════════════════════╗
-║                                                     ║
-║   E V O G E N                                       ║
-║                                                     ║
-║   a generational life-sim in Godot                  ║
-║                                                     ║
-║   when your character dies, you don't restart.      ║
-║   you inherit their legacy and keep playing as      ║
-║   their descendant — traits, mutations, and past    ║
-║   choices carry forward across generations.         ║
-║                                                     ║
-║   ── currently ──────────────────────────────────   ║
-║   building the data layer: Character resource       ║
-║   per life + Bloodline manager for the family tree  ║
-║                                                     ║
-║   progress  [=======>                    ]  ~25%    ║
-║                                                     ║
-╚═════════════════════════════════════════════════════╝
-```
----
+| **EVOGEN** | |
+|:---|:---|
+| **type** | Generational life-sim in Godot |
+| **idea** | When your character dies, you don't restart — you inherit their legacy. |
+| **inherited** | Traits · mutations · relationships · past choices |
+| **currently** | Building the data layer: `Character` resources and a `Bloodline` manager |
+| **progress** | `███████░░░░░░░░░░░░░░░░░` **25%** |
 
-## skills
+</div>
+
+## `skills`
 
 <div align="center">
 
@@ -65,19 +53,15 @@ i don't learn by following tutorials. i learn by shipping something, watching it
 
 </div>
 
----
-
-## projects
+## `projects`
 
 | project | what it is | status |
-|---|---|---|
-| [Evogen](https://github.com/Senvor/Evogen) | generational life-sim in Godot — legacy over respawn | 🔨 in progress |
-| [Cockroach Janta Party](https://github.com/Senvor/cockroach-janta-party) | informational site about the CJP movement | ✅ shipped · [live](https://cockroach-janta-party-six.vercel.app) |
-| [Obsidian](https://github.com/Senvor/Obsidian) | obsidian-themed keyboard project | 📐 planned |
+|:---|:---|:---:|
+| [**Evogen**](https://github.com/Senvor/Evogen) | Generational life-sim in Godot — legacy over respawn | 🔨 in progress |
+| [**Cockroach Janta Party**](https://github.com/Senvor/cockroach-janta-party) | Informational site about the CJP movement | ✅ [live](https://cockroach-janta-party-six.vercel.app) |
+| [**Obsidian**](https://github.com/Senvor/Obsidian) | Obsidian-themed keyboard project | 📐 planned |
 
----
-
-## github
+## `github activity`
 
 <div align="center">
 
