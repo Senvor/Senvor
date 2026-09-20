@@ -1,15 +1,10 @@
-<div align="center">
+# Hey there, I'm Senvor
 
-<pre>
-░██████╗███████╗███╗░░██╗██╗░░░██╗░█████╗░██████╗░
-██╔════╝██╔════╝████╗░██║██║░░░██║██╔══██╗██╔══██╗
-╚█████╗░█████╗░░██╔██╗██║╚██╗░██╔╝██║░░██║██████╔╝
-░╚═══██╗██╔══╝░░██║╚████║░╚████╔╝░██║░░██║██╔══██╗
-██████╔╝███████╗██║░╚███║░░╚██╔╝░░╚█████╔╝██║░░██║
-╚═════╝░╚══════╝╚═╝░░╚══╝░░░╚═╝░░░╚════╝░╚═╝░░╚═╝
-</pre>
+Programming is one of my profound interests, and recently I heard about [Hack Club](https://hackclub.com/), a community for teens, by teens, where everyone gets to make cool projects.
 
-### developer · designer · building things that outlast me
+It really inspired me to start making cool and useful things of my own. So far, I’m still pretty new to this field and I haven’t made any great projects yet, just a few small ones. But I’m excited to keep learning, building, and seeing what I can create.
+
+My most recent project is **EvoGen**, a game based on evolution and genesis. It’s still a work in progress, but I’m having a lot of fun building it.
 
 [![Portfolio](https://img.shields.io/badge/portfolio-E0632B?style=for-the-badge)](https://s3nvor.vercel.app/)
 [![GitHub](https://img.shields.io/badge/github-0F130C?style=for-the-badge&logo=github&logoColor=EFE8D8)](https://github.com/Senvor)
@@ -19,69 +14,25 @@
 [![Instagram](https://img.shields.io/badge/instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/s3nvor)
 [![YouTube](https://img.shields.io/badge/youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@s3nvor)
 
-</div>
-
 ---
 
-## `Who I Am`
+# Coding
 
-> self-taught. no degree, no bootcamp — just a lot of broken projects and the stubbornness to fix them.
+## `HackaTime`
 
-I build at the intersection of **code and design**. Sometimes it's a game about inherited consequences. Sometimes it's a website. Sometimes it's something that doesn't have a name yet.
-
-I don't learn by following tutorials. I learn by shipping something, watching it break, and figuring out why.
-
-## `Currently Building`
-
-<table>
-<tr>
-<td width="55%" valign="top">
-
-### 🧬 [Evogen](https://github.com/Senvor/Evogen)
-
-A generational life-sim in **Godot** where death is not a reset — it is a handoff.
-
-Traits, mutations, relationships, and past choices carry forward through the family tree.
-
-</td>
-<td width="45%" valign="top">
-
-### `status`
-
-**building the data layer**
-
-- `Character` resources per life
-- `Bloodline` family-tree manager
-- Legacy inheritance system
-
-**progress**
-
-`■■■■■■■■■■■■■■■■■■■■■■■■■` **25%**
-
-</td>
-</tr>
-</table>
-
-## `Skills`
-
-<div align="center">
-
-![skills](https://raw.githubusercontent.com/Senvor/Senvor/output/skills.svg?v=2)
-
-</div>
+![Hackatime Stats](https://github-readme-stats.hackclub.dev/api/wakatime?username=Senvor&api_domain=hackatime.hackclub.com&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8&theme=neon)
 
 ## `Github Activity`
 
+[![GitHub Streak](https://streak-stats.demolab.com?user=Senvor&theme=highcontrast&timezone=IST)](https://git.io/streak-stats)
 <div align="center">
-
+  
 ![snake](https://raw.githubusercontent.com/Senvor/Senvor/output/snake-dark.svg)
 
 </div>
 
 ---
 
-<div align="center">
 
-*every project is a generation. this one's still alive.*
 
-</div>
+
