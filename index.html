@@ -1,598 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Senvor</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Senvor — developer & graphic designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0F130C;
-    --surface: #1A2015;
-    --surface-2: #161B12;
-    --ink: #EFE8D8;
-    --ink-dim: #ADAB9C;
-    --accent: #E2703B;
-    --line: #4B5A3E;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Newsreader', Georgia, serif;
-    font-size: 18px;
-    line-height: 1.7;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
-  }
-
-  .wrap {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 64px 28px 100px;
-    display: grid;
-    grid-template-columns: 210px 1fr;
-    gap: 64px;
-  }
-
-  /* left rail */
-  .rail {
-    position: sticky;
-    top: 64px;
-    align-self: start;
-    height: fit-content;
-  }
-
-  .rail .role {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--ink-dim);
-    margin-bottom: 10px;
-    min-width: 28ch;
-  }
-
-  .rail h1 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 600;
-    font-size: 1.7em;
-    letter-spacing: -0.01em;
-    margin-bottom: 28px;
-  }
-
-  .rail nav ul {
-    list-style: none;
-    border-left: 1px solid var(--line);
-    animation: grow-h 1s ease-out both;
-    transform-origin: top;
-  }
-
-  @keyframes grow-h {
-    from { transform: scaleY(0); }
-    to { transform: scaleY(1); }
-  }
-
-  .rail nav li {
-    margin-bottom: 4px;
-  }
-
-  .rail nav a {
-    display: block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--ink-dim);
-    text-decoration: none;
-    padding: 6px 0 6px 16px;
-    border-left: 2px solid transparent;
-    margin-left: -1px;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-
-  .rail nav a:hover,
-  .rail nav a:focus-visible {
-    color: var(--ink);
-    border-color: var(--accent);
-  }
-
-  .rail nav a.active {
-    color: var(--accent);
-    border-left: 2px solid var(--accent);
-  }
-
-  /* right content */
-  main { min-width: 0; }
-
-  section {
-    padding-bottom: 64px;
-    scroll-margin-top: 64px;
-  }
-
-  section h2 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 500;
-    font-size: 1em;
-    color: var(--ink-dim);
-    margin-bottom: 18px;
-  }
-
-  section p {
-    max-width: 62ch;
-  }
-
-  section p + p { margin-top: 1em; }
-
-  /* currently building — full-width highlighted band, breaks the column rhythm */
-  .now {
-    background: var(--surface);
-    border-radius: 4px;
-    padding: 32px 36px;
-    margin: 32px -36px 0;
-    border-top: 2px solid var(--accent);
-  }
-
-  .now h2 { color: var(--accent); margin-bottom: 14px; }
-  .now p { max-width: 68ch; }
-
-  .now .meta {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
-    color: var(--ink-dim);
-    margin-top: 16px;
-  }
-
-  /* skills — pill chips, varied weight by proficiency */
-  .skills-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
-  }
-
-  .skills-list li {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    padding: 7px 14px;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    color: var(--ink);
-  }
-
-  .skills-list li.early {
-    color: var(--ink-dim);
-    border-style: dashed;
-  }
-
-  /* project grid */
-  .work-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  .work-card {
-    background: var(--surface-2);
-    border-radius: 4px;
-    padding: 24px;
-    position: relative;
-  }
-
-  .work-card h3 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 500;
-    font-size: 1.05em;
-    margin-bottom: 10px;
-  }
-
-  .work-card p {
-    color: var(--ink-dim);
-    font-size: 0.95em;
-  }
-
-  .work-card .tech {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--ink-dim);
-    margin-top: 14px;
-  }
-
-  .work-card .links {
-    margin-top: 14px;
-    display: flex;
-    gap: 18px;
-  }
-
-  .work-card a {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.15s ease;
-  }
-
-  .work-card a:hover,
-  .work-card a:focus-visible {
-    border-color: var(--accent);
-  }
-
-  /* up next — visually distinct, marked as unstarted */
-  .next-card {
-    border: 1px dashed var(--line);
-    border-radius: 4px;
-    padding: 22px 24px;
-    position: relative;
-  }
-
-  .expand-toggle {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    border: 0;
-    background: transparent;
-    color: var(--ink-dim);
-    cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 16px;
-    line-height: 1;
-    padding: 4px;
-  }
-
-  .expand-toggle:hover,
-  .expand-toggle:focus-visible {
-    color: var(--accent);
-  }
-
-  .details {
-    display: none;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.25s ease;
-  }
-
-  .next-card .status {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-dim);
-    text-transform: lowercase;
-    margin-bottom: 8px;
-  }
-
-  .next-card h3 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 500;
-    font-size: 1.05em;
-    margin-bottom: 8px;
-  }
-
-  .next-card p { color: var(--ink-dim); font-size: 0.95em; }
-
-  .next-card a {
-    display: inline-block;
-    margin-top: 12px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--ink-dim);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .next-card a:hover,
-  .next-card a:focus-visible { color: var(--accent); border-color: var(--accent); }
-
-  /* connect */
-  .connect-list { list-style: none; }
-  .connect-list li { margin-bottom: 10px; }
-
-  .connect-list a {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 1px;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-
-  .connect-list a:hover,
-  .connect-list a:focus-visible {
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-
-  .copy-link {
-    background: transparent;
-    border: 0;
-    color: var(--ink-dim);
-    cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    margin-left: 10px;
-    padding: 0;
-  }
-
-  .copy-link:hover,
-  .copy-link:focus-visible {
-    color: var(--accent);
-  }
-
-  .connect-list .label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--ink-dim);
-    display: inline-block;
-    width: 88px;
-  }
-
-  a:focus-visible, button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-
-  footer {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--ink-dim);
-  }
-
-  @media (max-width: 820px) {
-    .wrap {
-      grid-template-columns: 1fr;
-      padding: 40px 20px 80px;
-      gap: 40px;
-    }
-    .rail { position: static; }
-    .rail nav ul { display: flex; flex-wrap: wrap; border-left: none; gap: 4px 0; }
-    .rail nav a {
-      display: inline-block;
-      border-left: none;
-      border-bottom: 2px solid transparent;
-      padding: 4px 8px 4px 0;
-      margin-left: 0;
-    }
-    .rail nav a:hover,
-    .rail nav a:focus-visible {
-      border-left: none;
-      border-bottom-color: var(--line);
-    }
-    .rail nav a.active {
-      border-left: none;
-      border-bottom-color: var(--accent);
-    }
-    .now { margin: 32px 0 0; }
-    .work-grid { grid-template-columns: 1fr; }
-    body { font-size: 16.5px; }
-  }
-</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header class="top">
   <div class="wrap">
-    <div class="rail">
-      <div class="role">developer &amp; graphic designer</div>
-      <h1>Senvor</h1>
-      <nav aria-label="Section navigation">
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#connect">Connect</a></li>
-        </ul>
-      </nav>
-    </div>
-
-    <main>
-      <section id="about">
-        <h2>About</h2>
-        <p>I'm self-taught — I learn by building things rather than working through tutorials. Most of what I know about code came from getting stuck on a real project and figuring a way through it.</p>
-        <p>Alongside that, I do graphic design: logos, layouts, and visual identity work.</p>
-        <div class="now">
-          <h2>Currently building</h2>
-          <p><strong>Evogen</strong> — a generational life-sim in Godot. When your character dies, you don't restart: you inherit their legacy and keep playing as their descendant. Traits, mutations, and past choices carry forward across generations.</p>
-          <div class="meta">Right now: building the data layer — a Character resource per life, and a Bloodline manager tracking the family tree.</div>
-        </div>
-      </section>
-
-      <section id="skills">
-        <h2>Skills</h2>
-        <ul class="skills-list">
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>GDScript</li>
-          <li class="early">Java</li>
-          <li class="early">JavaScript</li>
-          <li>Graphic design</li>
-          <li>Pixel Art</li>
-          <li>CAD</li>
-          
-        </ul>
-      </section>
-
-      <section id="work">
-        <h2>Work</h2>
-        <div class="work-grid">
-          <div class="work-card">
-            <h3>Cockroach Janta Party</h3>
-            <p>An informational site about the CJP movement — my first project, shipped and live.</p>
-            <div class="tech">HTML · CSS · JS</div>
-            <div class="links">
-              <a href="https://cockroach-janta-party-six.vercel.app" target="_blank" rel="noopener noreferrer">Live site</a>
-              <a href="https://github.com/Senvor/cockroach-janta-party" target="_blank" rel="noopener noreferrer">Repository</a>
-            </div>
-          </div>
-
-          <div class="work-card">
-            <h3>Evogen</h3>
-            <p>Generational life-sim game — inheritance replaces respawning. See "Currently building" above for where it stands.</p>
-            <div class="tech">Godot Engine · GDScript · LibreSprite</div>
-            <div class="links">
-              <a href="https://github.com/Senvor/EvoGen" target="_blank" rel="noopener noreferrer">Repository</a>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top: 24px;">
-          <div class="next-card">
-            <div class="status">up next — not started</div>
-            <h3>Obsidian</h3>
-            <p>An obsidian-themed keyboard project, planned but not yet begun.</p>
-            <a href="https://github.com/Senvor/Obsidian" target="_blank" rel="noopener noreferrer">Repository</a>
-          </div>
-        </div>
-      </section>
-
-      <section id="connect">
-        <h2>Connect</h2>
-        <ul class="connect-list">
-          <li><span class="label">GitHub</span><a href="https://github.com/Senvor" target="_blank" rel="noopener noreferrer">github.com/Senvor</a></li>
-          <li><span class="label">Reddit</span><a href="https://reddit.com/user/senvor" target="_blank" rel="noopener noreferrer">u/senvor</a></li>
-          <li><span class="label">Discord</span><a href="https://discord.com/users/s3nvor" target="_blank" rel="noopener noreferrer">s3nvor</a></li>
-          <li><span class="label">X</span><a href="https://x.com/s3nvor" target="_blank" rel="noopener noreferrer">x.com/s3nvor</a></li>
-          <li><span class="label">Instagram</span><a href="https://instagram.com/s3nvor" target="_blank" rel="noopener noreferrer">insta.com/s3nvor</a></li>
-          <li><span class="label">YouTube</span><a href="https://youtube.com/@s3nvor" target="_blank" rel="noopener noreferrer">@s3nvor</a></li>
-        </ul>
-      </section>
-
-      <footer>&copy; 2026 Senvor</footer>
-    </main>
+    <a class="logo" href="#top">senvor</a>
+    <nav aria-label="Main">
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#work">Work</a><a href="#connect">Connect</a>
+      <button class="theme" id="theme" type="button" aria-label="Toggle light and dark theme">Theme</button>
+    </nav>
   </div>
-  <script>
-    (() => {
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+</header>
 
-      const navLinks = [...document.querySelectorAll('.rail nav a')];
-      const sections = [...document.querySelectorAll('main section[id]')];
+<main id="top">
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>Senvor</h1>
+      <p class="role">Developer and graphic designer. I learn by building things.</p>
+    </div>
+    <div class="lineage">
+      <h2>Bloodline</h2>
+      <p class="hint">A tiny taste of Evogen: each life passes its traits on, with a few mutations.</p>
+      <div class="tree" id="tree" aria-live="polite"></div>
+      <button class="btn" id="next" type="button">Pass it on</button>
+      <p class="trait" id="trait"></p>
+    </div>
+  </div>
 
-      navLinks.forEach((link) => {
-        link.addEventListener('click', (event) => {
-          const target = document.querySelector(link.getAttribute('href'));
-          if (!target) return;
+  <section id="about">
+    <h2>About</h2>
+    <div class="two">
+      <p>I'm self-taught. Most of what I know about code came from getting stuck on a real project and finding a way through, not from working through tutorials.</p>
+      <p>Alongside code, I do graphic design: logos, layouts, and visual identity work. I also design hardware, like custom PCBs for small devices.</p>
+    </div>
+  </section>
 
-          event.preventDefault();
-          target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
-          history.pushState(null, '', link.getAttribute('href'));
-          navLinks.forEach((item) => {
-            const isActive = item === link;
-            item.classList.toggle('active', isActive);
-            if (isActive) {
-              item.setAttribute('aria-current', 'true');
-            } else {
-              item.removeAttribute('aria-current');
-            }
-          });
-        });
-      });
+  <section id="building">
+    <h2>Currently building</h2>
+    <div class="build">
+      <h3>Starbie</h3>
+      <p>A tiny motion-controlled digital pet, basically a desktop Tamagotchi. It's built around a XIAO ESP32-C3 with a motion sensor, temperature and humidity readings, an OLED screen, an RGB LED, and Cherry MX switches for input.</p>
+      <p class="now">Made for Hack Club's HalfLife. Schematic and PCB are designed in KiCad, and the firmware is in progress. <a href="https://github.com/Senvor/Starbie">See the repo</a>. Evogen is on pause while I work on this.</p>
+    </div>
+  </section>
 
-      function setActiveSection() {
-        const activationOffset = 100;
-        const currentSection = sections.reduce((current, section) => {
-          return section.getBoundingClientRect().top <= activationOffset
-            ? section
-            : current;
-        }, sections[0]);
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul class="chips">
+      <li class="solid">HTML</li><li class="solid">CSS</li><li class="solid">JavaScript</li><li class="solid">Graphic design</li><li class="solid">Pixel art</li><li class="solid">Java</li><li class="solid">GDScript</li><li class="solid">KiCad</li>
+      <li class="learning">p5.js</li><li class="learning">Arduino</li><li class="learning">CAD</li>
+    </ul>
+    <p class="legend"><b><span class="s"></span>Comfortable</b><b><span class="l"></span>Still learning</b></p>
+  </section>
 
-        navLinks.forEach((link) => {
-          const isActive = link.getAttribute('href') === `#${currentSection?.id}`;
-          link.classList.toggle('active', isActive);
-          if (isActive) {
-            link.setAttribute('aria-current', 'true');
-          } else {
-            link.removeAttribute('aria-current');
-          }
-        });
-      }
+  <section id="work">
+    <h2>Work</h2>
+    <h3 class="group">Hardware</h3>
+    <div class="projects">
+      <article class="proj">
+        <div>
+          <h3>Starbie<span class="tag">in progress</span></h3>
+          <p>A motion-controlled desktop pet on a custom PCB, built for Hack Club's HalfLife.</p>
+          <div class="tech">XIAO ESP32-C3, Arduino, KiCad, MPU6050, DHT11, OLED</div>
+        </div>
+        <div class="links"><a href="https://github.com/Senvor/Starbie">Repository</a></div>
+      </article>
+      <article class="proj">
+        <div>
+          <h3>DevRuler<span class="tag">designed</span></h3>
+          <p>A custom PCB ruler for developers, with hardware footprints, everyday commands, and SI unit conversions. Made for Hack Club's Forge.</p>
+          <div class="tech">KiCad, JLCPCB</div>
+        </div>
+        <div class="links"><a href="https://github.com/Senvor/DevRuler">Repository</a></div>
+      </article>
+      <article class="proj next">
+        <div>
+          <h3>Obsidian<span class="tag">up next</span></h3>
+          <p>An obsidian-themed keyboard project. Planned, not started yet.</p>
+        </div>
+        <div class="links"><a href="https://github.com/Senvor/Obsidian">Repository</a></div>
+      </article>
+    </div>
+    <h3 class="group">Web</h3>
+    <div class="projects">
+      <article class="proj">
+        <div>
+          <h3>Sound Galaxy</h3>
+          <p>Turns microphone input into a moving galaxy of particles in real time. Built by following a Hack Club workshop.</p>
+          <div class="tech">HTML, JavaScript</div>
+        </div>
+        <div class="links"><a href="https://sound-galaxy.vercel.app">Live site</a><a href="https://github.com/Senvor/Sound-Galaxy">Repository</a></div>
+      </article>
+      <article class="proj">
+        <div>
+          <h3>Particle Physics</h3>
+          <p>A gravity simulation where particles pull on each other like tiny planets. Built by following a Hack Club workshop.</p>
+          <div class="tech">p5.js, JavaScript</div>
+        </div>
+        <div class="links"><a href="https://particle-physics.vercel.app">Live site</a><a href="https://github.com/Senvor/Particle-Physics">Repository</a></div>
+      </article>
+      <article class="proj">
+        <div>
+          <h3>Cockroach Janta Party</h3>
+          <p>An informational site about the CJP movement. My first project, shipped and live.</p>
+          <div class="tech">HTML, CSS, JS</div>
+        </div>
+        <div class="links"><a href="https://cockroach-janta-party-six.vercel.app">Live site</a><a href="https://github.com/Senvor/cockroach-janta-party">Repository</a></div>
+      </article>
+    </div>
+    <h3 class="group">Games</h3>
+    <div class="projects">
+      <article class="proj">
+        <div>
+          <h3>Evogen<span class="tag">on pause</span></h3>
+          <p>Generational life-sim where inheritance replaces respawning. Taking a break from it for now.</p>
+          <div class="tech">Godot Engine, GDScript, LibreSprite</div>
+        </div>
+        <div class="links"><a href="https://github.com/Senvor/EvoGen">Repository</a></div>
+      </article>
+    </div>
+  </section>
 
-      const sectionObserver = new IntersectionObserver(setActiveSection, {
-        rootMargin: '-100px 0px 0px 0px',
-        threshold: [0, 1]
-      });
-      sections.forEach((section) => sectionObserver.observe(section));
-      setActiveSection();
+  <section id="connect">
+    <h2>Connect</h2>
+    <ul class="social">
+      <li><a href="https://github.com/Senvor"><b><img class="logo" src="assets/github.svg" alt="" width="22" height="22">GitHub</b><span>github.com/Senvor</span></a></li>
+      <li><a href="https://reddit.com/user/senvor"><b><img class="logo" src="assets/reddit.svg" alt="" width="22" height="22">Reddit</b><span>u/senvor</span></a></li>
+      <li><a href="https://discord.com/users/s3nvor"><b><img class="logo" src="assets/discord.svg" alt="" width="22" height="22">Discord</b><span>s3nvor</span></a></li>
+      <li><a href="https://x.com/s3nvor"><b><img class="logo" src="assets/x.svg" alt="" width="22" height="22">X</b><span>x.com/s3nvor</span></a></li>
+      <li><a href="https://instagram.com/s3nvor"><b><img class="logo" src="assets/instagram.svg" alt="" width="22" height="22">Instagram</b><span>instagram.com/s3nvor</span></a></li>
+      <li><a href="https://youtube.com/@s3nvor"><b><img class="logo" src="assets/youtube.svg" alt="" width="22" height="22">YouTube</b><span>@s3nvor</span></a></li>
+    </ul>
+  </section>
+</div>
+</main>
+<footer><div class="wrap">© 2026 Senvor</div></footer>
 
-      document.querySelectorAll('.work-card, .next-card').forEach((card, index) => {
-        const details = document.createElement('div');
-        const detailsId = `work-details-${index + 1}`;
-        const toggle = document.createElement('button');
+<script>
+(function(){
+  var tree=document.getElementById('tree'),trait=document.getElementById('trait');
+  var TRAITS=['Quick learner','Night owl','Stubborn','Lucky','Curious','Steady hands','Restless','Cheerful'];
+  var line=[],counter=0;
+  function rnd(n){return Math.floor(Math.random()*n)}
+  function first(){
+    var bits=[];for(var i=0;i<32;i++)bits.push(Math.random()<.5);
+    return {bits:bits,hue:rnd(360),trait:TRAITS[rnd(TRAITS.length)]};
+  }
+  function child(p){
+    var bits=p.bits.map(function(b){return Math.random()<.12?!b:b});
+    var mutated=false;
+    var hue=(p.hue+rnd(41)-20+360)%360;
+    var t=p.trait;
+    if(Math.random()<.35){t=TRAITS[rnd(TRAITS.length)];mutated=true}
+    return {bits:bits,hue:hue,trait:t,mutated:mutated};
+  }
+  function draw(c,g){
+    var x=c.getContext('2d');x.clearRect(0,0,8,8);
+    x.fillStyle='hsl('+g.hue+' 70% 58%)';
+    for(var y=0;y<8;y++)for(var i=0;i<4;i++){
+      if(g.bits[y*4+i]){x.fillRect(i,y,1,1);x.fillRect(7-i,y,1,1)}
+    }
+    x.fillStyle='#1b1840';x.fillRect(2,3,1,1);x.fillRect(5,3,1,1);
+  }
+  function render(newest){
+    tree.innerHTML='';
+    line.forEach(function(g,idx){
+      var d=document.createElement('div');d.className='gen'+(newest&&idx===line.length-1?' new':'');
+      var c=document.createElement('canvas');c.width=8;c.height=8;
+      c.setAttribute('role','img');c.setAttribute('aria-label','Generation '+g.n+', trait: '+g.trait);
+      draw(c,g);
+      var s=document.createElement('small');s.textContent='Gen '+g.n;
+      d.appendChild(c);d.appendChild(s);tree.appendChild(d);
+    });
+    var last=line[line.length-1];
+    trait.textContent=last.mutated?'Gen '+last.n+' mutated: now '+last.trait.toLowerCase()+'.':'Gen '+last.n+' inherited: '+last.trait.toLowerCase()+'.';
+  }
+  function add(g){g.n=++counter;line.push(g);if(line.length>6)line.shift()}
+  add(first());add(child(line[0]));add(child(line[1]));
+  render(false);
+  document.getElementById('next').addEventListener('click',function(){add(child(line[line.length-1]));render(true)});
 
-        details.className = 'details';
-        details.id = detailsId;
-        details.innerHTML = '<!-- add extra project detail here -->';
+  var BM={
+    chip:['..#..#..','.######.','##....##','.#....#.','##....##','.#....#.','.######.','..#..#..'],
+    window:['########','#.#....#','########','#......#','#.####.#','#......#','#.##...#','########'],
+    pad:['........','.######.','#.#..#.#','###..###','#.#..#.#','#......#','.##..##.','........'],
+    code:['........','..#..#..','.#....#.','#......#','.#....#.','..#..#..','........','........'],
+    brush:['......##','.....###','....###.','...###..','..###...','.###....','##......','#.......'],
+    star:['...##...','...##...','########','.######.','..####..','.##..##.','.#....#.','........'],
+    fork:['.#....#.','.#....#.','.#....#.','.##..##.','..####..','...##...','...##...','...##...'],
+    chat:['........','########','#......#','#......#','#......#','########','..##....','..#.....'],
+    alien:['..#..#..','...##...','.######.','#.#..#.#','########','.######.','..#..#..','........'],
+    x:['#......#','.#....#.','..#..#..','...##...','...##...','..#..#..','.#....#.','#......#'],
+    camera:['........','..###...','########','#......#','#.####.#','#.#..#.#','#.####.#','########'],
+    play:['##......','####....','######..','########','########','######..','####....','##......']
+  };
+  function ic(n){var r=BM[n],s='<svg class="ic" viewBox="0 0 8 8" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">';for(var y=0;y<8;y++)for(var x=0;x<8;x++)if(r[y].charAt(x)==='#')s+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';return s+'</svg>'}
+  function tag(sel,map){document.querySelectorAll(sel).forEach(function(el){var k=el.textContent.trim();if(map[k])el.insertAdjacentHTML('afterbegin',ic(map[k]))})}
+  tag('.group',{Hardware:'chip',Web:'window',Games:'pad'});
+  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code','Graphic design':'brush','Pixel art':'star',KiCad:'chip',Arduino:'chip',CAD:'window'});
 
-        toggle.type = 'button';
-        toggle.className = 'expand-toggle';
-        toggle.textContent = '+';
-        toggle.setAttribute('aria-label', 'Show project details');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-controls', detailsId);
-
-        card.append(toggle, details);
-
-        toggle.addEventListener('click', () => {
-          const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-          toggle.setAttribute('aria-expanded', String(!isExpanded));
-          toggle.setAttribute('aria-label', isExpanded ? 'Show project details' : 'Hide project details');
-          toggle.textContent = isExpanded ? '+' : '-';
-
-          if (reducedMotion) {
-            details.style.display = isExpanded ? 'none' : 'block';
-            details.style.maxHeight = isExpanded ? '0' : 'none';
-            return;
-          }
-
-          if (isExpanded) {
-            details.style.maxHeight = `${details.scrollHeight}px`;
-            details.addEventListener('transitionend', () => {
-              details.style.display = 'none';
-            }, { once: true });
-            requestAnimationFrame(() => {
-              details.style.maxHeight = '0';
-            });
-          } else {
-            details.style.display = 'block';
-            details.style.maxHeight = '0';
-            requestAnimationFrame(() => {
-              details.style.maxHeight = `${details.scrollHeight}px`;
-            });
-          }
-        });
-      });
-
-      document.querySelectorAll('.connect-list a').forEach((link) => {
-        const copyButton = document.createElement('button');
-        copyButton.type = 'button';
-        copyButton.className = 'copy-link';
-        copyButton.textContent = 'copy';
-        copyButton.setAttribute('aria-label', `Copy ${link.textContent} link`);
-        link.after(copyButton);
-
-        copyButton.addEventListener('click', async () => {
-          try {
-            await navigator.clipboard.writeText(link.href);
-            copyButton.textContent = 'copied';
-            window.setTimeout(() => {
-              copyButton.textContent = 'copy';
-            }, 1500);
-          } catch {
-            // Clipboard access is optional.
-          }
-        });
-      });
-
-      const role = document.querySelector('.rail .role');
-      const roleText = role.textContent;
-      if (reducedMotion) {
-        role.textContent = roleText;
-      } else {
-        role.textContent = '';
-        roleText.split('').forEach((character, index) => {
-          window.setTimeout(() => {
-            role.textContent += character;
-          }, (900 / roleText.length) * (index + 1));
-        });
-      }
-    })();
-  </script>
+  var root=document.documentElement,btn=document.getElementById('theme');
+  btn.addEventListener('click',function(){
+    var dark=getComputedStyle(root).getPropertyValue('--bg').trim()==='#15132b';
+    root.setAttribute('data-theme',dark?'light':'dark');
+  });
+})();
+</script>
 </body>
 </html>
