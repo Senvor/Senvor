@@ -26,7 +26,7 @@ h1,h2,h3,.px{font-family:"Pixelify Sans",ui-monospace,monospace;font-weight:700;
 
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:2px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
-.logo{font-family:"Pixelify Sans",monospace;font-weight:700;font-size:22px;text-decoration:none}
+.logo{font-family:"Pixelify Sans",monospace;font-weight:700;font-size:24px;text-decoration:none;color:var(--ink)}
 nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 nav a,.theme{font:500 15px Figtree,sans-serif;text-decoration:none;padding:6px 12px;border:2px solid transparent;color:var(--soft);background:none;cursor:pointer}
 nav a:hover,.theme:hover{border-color:var(--line);color:var(--ink)}
@@ -89,9 +89,9 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
 .group{display:flex;align-items:center}
 .group .ic{width:24px;height:24px;margin-right:10px;color:var(--amber)}
 .social .ic{width:20px;height:20px;color:var(--amber);vertical-align:-3px}
-.logo{width:22px;height:22px;margin-right:10px;vertical-align:-4px}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo{filter:invert(1)}}
-:root[data-theme="dark"] .logo{filter:invert(1)}
+.brand{width:22px;height:22px;margin-right:10px;vertical-align:-4px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand{filter:invert(1)}}
+:root[data-theme="dark"] .brand{filter:invert(1)}
 @keyframes pop{from{transform:scale(.4)}to{transform:scale(1)}}
 .gen.new canvas{animation:pop .3s steps(4)}
 @media (prefers-reduced-motion:reduce){.gen.new canvas{animation:none}html{scroll-behavior:auto}}
@@ -103,3 +103,7 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
   .gen:not(:last-child)::after{display:none}
   nav a{padding:6px 8px}
 }
+
+.hc{display:inline-block;margin:18px 0 0;padding:4px 12px;border:2px solid var(--amber);color:var(--amber);font:500 15px "Pixelify Sans",monospace}
+.contact{margin:16px 0 0;max-width:38ch;color:var(--soft);font-size:17px}
+.contact a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:3px}
