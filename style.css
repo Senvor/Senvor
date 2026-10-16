@@ -81,15 +81,14 @@ section h2{font-size:clamp(28px,5vw,40px);margin-bottom:20px}
 .social{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:0;margin:0;list-style:none}
 .social a{display:block;background:var(--panel);border:2px solid var(--line);padding:14px 16px;text-decoration:none}
 .social a:hover{border-color:var(--amber)}
-.social b{display:block;font:700 18px "Pixelify Sans",monospace}
+.social b{display:flex;align-items:center;gap:10px;margin-bottom:6px;font:600 18px Figtree,system-ui,sans-serif}
 .social span{font-size:14px;color:var(--soft)}
 footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);font-size:14px}
 
 .ic{display:inline-block;width:16px;height:16px;margin-right:8px;vertical-align:-2px;flex:none}
 .group{display:flex;align-items:center}
 .group .ic{width:24px;height:24px;margin-right:10px;color:var(--amber)}
-.social .ic{width:20px;height:20px;color:var(--amber);vertical-align:-3px}
-.brand{width:22px;height:22px;margin-right:10px;vertical-align:-4px}
+.brand{width:22px;height:22px;flex:none;display:block}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand{filter:invert(1)}}
 :root[data-theme="dark"] .brand{filter:invert(1)}
 @keyframes pop{from{transform:scale(.4)}to{transform:scale(1)}}
