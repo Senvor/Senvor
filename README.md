@@ -6,7 +6,7 @@ It really inspired me to start making cool and useful things of my own. So far, 
 
 My most recent project is **EvoGen**, a game based on evolution and genesis. It’s still a work in progress, but I’m having a lot of fun building it.
 
-[![Portfolio](https://img.shields.io/badge/portfolio-E0632B?style=for-the-badge)](https://s3nvor.vercel.app/)
+[![Portfolio](https://img.shields.io/badge/portfolio-E0632B?style=for-the-badge)](https://senvor.dev/)
 [![GitHub](https://img.shields.io/badge/github-0F130C?style=for-the-badge&logo=github&logoColor=EFE8D8)](https://github.com/Senvor)
 [![Reddit](https://img.shields.io/badge/reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://reddit.com/user/senvor)
 [![Discord](https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/users/s3nvor)
