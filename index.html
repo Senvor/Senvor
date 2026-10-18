@@ -76,9 +76,21 @@
 
   <section id="skills">
     <h2>Skills</h2>
+    <h3 class="sg sg-code">Code</h3>
     <ul class="chips">
-      <li class="solid">HTML</li><li class="solid">CSS</li><li class="solid">JavaScript</li><li class="solid">Graphic design</li><li class="solid">Pixel art</li><li class="solid">Java</li><li class="solid">GDScript</li><li class="solid">KiCad</li>
-      <li class="learning">p5.js</li><li class="learning">Arduino</li><li class="learning">CAD</li>
+      <li class="solid">HTML</li><li class="solid">CSS</li><li class="solid">JavaScript</li><li class="solid">Java</li><li class="solid">GDScript</li>
+      <li class="learning">Python</li><li class="learning">p5.js</li>
+    </ul>
+
+    <h3 class="sg sg-hw">Hardware</h3>
+    <ul class="chips">
+      <li class="solid">KiCad</li>
+      <li class="learning">Arduino</li><li class="learning">EasyEDA</li>
+    </ul>
+
+    <h3 class="sg sg-design">Design</h3>
+    <ul class="chips">
+      <li class="solid">Aseprite</li><li class="solid">Canva</li><li class="solid">CapCut</li>
     </ul>
     <p class="legend"><b><span class="s"></span>Comfortable</b><b><span class="l"></span>Still learning</b></p>
   </section>
@@ -224,10 +236,11 @@
     camera:['........','..###...','########','#......#','#.####.#','#.#..#.#','#.####.#','########'],
     play:['##......','####....','######..','########','########','######..','####....','##......']
   };
-  function ic(n){var r=BM[n],s='<svg class="ic" viewBox="0 0 8 8" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">';for(var y=0;y<8;y++)for(var x=0;x<8;x++)if(r[y].charAt(x)==='#')s+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';return s+'</svg>'}
+  function ic(n){var r=BM[n],a=8,b=-1,x,y;for(y=0;y<8;y++)if(r[y].indexOf('#')>-1){if(y<a)a=y;b=y}var s='<svg class="ic" viewBox="0 '+a+' 8 '+(b-a+1)+'" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">';for(y=a;y<=b;y++)for(x=0;x<8;x++)if(r[y].charAt(x)==='#')s+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';return s+'</svg>'}
   function tag(sel,map){document.querySelectorAll(sel).forEach(function(el){var k=el.textContent.trim();if(map[k])el.insertAdjacentHTML('afterbegin',ic(map[k]))})}
   tag('.group',{Hardware:'chip',Web:'window',Games:'pad'});
-  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code','Graphic design':'brush','Pixel art':'star',KiCad:'chip',Arduino:'chip',CAD:'window'});
+  tag('.sg',{Code:'code',Hardware:'chip',Design:'brush'});
+  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code',Python:'code',Aseprite:'star',Canva:'brush',CapCut:'play',KiCad:'chip',Arduino:'chip',EasyEDA:'chip'});
 
   var root=document.documentElement,btn=document.getElementById('theme');
   btn.addEventListener('click',function(){

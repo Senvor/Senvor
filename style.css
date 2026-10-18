@@ -87,9 +87,9 @@ section h2{font-size:clamp(28px,5vw,40px);margin-bottom:20px}
 .social span{font-size:14px;color:var(--soft)}
 footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);font-size:14px}
 
-.ic{display:inline-block;width:16px;height:16px;margin-right:8px;vertical-align:-2px;flex:none}
+.ic{display:inline-block;width:16px;height:auto;margin-right:8px;vertical-align:middle;flex:none}
 .group{display:flex;align-items:center}
-.group .ic{width:24px;height:24px;margin-right:10px;color:var(--amber)}
+.group .ic{width:24px;height:auto;margin-right:10px;color:var(--amber)}
 .brand{width:22px;height:22px;flex:none;display:block}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand{filter:invert(1)}}
 :root[data-theme="dark"] .brand{filter:invert(1)}
@@ -133,3 +133,10 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
 .hc{display:inline-block;margin:18px 0 0;padding:4px 12px;border:2px solid var(--amber);color:var(--amber);font:500 15px "Pixelify Sans",monospace}
 .contact{margin:16px 0 0;max-width:38ch;color:var(--soft);font-size:17px}
 .contact a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:3px}
+
+.sg{display:flex;align-items:center;margin:26px 0 12px;font-size:18px;color:var(--soft)}
+.sg:first-of-type{margin-top:0}
+.sg .ic{width:24px;height:auto;margin-right:10px}
+.sg-code .ic{color:var(--sky)}
+.sg-hw .ic{color:var(--amber)}
+.sg-design .ic{color:#d65db1}
