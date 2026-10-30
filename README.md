@@ -4,7 +4,7 @@ Programming is one of my profound interests, and recently I heard about [Hack Cl
 
 It really inspired me to start making cool and useful things of my own. So far, I’m still pretty new to this field and I haven’t made any great projects yet, just a few small ones. But I’m excited to keep learning, building, and seeing what I can create.
 
-My most recent project is **EvoGen**, a game based on evolution and genesis. It’s still a work in progress, but I’m having a lot of fun building it.
+I'm currently building Pocket Gravity Lab, a portable physics lab for exploring gravity and orbital mechanics, written in C++ for the ESP32-S3.
 
 [![Portfolio](https://img.shields.io/badge/portfolio-E0632B?style=for-the-badge)](https://senvor.dev/)
 [![GitHub](https://img.shields.io/badge/github-0F130C?style=for-the-badge&logo=github&logoColor=EFE8D8)](https://github.com/Senvor)
