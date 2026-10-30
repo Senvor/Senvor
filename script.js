@@ -48,23 +48,19 @@
 
   var BM={
     chip:['..#..#..','.######.','##....##','.#....#.','##....##','.#....#.','.######.','..#..#..'],
-    window:['########','#.#....#','########','#......#','#.####.#','#......#','#.##...#','########'],
-    pad:['........','.######.','#.#..#.#','###..###','#.#..#.#','#......#','.##..##.','........'],
+    window:['########','#......#','########','#......#','#.####.#','#......#','#.####.#','########'],
+    invader:['..#..#..','...##...','..####..','.##..##.','########','#.####.#','#.#..#.#','...##...'],
     code:['........','..#..#..','.#....#.','#......#','.#....#.','..#..#..','........','........'],
-    brush:['......##','.....###','....###.','...###..','..###...','.###....','##......','#.......'],
+    gem:['...##...','..####..','.######.','########','.######.','..####..','...##...','........'],
+    layout:['########','........','###..###','###..###','###..###','###..###','........','........'],
     star:['...##...','...##...','########','.######.','..####..','.##..##.','.#....#.','........'],
-    fork:['.#....#.','.#....#.','.#....#.','.##..##.','..####..','...##...','...##...','...##...'],
-    chat:['........','########','#......#','#......#','#......#','########','..##....','..#.....'],
-    alien:['..#..#..','...##...','.######.','#.#..#.#','########','.######.','..#..#..','........'],
-    x:['#......#','.#....#.','..#..#..','...##...','...##...','..#..#..','.#....#.','#......#'],
-    camera:['........','..###...','########','#......#','#.####.#','#.#..#.#','#.####.#','########'],
     play:['##......','####....','######..','########','########','######..','####....','##......']
   };
   function ic(n){var r=BM[n],a=8,b=-1,x,y;for(y=0;y<8;y++)if(r[y].indexOf('#')>-1){if(y<a)a=y;b=y}var s='<svg class="ic" viewBox="0 '+a+' 8 '+(b-a+1)+'" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">';for(y=a;y<=b;y++)for(x=0;x<8;x++)if(r[y].charAt(x)==='#')s+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';return s+'</svg>'}
   function tag(sel,map){document.querySelectorAll(sel).forEach(function(el){var k=el.textContent.trim();if(map[k])el.insertAdjacentHTML('afterbegin',ic(map[k]))})}
-  tag('.group',{Hardware:'chip',Web:'window',Games:'pad'});
-  tag('.sg',{Code:'code',Hardware:'chip',Design:'brush'});
-  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code',Python:'code',Aseprite:'star',Canva:'brush',CapCut:'play',KiCad:'chip',Arduino:'chip',EasyEDA:'chip'});
+  tag('.group',{Hardware:'chip',Web:'window',Games:'invader'});
+  tag('.sg',{Code:'code',Hardware:'chip',Design:'gem'});
+  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code',Python:'code',Aseprite:'star',Canva:'layout',CapCut:'play',KiCad:'chip',Arduino:'chip',EasyEDA:'chip'});
 
   var root=document.documentElement,btn=document.getElementById('theme');
   btn.addEventListener('click',function(){
