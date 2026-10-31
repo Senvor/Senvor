@@ -47,7 +47,6 @@
   document.getElementById('next').addEventListener('click',function(){add(child(line[line.length-1]));render('new')});
 
   var BM={
-    chip:['..#..#..','.######.','##....##','.#....#.','##....##','.#....#.','.######.','..#..#..'],
     window:['########','#......#','########','#......#','#.####.#','#......#','#.####.#','########'],
     invader:['..#..#..','...##...','..####..','.##..##.','########','#.####.#','#.#..#.#','...##...'],
     code:['........','..#..#..','.#....#.','#......#','.#....#.','..#..#..','........','........'],
@@ -56,15 +55,19 @@
   // Icons taken from pixelarticons (https://github.com/halfmage/pixelarticons), MIT License, (c) 2019 Gerrit Halfmann.
   // They are drawn on a 24x24 grid, so they are stored as ready-made SVG paths instead of 8x8 bitmaps.
   var RAW={
+    board:{vb:'2 2 20 20',d:'<path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zM8 6h2v2H8zm8 12h-2v-2h2zM6 8h2v2H6zm12 8h-2v-2h2zM8 10h2v2H8zm8 4h-2v-2h2zm-6-6h6v2h-6zm4 8H8v-2h6zm2-12h2v4h-2zM8 20H6v-4h2z"/>'},
+    cpu:{vb:'1 1 22 22',w:22,d:'<path d="M5 3h14v2H5zm0 16h14v2H5zM3 5h2v14H3zm16 0h2v14h-2zM9 7h6v2H9zm0 8h6v2H9zM7 9h2v6H7zm8 0h2v6h-2zm-4-8h2v2h-2zm0 20h2v2h-2zM1 11h2v2H1zm20 0h2v2h-2zm0-4h2v2h-2zm0 8h2v2h-2zM1 15h2v2H1zm0-8h2v2H1zm6-6h2v2H7zm8 0h2v2h-2zm0 20h2v2h-2zm-8 0h2v2H7z"/>'},
+    usb:{vb:'3 2 18 20',w:18,d:'<path d="M19 22H5V20H19V22ZM7 13H17V4H19V13H21V20H19V15H5V20H3V13H5V4H7V13ZM11 11H9V6H11V11ZM15 11H13V6H15V11ZM17 4H7V2H17V4Z"/>'},
+    zap:{vb:'2 1 20 22',w:20,d:'<path d="M4 13h8v6h2v2h-2v2h-2v-8H2v-4h2v2Zm12 6h-2v-2h2v2Zm2-2h-2v-2h2v2Zm2-2h-2v-2h2v2Zm-6-6h8v4h-2v-2h-8V5h-2V3h2V1h2v8Zm-8 2H4V9h2v2Zm2-2H6V7h2v2Zm2-2H8V5h2v2Z"/>'},
     brush:{vb:'2 2 20 20',d:'<path d="M5 2h12v2H5zm0 2h2v10H5zm12-2h2v12h-2z"/><path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm0 4h14v2H5zm4 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/>'},
     shapes:{vb:'2 2 20 20',w:20,d:'<path d="M2 13h9v2H2zm0 2h2v5H2zm0 5h9v2H2zm7-5h2v5H9zm6-2h5v2h-5zm-2 2h2v5h-2zm2 5h5v2h-5zm5-5h2v5h-2zM7 9h10v2H7zm0-2h2v2H7zm2-3h2v3H9zm2-2h2v2h-2zm2 2h2v3h-2zm2 3h2v2h-2z"/>'},
     cut:{vb:'1 2 22 22',w:22,d:'<path d="M1 17h2v4H1zm14 0h2v4h-2zM3 21h4v2H3zm14 0h4v2h-4zM3 15h4v2H3zm14 0h4v2h-4zM7 17h2v4H7zm14 0h2v4h-2zM7 15h2v2H7zm8 0h2v2h-2zm-6-2h2v2H9zm6 0h-2v2h2zm-4-2h2v2h-2z"/><path d="M13 11h-2v2h2zm0-2h2v2h-2zm-2 0H9v2h2zm4-2h2v2h-2zM9 7H7v2h2zm8-2h2v2h-2zM7 5H5v2h2zm12-2h2v2h-2zM5 3H3v2h2z"/>'}
   };
   function ic(n){if(RAW[n])return'<svg class="ic"'+(RAW[n].w?' style="width:'+RAW[n].w+'px"':'')+' viewBox="'+RAW[n].vb+'" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">'+RAW[n].d+'</svg>';var r=BM[n],a=8,b=-1,x,y;for(y=0;y<8;y++)if(r[y].indexOf('#')>-1){if(y<a)a=y;b=y}var s='<svg class="ic" viewBox="0 '+a+' 8 '+(b-a+1)+'" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">';for(y=a;y<=b;y++)for(x=0;x<8;x++)if(r[y].charAt(x)==='#')s+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';return s+'</svg>'}
   function tag(sel,map){document.querySelectorAll(sel).forEach(function(el){var k=el.textContent.trim();if(map[k])el.insertAdjacentHTML('afterbegin',ic(map[k]))})}
-  tag('.group',{Hardware:'chip',Web:'window',Games:'invader'});
-  tag('.sg',{Code:'code',Hardware:'chip',Design:'brush'});
-  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code',Python:'code','C++':'code',Aseprite:'ghost',Canva:'shapes',CapCut:'cut',KiCad:'chip',Arduino:'chip',EasyEDA:'chip'});
+  tag('.group',{Hardware:'board',Web:'window',Games:'invader'});
+  tag('.sg',{Code:'code',Hardware:'board',Design:'brush'});
+  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code',Python:'code','C++':'code',Aseprite:'ghost',Canva:'shapes',CapCut:'cut',KiCad:'cpu',Arduino:'usb',EasyEDA:'zap'});
 
   // Discord profile links need a numeric user ID, so instead of linking, these copy the username.
   document.querySelectorAll('[data-copy]').forEach(function(a){
