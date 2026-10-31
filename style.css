@@ -210,3 +210,13 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
 @media (min-width:761px){
   html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
 }
+
+/* 9. Project cards step into view as you scroll to them.
+   The .reveal class is added by script.js, so if JavaScript fails the cards simply stay visible. */
+@keyframes cardin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.proj.reveal{opacity:0}
+.proj.reveal.in{opacity:1;animation:cardin .4s steps(4) var(--d,0s) backwards}
+@media (prefers-reduced-motion:reduce){
+  .proj.reveal{opacity:1}
+  .proj.reveal.in{animation:none}
+}

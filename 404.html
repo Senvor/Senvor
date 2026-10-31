@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#15132b">
+<title>404: page not found | Senvor</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>
+  /* Absolute paths (/style.css, /assets/...) are used on purpose: GitHub Pages serves this page
+     for ANY missing URL, including deep ones like /a/b/c, where relative paths would break. */
+  body{min-height:100vh;display:flex;flex-direction:column}
+  main.nf{flex:1;display:flex;align-items:center;text-align:center;padding:56px 0}
+  .nf .code{display:flex;align-items:center;justify-content:center;gap:.08em;font:700 clamp(84px,22vw,160px)/1 var(--display);margin:0}
+  .nf .ghost{height:.78em;width:.78em;color:var(--amber);animation:bob .7s steps(2) infinite alternate}
+  @keyframes bob{from{transform:translateY(0)}to{transform:translateY(-.06em)}}
+  .nf h2{font-size:clamp(24px,5vw,34px);margin:18px 0 10px}
+  .nf p{color:var(--soft);margin:0 auto;max-width:46ch}
+  .nf .path{display:inline-block;margin-top:14px;max-width:100%;overflow-wrap:anywhere;padding:4px 10px;background:var(--chip);border:2px solid var(--line);font:500 14px var(--mono);color:var(--ink)}
+  .nf .btn{display:inline-block;text-decoration:none;margin-top:26px}
+  @media (prefers-reduced-motion:reduce){.nf .ghost{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="/">senvor</a>
+  </div>
+</header>
+
+<main class="nf">
+  <div class="wrap">
+    <h1 class="code" aria-label="404"><span aria-hidden="true">4</span><svg class="ghost" viewBox="0 0 8 8" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/></svg><span aria-hidden="true">4</span></h1>
+    <h2>Page not found</h2>
+    <p>This page wandered off. It may have moved, or the link might have a typo.</p>
+    <span class="path" id="path" hidden></span><br>
+    <a class="btn" href="/">Back to home</a>
+  </div>
+</main>
+
+<footer><div class="wrap">© 2026 Senvor</div></footer>
+
+<script>
+  // Show which address was asked for. textContent (not innerHTML) keeps odd URLs from being treated as code.
+  var p=document.getElementById("path");
+  if(p&&location.pathname&&location.pathname!=="/"){p.textContent=location.pathname;p.hidden=false}
+</script>
+</body>
+</html>

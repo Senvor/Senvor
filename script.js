@@ -51,16 +51,16 @@
     window:['########','#......#','########','#......#','#.####.#','#......#','#.####.#','########'],
     invader:['..#..#..','...##...','..####..','.##..##.','########','#.####.#','#.#..#.#','...##...'],
     code:['........','..#..#..','.#....#.','#......#','.#....#.','..#..#..','........','........'],
-    gem:['...##...','..####..','.######.','########','.######.','..####..','...##...','........'],
     layout:['########','........','###..###','###..###','###..###','###..###','........','........'],
-    star:['...##...','...##...','########','.######.','..####..','.##..##.','.#....#.','........'],
-    play:['##......','####....','######..','########','########','######..','####....','##......']
+    pencil:['.....##.','....#..#','...#..#.','..#..#..','.#..#...','#..#....','##.#....','###.....'],
+    ghost:['..####..','.#....#.','#.#..#.#','#.#..#.#','#......#','#......#','#.##.#.#','.#.##.#.'],
+    clip:['.######.','#......#','#.#....#','#.##...#','#.###..#','#.##...#','#.#....#','.######.'],
   };
   function ic(n){var r=BM[n],a=8,b=-1,x,y;for(y=0;y<8;y++)if(r[y].indexOf('#')>-1){if(y<a)a=y;b=y}var s='<svg class="ic" viewBox="0 '+a+' 8 '+(b-a+1)+'" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">';for(y=a;y<=b;y++)for(x=0;x<8;x++)if(r[y].charAt(x)==='#')s+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';return s+'</svg>'}
   function tag(sel,map){document.querySelectorAll(sel).forEach(function(el){var k=el.textContent.trim();if(map[k])el.insertAdjacentHTML('afterbegin',ic(map[k]))})}
   tag('.group',{Hardware:'chip',Web:'window',Games:'invader'});
-  tag('.sg',{Code:'code',Hardware:'chip',Design:'gem'});
-  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code',Python:'code',Aseprite:'star',Canva:'layout',CapCut:'play',KiCad:'chip',Arduino:'chip',EasyEDA:'chip'});
+  tag('.sg',{Code:'code',Hardware:'chip',Design:'pencil'});
+  tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code',Python:'code','C++':'code',Aseprite:'ghost',Canva:'layout',CapCut:'clip',KiCad:'chip',Arduino:'chip',EasyEDA:'chip'});
 
   // Discord profile links need a numeric user ID, so instead of linking, these copy the username.
   document.querySelectorAll('[data-copy]').forEach(function(a){
@@ -82,6 +82,22 @@
       else fallback();
     });
   });
+
+  // Scroll reveal: each project card steps in the first time it scrolls into view.
+  // Cards that arrive together are staggered slightly so they cascade instead of popping at once.
+  if('IntersectionObserver' in window){
+    var cards=document.querySelectorAll('.proj');
+    var io=new IntersectionObserver(function(entries){
+      var n=0;
+      entries.forEach(function(en){
+        if(!en.isIntersecting)return;
+        en.target.style.setProperty('--d',(n++*0.08)+'s');
+        en.target.classList.add('in');
+        io.unobserve(en.target);   // animate once, then stop watching
+      });
+    },{threshold:0.12});
+    cards.forEach(function(c){c.classList.add('reveal');io.observe(c)});
+  }
 
   var root=document.documentElement,btn=document.getElementById('theme');
   btn.addEventListener('click',function(){
