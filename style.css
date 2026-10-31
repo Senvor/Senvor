@@ -91,9 +91,11 @@ section h2{font-size:clamp(28px,5vw,40px);margin-bottom:20px}
 .social span{font-size:14px;color:var(--soft)}
 footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);font-size:14px}
 
-.ic{display:inline-block;width:16px;height:auto;margin-right:8px;vertical-align:middle;flex:none}
+/* Icons: all share one 24x24 grid. Chips use 24px (2px per art pixel), headings 36px (3px per art pixel),
+   so every art pixel is a whole number of screen pixels and nothing looks uneven. */
+.ic{display:inline-block;width:24px;height:24px;margin:-4px 6px -4px -3px;vertical-align:middle;flex:none}
 .group{display:flex;align-items:center}
-.group .ic{width:24px;height:auto;margin-right:10px;color:var(--amber)}
+.group .ic{width:36px;height:36px;margin:-6px 8px -6px -4px;color:var(--amber)}
 .brand{width:22px;height:22px;flex:none;display:block}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand{filter:invert(1)}}
 :root[data-theme="dark"] .brand{filter:invert(1)}
@@ -142,7 +144,7 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
 
 .sg{display:flex;align-items:center;margin:26px 0 12px;font-size:18px;color:var(--soft)}
 .sg:first-of-type{margin-top:0}
-.sg .ic{width:24px;height:auto;margin-right:10px}
+.sg .ic{width:36px;height:36px;margin:-6px 8px -6px -4px}
 .sg-code .ic{color:var(--sky)}
 .sg-hw .ic{color:var(--amber)}
 .sg-design .ic{color:#d65db1}
