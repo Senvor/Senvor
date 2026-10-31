@@ -1,6 +1,6 @@
 :root{
   --bg:#f2f0ff; --panel:#ffffff; --line:#cfc9f5; --ink:#1b1840; --soft:#5a5688;
-  --amber:#c9740a; --sky:#2f6fd0; --chip:#e6e2ff;
+  --amber:#c9740a; --amber-text:#9a5400; --sky:#2f6fd0; --chip:#e6e2ff;
   --display:"Pixelify Sans",ui-monospace,monospace;
   --body:Figtree,system-ui,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -11,13 +11,13 @@
   :root:not([data-theme="light"]){
     color-scheme:dark;
     --bg:#15132b; --panel:#1f1c3d; --line:#3a3670; --ink:#ece8ff; --soft:#a6a1d6;
-    --amber:#ffb84d; --sky:#6ec1ff; --chip:#2a2650;
+    --amber:#ffb84d; --amber-text:#ffb84d; --sky:#6ec1ff; --chip:#2a2650;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --bg:#15132b; --panel:#1f1c3d; --line:#3a3670; --ink:#ece8ff; --soft:#a6a1d6;
-  --amber:#ffb84d; --sky:#6ec1ff; --chip:#2a2650;
+  --amber:#ffb84d; --amber-text:#ffb84d; --sky:#6ec1ff; --chip:#2a2650;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 *,*::before,*::after{box-sizing:border-box}
@@ -82,7 +82,7 @@ section h2{font-size:clamp(28px,5vw,40px);margin-bottom:20px}
 .links{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
 .links a{font-weight:600;text-decoration:none;border-bottom:2px solid var(--sky);padding-bottom:1px}
 .proj.next{border-style:dashed;background:transparent}
-.tag{white-space:nowrap;display:inline-block;font:500 12px var(--mono);color:var(--amber);padding:0;margin-left:10px;vertical-align:middle}
+.tag{white-space:nowrap;display:inline-block;font:500 12px var(--mono);color:var(--amber-text);padding:0;margin-left:10px;vertical-align:middle}
 
 .social{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:0;margin:0;list-style:none}
 .social a{display:block;background:var(--panel);border:1px solid var(--line);padding:14px 16px;text-decoration:none}
@@ -136,7 +136,7 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
   .hero h1{font-size:56px}
 }
 
-.hc{display:inline-block;margin:18px 0 0;padding:4px 12px;border:2px solid var(--amber);color:var(--amber);font:500 15px var(--display)}
+.hc{display:inline-block;margin:18px 0 0;padding:4px 12px;border:2px solid var(--amber);color:var(--amber-text);font:500 15px var(--display)}
 .contact{margin:16px 0 0;max-width:38ch;color:var(--soft);font-size:17px}
 .contact a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:3px}
 
@@ -188,4 +188,25 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
   .btn,.social a{transition:none}
   .btn:hover,.social a:hover{transform:none}
   .fade,.fade *{transition:none!important}
+}
+
+/* 6. Repo / Live site links: a blue fill sweeps across the link in 5 steps on hover or keyboard focus.
+   The resting underline is drawn as a background layer (not a border) so the extra padding
+   that gives the fill room doesn't make the underline stick out past the text. */
+.links a{
+  padding:2px 6px;margin:-2px -6px;border-bottom:0;
+  background:
+    linear-gradient(var(--sky),var(--sky)) left bottom/0% 100% no-repeat,
+    linear-gradient(var(--sky),var(--sky)) 6px bottom/calc(100% - 12px) 2px no-repeat;
+  transition:background-size .2s steps(5),color .2s steps(5);
+}
+@media (hover:hover){
+  .links a:hover{background-size:100% 100%,calc(100% - 12px) 2px;color:var(--bg)}
+}
+.links a:focus-visible{background-size:100% 100%,calc(100% - 12px) 2px;color:var(--bg)}
+@media (prefers-reduced-motion:reduce){.links a{transition:none}}
+
+/* 8. Anchor links: leave a little room under the sticky header so section headings aren't tucked behind it */
+@media (min-width:761px){
+  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
 }

@@ -62,11 +62,34 @@
   tag('.sg',{Code:'code',Hardware:'chip',Design:'gem'});
   tag('.chips li',{HTML:'code',CSS:'code',JavaScript:'code',Java:'code',GDScript:'code','p5.js':'code',Python:'code',Aseprite:'star',Canva:'layout',CapCut:'play',KiCad:'chip',Arduino:'chip',EasyEDA:'chip'});
 
+  // Discord profile links need a numeric user ID, so instead of linking, these copy the username.
+  document.querySelectorAll('[data-copy]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var text=a.getAttribute('data-copy'),t=a.querySelector('span')||a,old=t.textContent;
+      function done(){
+        t.setAttribute('aria-live','polite');t.textContent='Copied!';
+        setTimeout(function(){t.textContent=old},1500);
+      }
+      function fallback(){
+        var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');
+        ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+        var ok=false;try{ok=document.execCommand('copy')}catch(err){}
+        document.body.removeChild(ta);
+        if(ok)done();else window.open(a.href,'_blank','noopener');
+      }
+      if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(text).then(done,fallback);
+      else fallback();
+    });
+  });
+
   var root=document.documentElement,btn=document.getElementById('theme');
   btn.addEventListener('click',function(){
     var dark=getComputedStyle(root).getPropertyValue('--bg').trim()==='#15132b';
     root.classList.add('fade');
-    root.setAttribute('data-theme',dark?'light':'dark');
+    var next=dark?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('theme',next)}catch(e){}
     setTimeout(function(){root.classList.remove('fade')},350);
   });
 })();
