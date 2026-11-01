@@ -47,15 +47,16 @@
   document.getElementById('next').addEventListener('click',function(){add(child(line[line.length-1]));render('new')});
 
   // Icons taken from pixelarticons (https://github.com/halfmage/pixelarticons), MIT License, (c) 2019 Gerrit Halfmann.
+  // The Python icon is the Python logo traced from the MIT-licensed devicon SVG and redrawn as a 12x12 pixel outline.
   // Every icon is drawn on pixelarticons' 24x24 grid (one art pixel = 2 units), so they all share one viewBox and scale together.
   var RAW={
-    code:'<g transform="translate(-1.2 -1.2) scale(1.1)"><path d="M5 4h4v2H5zm14 0h-4v2h4zM5 20h4v-2H5zm14 0h-4v-2h4zM3 6h2v12H3zm18 0h-2v12h2zm-10 5h2v2h-2zm-4 0h2v2H7zm8 0h2v2h-2z"/></g>',
+    code:'<path d="M5 4h4v2H5zm14 0h-4v2h4zM5 20h4v-2H5zm14 0h-4v-2h4zM3 6h2v12H3zm18 0h-2v12h2zm-10 5h2v2h-2zm-4 0h2v2H7zm8 0h2v2h-2z"/>',
     web:'<path d="M6 2h12v2H6zm0 18h12v2H6zM4 4h2v2H4zm5 0h2v2H9zm0 14h2v2H9zm4 0h2v2h-2zM7 6h2v12H7zm8 0h2v12h-2zm-2-2h2v2h-2zm7 0h-2v2h2zM2 6h2v12H2zm20 0h-2v12h2zM4 18h2v2H4zm16 0h-2v2h2z"/><path d="M3 11h18v2H3z"/>',
     css:'<path d="M2 2h20v2h-20zM2 4h2v2h-2zM20 4h2v2h-2zM2 6h2v2h-2zM8 6h8v2h-8zM20 6h2v2h-2zM2 8h2v2h-2zM14 8h2v2h-2zM20 8h2v2h-2zM2 10h2v2h-2zM10 10h6v2h-6zM20 10h2v2h-2zM2 12h2v2h-2zM14 12h2v2h-2zM20 12h2v2h-2zM4 14h2v2h-2zM8 14h8v2h-8zM18 14h2v2h-2zM4 16h2v2h-2zM18 16h2v2h-2zM6 18h2v2h-2zM16 18h2v2h-2zM8 20h8v2h-8z"/>',
     js:'<path d="M6 4h4v2H6zm12 0h-4v2h4zM6 20h4v-2H6zm12 0h-4v-2h4zM4 6h2v5H4zm16 0h-2v5h2zM4 18h2v-5H4zm16 0h-2v-5h2zM2 11h2v2H2zm20 0h-2v2h2z"/>',
     java:'<path d="M4 4h16v2H4zm0 2h2v8H4zm2 8h10v2H6zm14-8h2v4h-2zm-2 4h2v2h-2zm-2-4h2v8h-2zM2 18h18v2H2z"/>',
     godot:'<path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/><path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/>',
-    py:'<g transform="translate(2 2) scale(.8333)"><path d="M4 0h10v2h-10zM2 2h2v2h-2zM6 2h10v2h-10zM2 4h14v2h-14zM2 6h14v2h-14zM2 8h8v2h-8zM2 10h20v2h-20zM2 12h20v2h-20zM14 14h8v2h-8zM8 16h14v2h-14zM8 18h14v2h-14zM8 20h10v2h-10zM20 20h2v2h-2zM10 22h10v2h-10z"/></g>',
+    py:'<path d="M8 0h8v2h-8zM6 2h2v2h-2zM10 2h2v2h-2zM16 2h2v2h-2zM6 4h4v2h-4zM16 4h2v2h-2zM2 6h4v2h-4zM16 6h6v2h-6zM0 8h2v2h-2zM16 8h2v2h-2zM22 8h2v2h-2zM0 10h2v2h-2zM6 10h10v2h-10zM18 10h2v2h-2zM22 10h2v2h-2zM0 12h2v2h-2zM4 12h2v2h-2zM8 12h2v2h-2zM16 12h2v2h-2zM22 12h2v2h-2zM0 14h2v2h-2zM4 14h4v2h-4zM22 14h2v2h-2zM2 16h4v2h-4zM18 16h4v2h-4zM6 18h2v2h-2zM14 18h4v2h-4zM6 20h2v2h-2zM12 20h2v2h-2zM16 20h2v2h-2zM8 22h8v2h-8z"/>',
     cpp:'<path d="M7 3h2v2H7zm8 10h2v2h-2zM5 5h2v4H5zm8 10h2v4h-2zM9 5h2v4H9zm8 10h2v4h-2zM7 9h2v2H7zm8 10h2v2h-2zM13 3h4v2h-4zM5 13h4v2H5zm10-8h2v4h-2zM7 15h2v4H7zm6-6h6v2h-6zM5 19h6v2H5z"/>',
     board:'<path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zM8 6h2v2H8zm8 12h-2v-2h2zM6 8h2v2H6zm12 8h-2v-2h2zM8 10h2v2H8zm8 4h-2v-2h2zm-6-6h6v2h-6zm4 8H8v-2h6zm2-12h2v4h-2zM8 20H6v-4h2z"/>',
     cpu:'<path d="M4 4h16v2H4zM4 18h16v2H4zM4 6h2v12H4zM18 6h2v12h-2zM8 8h8v2H8zM8 14h8v2H8zM8 10h2v4H8zM14 10h2v4h-2zM7 2h2v2H7zM11 2h2v2h-2zM15 2h2v2h-2zM7 20h2v2H7zM11 20h2v2h-2zM15 20h2v2h-2zM2 7h2v2H2zM2 11h2v2H2zM2 15h2v2H2zM20 7h2v2h-2zM20 11h2v2h-2zM20 15h2v2h-2z"/>',
