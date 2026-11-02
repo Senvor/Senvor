@@ -5,7 +5,7 @@
   function rnd(n){return Math.floor(Math.random()*n)}
   function first(){
     var bits=[];for(var i=0;i<32;i++)bits.push(Math.random()<.5);
-    return {bits:bits,hue:rnd(360),trait:TRAITS[rnd(TRAITS.length)]};
+    return {bits:bits,hue:rnd(360),trait:TRAITS[rnd(TRAITS.length)],founder:true};
   }
   function child(p){
     var bits=p.bits.map(function(b){return Math.random()<.12?!b:b});
@@ -23,6 +23,19 @@
     }
     x.fillStyle='#1b1840';x.fillRect(2,3,1,1);x.fillRect(5,3,1,1);
   }
+  var sel=0;
+  function describe(g){
+    if(g.founder)return 'Gen '+g.n+' starts a new line: '+g.trait.toLowerCase()+'.';
+    return g.mutated?'Gen '+g.n+' mutated: now '+g.trait.toLowerCase()+'.':'Gen '+g.n+' inherited: '+g.trait.toLowerCase()+'.';
+  }
+  // Tapping a creature shows its details without rebuilding (and re-animating) the whole tree.
+  function select(idx){
+    sel=idx;
+    var kids=tree.children;
+    for(var i=0;i<kids.length;i++)kids[i].classList.toggle('sel',i===idx);
+    var g=line[idx];
+    trait.textContent=describe(g)+' Colour hue '+g.hue+'°.';
+  }
   function render(mode){
     tree.innerHTML='';
     line.forEach(function(g,idx){
@@ -33,18 +46,43 @@
         else if(idx===line.length-2)d.className+=' linking';
       }
       var c=document.createElement('canvas');c.width=8;c.height=8;
-      c.setAttribute('role','img');c.setAttribute('aria-label','Generation '+g.n+', trait: '+g.trait);
+      c.setAttribute('role','button');c.tabIndex=0;
+      c.setAttribute('aria-label','Generation '+g.n+', trait: '+g.trait+'. Press to inspect.');
       draw(c,g);
+      c.addEventListener('click',function(){select(idx)});
+      c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();select(idx)}});
       var s=document.createElement('small');s.textContent='Gen '+g.n;
       d.appendChild(c);d.appendChild(s);tree.appendChild(d);
     });
-    var last=line[line.length-1];
-    trait.textContent=last.mutated?'Gen '+last.n+' mutated: now '+last.trait.toLowerCase()+'.':'Gen '+last.n+' inherited: '+last.trait.toLowerCase()+'.';
+    sel=line.length-1;
+    tree.lastChild.classList.add('sel');
+    trait.textContent=describe(line[sel]);
   }
   function add(g){g.n=++counter;line.push(g);if(line.length>6)line.shift()}
-  add(first());add(child(line[0]));add(child(line[1]));
+  function startLine(){line=[];counter=0;add(first());add(child(line[0]));add(child(line[1]))}
+  startLine();
   render('intro');
   document.getElementById('next').addEventListener('click',function(){add(child(line[line.length-1]));render('new')});
+  document.getElementById('reset').addEventListener('click',function(){
+    startLine();
+    tree.style.setProperty('--b','0s');   // fresh creatures pop in straight away instead of after the page-load delay
+    render('intro');
+  });
+  // Save the selected creature as a crisp 256x256 PNG (8x8 pixels scaled up with no smoothing).
+  document.getElementById('save').addEventListener('click',function(){
+    var g=line[sel];if(!g)return;
+    var small=document.createElement('canvas');small.width=small.height=8;draw(small,g);
+    var big=document.createElement('canvas');big.width=big.height=256;
+    var x=big.getContext('2d');x.imageSmoothingEnabled=false;
+    x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--chip').trim()||'#e6e2ff';
+    x.fillRect(0,0,256,256);x.drawImage(small,0,0,256,256);
+    big.toBlob(function(blob){
+      var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='senvor-bloodline-gen-'+g.n+'.png';
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      setTimeout(function(){URL.revokeObjectURL(a.href)},1000);
+      if(window.senvorToast)window.senvorToast('Saved Gen '+g.n+' as a PNG');
+    });
+  });
 
   // Icons taken from pixelarticons (https://github.com/halfmage/pixelarticons), MIT License, (c) 2019 Gerrit Halfmann.
   // Every icon is drawn on pixelarticons' 24x24 grid (one art pixel = 2 units), so they all share one viewBox and scale together.
@@ -119,5 +157,115 @@
     root.setAttribute('data-theme',next);
     try{localStorage.setItem('theme',next)}catch(e){}
     setTimeout(function(){root.classList.remove('fade')},350);
+  });
+})();
+
+// ---------- Toast (small pixel notification) ----------
+(function(){
+  var el=null,timer;
+  window.senvorToast=function(msg){
+    if(!el){el=document.createElement('div');el.className='toast';el.setAttribute('role','status');document.body.appendChild(el)}
+    el.textContent=msg;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
+    clearTimeout(timer);timer=setTimeout(function(){el.classList.remove('show')},2400);
+  };
+})();
+
+// ---------- Pocket Gravity Lab: tiny orbit demo ----------
+// Each planet feels a pull toward the star that weakens with distance (inverse-square law, a = GM / r^2).
+// The motion is stepped with "velocity Verlet", which keeps orbits stable for a long time. The simpler Euler
+// method slowly gains energy, so planets would gradually spiral outward.
+(function(){
+  var cv=document.getElementById('orbit');if(!cv||!cv.getContext)return;
+  var ctx=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W/2,cy=H/2;
+  var GM=16000,SOFT=16,MAX=12,TRAIL=30;
+  var bodies=[],paused=false,onScreen=true,lastT=0,raf=0;
+  var pauseBtn=document.getElementById('orbit-pause');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function acc(x,y){
+    var dx=cx-x,dy=cy-y,r2=dx*dx+dy*dy+SOFT,inv=GM/(r2*Math.sqrt(r2));   // SOFT stops the pull blowing up right at the star
+    return [dx*inv,dy*inv];
+  }
+  // Launch a planet at (x,y), moving sideways to the star at about the speed that gives a circular orbit.
+  function launch(x,y,spin,speed){
+    var dx=x-cx,dy=y-cy,r=Math.max(Math.sqrt(dx*dx+dy*dy),10);
+    var v=Math.sqrt(GM/r)*(speed||(0.8+Math.random()*0.3));
+    var sp=spin||(Math.random()<.5?1:-1);
+    bodies.push({x:x,y:y,vx:-dy/r*v*sp,vy:dx/r*v*sp,hue:Math.floor(Math.random()*360),trail:[]});
+    if(bodies.length>MAX)bodies.shift();
+  }
+  function seed(){
+    bodies=[];
+    launch(cx+34,cy,1,1);launch(cx-58,cy+6,-1,0.85);launch(cx+8,cy-40,1,0.95);
+  }
+  function step(dt){
+    for(var i=bodies.length-1;i>=0;i--){
+      var b=bodies[i],a=acc(b.x,b.y);
+      b.x+=b.vx*dt+0.5*a[0]*dt*dt;b.y+=b.vy*dt+0.5*a[1]*dt*dt;
+      var n=acc(b.x,b.y);
+      b.vx+=0.5*(a[0]+n[0])*dt;b.vy+=0.5*(a[1]+n[1])*dt;
+      var dx=b.x-cx,dy=b.y-cy,r=Math.sqrt(dx*dx+dy*dy);
+      if(r<3||r>W){bodies.splice(i,1);continue}      // fell into the star, or flew away
+    }
+  }
+  function draw(){
+    var amber=getComputedStyle(document.documentElement).getPropertyValue('--amber').trim()||'#c9740a';
+    ctx.clearRect(0,0,W,H);
+    bodies.forEach(function(b){
+      ctx.fillStyle='hsl('+b.hue+' 70% 58%)';
+      b.trail.forEach(function(p,i){ctx.globalAlpha=.15+.5*i/b.trail.length;ctx.fillRect(p[0],p[1],1,1)});
+      ctx.globalAlpha=1;ctx.fillRect(Math.round(b.x)-1,Math.round(b.y)-1,2,2);
+    });
+    ctx.globalAlpha=1;ctx.fillStyle=amber;                      // the star: a small pixel plus-sign
+    ctx.fillRect(cx-1,cy-1,3,3);ctx.fillRect(cx-2,cy,5,1);ctx.fillRect(cx,cy-2,1,5);
+  }
+  function frame(t){
+    raf=0;
+    var dt=Math.min((t-lastT)/1000,0.05);lastT=t;
+    for(var k=0;k<4;k++)step(dt/4);                              // 4 small steps per frame: smoother and more accurate orbits
+    bodies.forEach(function(b){b.trail.push([Math.round(b.x),Math.round(b.y)]);if(b.trail.length>TRAIL)b.trail.shift()});
+    draw();
+    if(!paused&&onScreen&&!document.hidden)raf=requestAnimationFrame(frame);
+  }
+  function run(){if(!raf&&!paused&&onScreen&&!document.hidden){lastT=performance.now();raf=requestAnimationFrame(frame)}}
+  function setPaused(p){paused=p;pauseBtn.textContent=p?'Play':'Pause';if(!p)run()}
+
+  cv.addEventListener('click',function(e){
+    var r=cv.getBoundingClientRect();
+    launch((e.clientX-r.left)/r.width*W,(e.clientY-r.top)/r.height*H);
+    if(paused)draw();else run();
+  });
+  cv.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){
+      e.preventDefault();
+      var a=Math.random()*6.283,d=22+Math.random()*50;
+      launch(cx+Math.cos(a)*d,cy+Math.sin(a)*d*0.6);
+      if(paused)draw();else run();
+    }
+  });
+  pauseBtn.addEventListener('click',function(){setPaused(!paused)});
+  document.getElementById('orbit-reset').addEventListener('click',function(){seed();draw();run()});
+  document.addEventListener('visibilitychange',run);
+  if('IntersectionObserver' in window)new IntersectionObserver(function(en){onScreen=en[0].isIntersecting;if(onScreen)run()},{threshold:0}).observe(cv);
+
+  seed();draw();
+  if(reduce)setPaused(true);else run();                           // respect "reduce motion": start paused, one frame is shown
+})();
+
+// ---------- Easter egg: Konami code (or tap the name 5 times on a phone) ----------
+(function(){
+  var code=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'],pos=0;
+  function party(){
+    var on=document.documentElement.classList.toggle('party');
+    if(window.senvorToast)window.senvorToast(on?'+30 XP':'Party mode off');
+  }
+  document.addEventListener('keydown',function(e){
+    var k=e.key.length===1?e.key.toLowerCase():e.key;
+    if(k===code[pos]){pos++;if(pos===code.length){pos=0;party()}}else pos=(k===code[0])?1:0;
+  });
+  var h1=document.querySelector('.hero h1'),taps=0,t0=0;
+  if(h1)h1.addEventListener('click',function(){
+    var now=Date.now();taps=(now-t0<2000)?taps+1:1;t0=now;
+    if(taps>=5){taps=0;party()}
   });
 })();
