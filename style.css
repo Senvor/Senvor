@@ -207,6 +207,13 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
 }
 .links a:focus-visible{background-size:100% 100%,calc(100% - 12px) 2px;color:var(--bg)}
 @media (prefers-reduced-motion:reduce){.links a{transition:none}}
+/* Bigger tap area on phones without changing how the link looks */
+.links a{position:relative}
+@media (max-width:600px){.links a::after{content:"";position:absolute;inset:-8px -4px}}
+/* Skip link: hidden until a keyboard user tabs to it */
+.skip{position:absolute;left:-9999px;top:8px;z-index:20;font:600 15px var(--body);text-decoration:none;background:var(--ink);color:var(--bg);padding:10px 16px}
+.skip:focus{left:12px}
+main:focus{outline:none}
 
 /* 8. Anchor links: leave a little room under the sticky header so section headings aren't tucked behind it */
 @media (min-width:761px){

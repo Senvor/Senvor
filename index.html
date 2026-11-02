@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip" href="#top">Skip to content</a>
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#top">senvor</a>
@@ -41,7 +42,7 @@
   </div>
 </header>
 
-<main id="top">
+<main id="top" tabindex="-1">
 <div class="wrap">
   <div class="hero">
     <div>
@@ -52,8 +53,9 @@
     </div>
     <div class="lineage">
       <h2>Bloodline</h2>
-      <p class="hint">A tiny taste of Evogen: each life passes its traits on, with a few mutations.</p>
+      <p class="hint">A tiny taste of EvoGen: each life passes its traits on, with a few mutations.</p>
       <div class="tree" id="tree"></div>
+      <noscript><p class="hint">Turn on JavaScript to try the Bloodline demo.</p></noscript>
       <button class="btn" id="next" type="button">Pass it on</button>
       <p class="trait" id="trait" aria-live="polite"></p>
     </div>
@@ -110,6 +112,13 @@
         <div class="links"><a href="https://github.com/Senvor/Pocket-Gravity-Lab">Repository</a></div>
       </article>
       <article class="proj">
+        <div>
+          <h3>Marbew<span class="tag">in progress</span></h3>
+          <p>A custom 3D-printed marble race, designed from scratch.</p>
+        </div>
+        <div class="links"><a href="https://github.com/Senvor/Marbew">Repository</a></div>
+      </article>
+      <article class="proj">
         <img class="thumb" src="assets/starbie.png" alt="PCB render of Starbie, a star-shaped board with an OLED, sensor and two buttons" loading="lazy">
         <div>
           <h3>Starbie<span class="tag">designed</span></h3>
@@ -156,7 +165,7 @@
       <article class="proj">
         <div>
           <h3>Cockroach Janta Party</h3>
-          <p>An informational site about the CJP movement. My first project, shipped and live.</p>
+          <p>An informational site about the CJP movement. My second project, shipped and live.</p>
           <div class="tech">HTML, CSS, JS</div>
         </div>
         <div class="links"><a href="https://cockroach-janta-party-six.vercel.app">Live site</a><a href="https://github.com/Senvor/cockroach-janta-party">Repository</a></div>
@@ -166,9 +175,9 @@
     <div class="projects">
       <article class="proj">
         <div>
-          <h3>Evogen<span class="tag">on pause</span></h3>
+          <h3>EvoGen<span class="tag">on pause</span></h3>
           <p>Generational life-sim where inheritance replaces respawning. Taking a break from it for now.</p>
-          <div class="tech">Godot Engine, GDScript, LibreSprite</div>
+          <div class="tech">Godot Engine, GDScript, Aseprite</div>
         </div>
         <div class="links"><a href="https://github.com/Senvor/EvoGen">Repository</a></div>
       </article>
