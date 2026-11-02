@@ -118,7 +118,7 @@ footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);fo
   .proj .thumb{height:150px}
   .proj h3{font-size:22px}
   .lineage{padding:16px;box-shadow:4px 4px 0 var(--line)}
-  .tree{grid-template-columns:repeat(3,1fr);gap:12px 8px;min-height:0}
+  .tree{grid-template-columns:repeat(3,1fr);gap:12px 8px;min-height:83px}
   .gen canvas{max-width:64px}
   .chips{gap:8px}
   .chips li{padding:5px 12px}
@@ -258,4 +258,18 @@ html.party .gen canvas,html.party .orbit canvas{animation:party 1.2s steps(6) in
 @media (prefers-reduced-motion:reduce){
   .toast.show{animation:none}
   html.party .gen canvas,html.party .orbit canvas{animation:none}
+}
+
+/* 14. Smoothness polish */
+/* No grey flash when tapping on phones, and no double-tap-zoom delay on buttons and links */
+a,button,canvas{-webkit-tap-highlight-color:transparent}
+a,button{touch-action:manipulation}
+
+/* Theme switch: the browser takes a snapshot of the old and new page and cross-fades them,
+   which is much cheaper than animating the colour of every element separately. */
+@supports (view-transition-name:none){
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.28s;animation-timing-function:ease}
+}
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
 }

@@ -152,11 +152,21 @@
   var root=document.documentElement,btn=document.getElementById('theme');
   btn.addEventListener('click',function(){
     var dark=getComputedStyle(root).getPropertyValue('--bg').trim()==='#15132b';
-    root.classList.add('fade');
     var next=dark?'light':'dark';
-    root.setAttribute('data-theme',next);
-    try{localStorage.setItem('theme',next)}catch(e){}
-    setTimeout(function(){root.classList.remove('fade')},350);
+    function apply(){
+      root.setAttribute('data-theme',next);
+      try{localStorage.setItem('theme',next)}catch(e){}
+    }
+    var calm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(document.startViewTransition&&!calm){
+      document.startViewTransition(apply);       // browser cross-fades a snapshot of the old page into the new one
+    }else if(calm){
+      apply();                                    // reduced motion: switch instantly
+    }else{
+      root.classList.add('fade');                 // older browsers: fade the colours instead
+      apply();
+      setTimeout(function(){root.classList.remove('fade')},350);
+    }
   });
 })();
 
@@ -180,6 +190,15 @@
   var GM=16000,SOFT=16,MAX=12,TRAIL=30;
   var bodies=[],paused=false,onScreen=true,lastT=0,raf=0;
   var pauseBtn=document.getElementById('orbit-pause');
+  // getComputedStyle forces the browser to recalculate styles, so do it once, not 60 times a second.
+  var amber='#c9740a';
+  function readColors(){amber=getComputedStyle(document.documentElement).getPropertyValue('--amber').trim()||amber}
+  readColors();
+  new MutationObserver(function(){readColors();if(paused)draw()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  if(window.matchMedia){
+    var mq=window.matchMedia('(prefers-color-scheme: dark)');
+    if(mq.addEventListener)mq.addEventListener('change',function(){readColors();if(paused)draw()});
+  }
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function acc(x,y){
@@ -209,7 +228,6 @@
     }
   }
   function draw(){
-    var amber=getComputedStyle(document.documentElement).getPropertyValue('--amber').trim()||'#c9740a';
     ctx.clearRect(0,0,W,H);
     bodies.forEach(function(b){
       ctx.fillStyle='hsl('+b.hue+' 70% 58%)';
