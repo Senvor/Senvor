@@ -14,14 +14,14 @@
 <meta property="og:url" content="https://senvor.dev/">
 <meta property="og:title" content="Senvor">
 <meta property="og:description" content="Developer and graphic designer. Self-taught, Hack Club member.">
-<meta property="og:image" content="https://senvor.dev/assets/preview.jpg">
-<meta property="og:image:width" content="400">
-<meta property="og:image:height" content="400">
-<meta property="og:image:alt" content="Senvor's profile picture: a blue cat with horns and a green flame">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://senvor.dev/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Senvor, developer and graphic designer, next to a profile picture of a blue cat with horns and a green flame">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Senvor">
 <meta name="twitter:description" content="Developer and graphic designer. Self-taught, Hack Club member.">
-<meta name="twitter:image" content="https://senvor.dev/assets/preview.jpg">
+<meta name="twitter:image" content="https://senvor.dev/assets/og.jpg">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <title>Senvor — developer & graphic designer</title>
@@ -146,6 +146,26 @@
           <div class="tech">KiCad, JLCPCB</div>
         </div>
         <div class="links"><a href="https://github.com/Senvor/DevRuler">Repository</a></div>
+        <details class="conv" hidden>
+          <summary>Try the ruler's conversions</summary>
+          <div class="conv-grid">
+            <label>Type
+              <select id="cv-kind">
+                <option value="length">Length</option>
+                <option value="area">Area</option>
+                <option value="volume">Volume</option>
+                <option value="mass">Mass</option>
+                <option value="temp">Temperature</option>
+              </select>
+            </label>
+            <label>Value <input id="cv-val" type="number" inputmode="decimal" step="any" value="1"></label>
+            <label>From <select id="cv-from"></select></label>
+            <label>To <select id="cv-to"></select></label>
+            <button class="mini" id="cv-swap" type="button">Swap</button>
+          </div>
+          <p class="conv-out" id="cv-out" role="status"></p>
+          <p class="conv-note">Uses exact conversion factors, so results can differ slightly from the rounded numbers printed on the ruler.</p>
+        </details>
       </article>
       <article class="proj next">
         <div>

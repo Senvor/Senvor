@@ -273,3 +273,17 @@ a,button{touch-action:manipulation}
 @media (prefers-reduced-motion:reduce){
   ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
 }
+
+/* DevRuler converter (opens from the DevRuler card; hidden until script.js runs) */
+.conv{grid-column:1/-1;margin-top:10px;padding-top:14px;border-top:1px solid var(--line)}
+.conv summary{display:inline-flex;align-items:center;gap:10px;min-height:32px;cursor:pointer;list-style:none;font:600 15px var(--body);color:var(--ink)}
+.conv summary::-webkit-details-marker{display:none}
+.conv summary::before{content:"+";display:inline-grid;place-items:center;width:22px;height:22px;border:2px solid var(--line);background:var(--chip);font:600 15px var(--mono)}
+.conv[open] summary::before{content:"\2212"}
+.conv-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:10px;align-items:end;margin-top:14px}
+.conv label{display:grid;gap:4px;font:600 13px var(--body);color:var(--soft)}
+.conv select,.conv input{width:100%;min-height:42px;box-sizing:border-box;padding:8px 10px;border:2px solid var(--line);border-radius:0;background:var(--chip);color:var(--ink);font:500 15px var(--mono)}
+.conv .mini{min-height:42px}
+.conv-out{margin:16px 0 4px;font:600 20px/1.4 var(--mono);color:var(--ink);overflow-wrap:anywhere}
+.conv-note{margin:0;font-size:13px;color:var(--soft)}
+@media (max-width:600px){.conv-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.conv-out{font-size:18px}}

@@ -287,3 +287,45 @@
     if(taps>=5){taps=0;party()}
   });
 })();
+
+// ---------- DevRuler converter ----------
+// Same categories as the table printed on the ruler. Every unit is stored as a factor to one base unit
+// (metres, square metres, litres, kilograms); temperature is handled with formulas.
+(function(){
+  var box=document.querySelector('.conv'),kind=document.getElementById('cv-kind'),val=document.getElementById('cv-val'),
+      from=document.getElementById('cv-from'),to=document.getElementById('cv-to'),out=document.getElementById('cv-out'),swap=document.getElementById('cv-swap');
+  if(!box||!kind||!val||!from||!to||!out||!swap)return;
+  var SETS={
+    length:{u:[['mm',.001],['cm',.01],['m',1],['km',1000],['in',.0254],['ft',.3048],['yd',.9144],['mi',1609.344]],d:['in','cm']},
+    area:{u:[['cm\u00b2',1e-4],['m\u00b2',1],['km\u00b2',1e6],['in\u00b2',6.4516e-4],['ft\u00b2',.09290304],['yd\u00b2',.83612736],['acre',4046.8564224]],d:['ft\u00b2','m\u00b2']},
+    volume:{u:[['mL',.001],['L',1],['fl oz',.0295735295625],['cup',.2365882365],['qt',.946352946],['gal',3.785411784]],d:['L','qt']},
+    mass:{u:[['g',.001],['kg',1],['oz',.028349523125],['lb',.45359237]],d:['kg','lb']},
+    temp:{u:[['\u00b0C'],['\u00b0F'],['K']],d:['\u00b0F','\u00b0C']}
+  };
+  function toC(v,u){return u==='\u00b0C'?v:u==='\u00b0F'?(v-32)*5/9:v-273.15}
+  function fromC(c,u){return u==='\u00b0C'?c:u==='\u00b0F'?c*9/5+32:c+273.15}
+  function factor(set,name){for(var i=0;i<set.u.length;i++)if(set.u[i][0]===name)return set.u[i][1]}
+  function fmt(n){return n.toLocaleString('en',{maximumSignificantDigits:6})}
+  function fill(sel,set,pick){
+    sel.innerHTML='';
+    set.u.forEach(function(x){var o=document.createElement('option');o.value=o.textContent=x[0];sel.appendChild(o)});
+    sel.value=pick;
+  }
+  function load(){var set=SETS[kind.value];fill(from,set,set.d[0]);fill(to,set,set.d[1]);calc()}
+  function calc(){
+    var set=SETS[kind.value],raw=val.value.trim(),v=parseFloat(raw);
+    if(raw===''||!isFinite(v)){out.textContent='Enter a number to convert.';return}
+    var r,c;
+    if(kind.value==='temp'){
+      c=toC(v,from.value);
+      if(c<-273.15){out.textContent='That is below absolute zero.';return}
+      r=fromC(c,to.value);
+    }else r=v*factor(set,from.value)/factor(set,to.value);
+    out.textContent=fmt(v)+' '+from.value+' = '+fmt(r)+' '+to.value;
+  }
+  kind.addEventListener('change',load);
+  [val,from,to].forEach(function(e){e.addEventListener('input',calc);e.addEventListener('change',calc)});
+  swap.addEventListener('click',function(){var a=from.value;from.value=to.value;to.value=a;calc()});
+  load();
+  box.hidden=false;
+})();
