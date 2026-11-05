@@ -6,7 +6,7 @@
 <meta name="description" content="Senvor: developer and graphic designer. Building custom PCBs, games, and web projects through Hack Club.">
 <meta name="theme-color" content="#15132b">
 <link rel="canonical" href="https://senvor.dev/">
-<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 
 <!-- Link preview (Discord, X, WhatsApp, iMessage, Slack) -->
 <meta property="og:type" content="website">
@@ -49,7 +49,7 @@
       <h1>Senvor</h1>
       <p class="role">Developer and graphic designer. I learn by building things.</p>
       <p class="hc">Hack Club member</p>
-      <p class="contact">Want to talk? Message me on <a href="https://discord.com/users/s3nvor" data-copy="s3nvor" title="Copy my Discord username">Discord: s3nvor</a>, or find me <a href="#connect">anywhere else</a>.</p>
+      <p class="contact">Want to talk? Message me on <a href="https://discord.com/users/s3nvor" data-copy="s3nvor" title="Copy my Discord username">Discord: s3nvor</a>, email <a href="mailto:senvor@lazydeveloper.org" data-copy="senvor@lazydeveloper.org" title="Copy my email">senvor@lazydeveloper.org</a>, or find me <a href="#connect">anywhere else</a>.</p>
     </div>
     <div class="lineage">
       <h2>Bloodline</h2>
@@ -65,7 +65,7 @@
     </div>
   </div>
 
-  <section id="about">
+  <section id="about" class="reveal">
     <h2>About</h2>
     <div class="two">
       <p>I'm self-taught. Most of what I know about code came from getting stuck on a real project and finding a way through, not from working through tutorials.</p>
@@ -73,7 +73,7 @@
     </div>
   </section>
 
-  <section id="building">
+  <section id="building" class="reveal">
     <h2>Currently building</h2>
     <div class="build">
       <h3>Pocket Gravity Lab</h3>
@@ -89,7 +89,7 @@
     </div>
   </section>
 
-  <section id="skills">
+  <section id="skills" class="reveal">
     <h2>Skills</h2>
     <h3 class="sg sg-code">Code</h3>
     <ul class="chips">
@@ -110,8 +110,9 @@
     <p class="legend"><b><span class="s"></span>Comfortable</b><b><span class="l"></span>Still learning</b></p>
   </section>
 
-  <section id="work">
+  <section id="work" class="reveal">
     <h2>Work</h2>
+    <p class="now" id="project-count"></p>
     <h3 class="group">Hardware</h3>
     <div class="projects">
       <article class="proj">
@@ -119,15 +120,17 @@
           <h3>Pocket Gravity Lab<span class="tag">in progress</span></h3>
           <p>A portable physics lab for exploring gravity and orbital mechanics through real-time simulations and physical controls.</p>
           <div class="tech">C++, ESP32-S3</div>
+          <p class="now" data-repo="Pocket-Gravity-Lab"></p>
         </div>
-        <div class="links"><a href="https://github.com/Senvor/Pocket-Gravity-Lab">Repository</a></div>
+        <div class="links"><a href="projects/pocket-gravity-lab/">Details</a><a href="https://github.com/Senvor/Pocket-Gravity-Lab">Repository</a></div>
       </article>
       <article class="proj">
         <div>
           <h3>Marbew<span class="tag">in progress</span></h3>
           <p>A custom 3D-printed marble race, designed from scratch.</p>
+          <p class="now" data-repo="Marbew"></p>
         </div>
-        <div class="links"><a href="https://github.com/Senvor/Marbew">Repository</a></div>
+        <div class="links"><a href="projects/marbew/">Details</a><a href="https://github.com/Senvor/Marbew">Repository</a></div>
       </article>
       <article class="proj">
         <img class="thumb" src="assets/starbie.webp" alt="PCB render of Starbie, a star-shaped board with an OLED, sensor and two buttons" loading="lazy" decoding="async">
@@ -135,8 +138,9 @@
           <h3>Starbie<span class="tag">designed</span></h3>
           <p>A motion-controlled desktop pet on a custom PCB.</p>
           <div class="tech">XIAO ESP32-C3, Arduino, KiCad, MPU6050, DHT11, OLED</div>
+          <p class="now" data-repo="Starbie"></p>
         </div>
-        <div class="links"><a href="https://github.com/Senvor/Starbie">Repository</a></div>
+        <div class="links"><a href="projects/starbie/">Details</a><a href="https://github.com/Senvor/Starbie">Repository</a></div>
       </article>
       <article class="proj">
         <img class="thumb" src="assets/devruler.webp" alt="Render of the DevRuler, a custom PCB ruler" loading="lazy" decoding="async">
@@ -144,8 +148,9 @@
           <h3>DevRuler<span class="tag">designed</span></h3>
           <p>A custom PCB ruler for developers, with hardware footprints, everyday commands, and SI unit conversions. Made for Hack Club's Forge.</p>
           <div class="tech">KiCad, JLCPCB</div>
+          <p class="now" data-repo="DevRuler"></p>
         </div>
-        <div class="links"><a href="https://github.com/Senvor/DevRuler">Repository</a></div>
+        <div class="links"><a href="projects/devruler/">Details</a><a href="https://github.com/Senvor/DevRuler">Repository</a></div>
         <details class="conv" hidden>
           <summary>Try the ruler's conversions</summary>
           <div class="conv-grid">
@@ -171,8 +176,9 @@
         <div>
           <h3>Obsidian<span class="tag">up next</span></h3>
           <p>An obsidian-themed keyboard project. Planned, not started yet.</p>
+          <p class="now" data-repo="Obsidian"></p>
         </div>
-        <div class="links"><a href="https://github.com/Senvor/Obsidian">Repository</a></div>
+        <div class="links"><a href="projects/obsidian/">Details</a><a href="https://github.com/Senvor/Obsidian">Repository</a></div>
       </article>
     </div>
     <h3 class="group">Web</h3>
@@ -182,24 +188,27 @@
           <h3>Sound Galaxy</h3>
           <p>Turns microphone input into a moving galaxy of particles in real time. Built by following a Hack Club workshop.</p>
           <div class="tech">HTML, JavaScript</div>
+          <p class="now" data-repo="Sound-Galaxy"></p>
         </div>
-        <div class="links"><a href="https://sound-galaxy.vercel.app">Live site</a><a href="https://github.com/Senvor/Sound-Galaxy">Repository</a></div>
+        <div class="links"><a href="projects/sound-galaxy/">Details</a><a href="https://sound-galaxy.vercel.app">Live site</a><a href="https://github.com/Senvor/Sound-Galaxy">Repository</a></div>
       </article>
       <article class="proj">
         <div>
           <h3>Particle Physics</h3>
           <p>A gravity simulation where particles pull on each other like tiny planets. Built by following a Hack Club workshop.</p>
           <div class="tech">p5.js, JavaScript</div>
+          <p class="now" data-repo="Particle-Physics"></p>
         </div>
-        <div class="links"><a href="https://particle-physics.vercel.app">Live site</a><a href="https://github.com/Senvor/Particle-Physics">Repository</a></div>
+        <div class="links"><a href="projects/particle-physics/">Details</a><a href="https://particle-physics.vercel.app">Live site</a><a href="https://github.com/Senvor/Particle-Physics">Repository</a></div>
       </article>
       <article class="proj">
         <div>
           <h3>Cockroach Janta Party</h3>
           <p>An informational site about the CJP movement. My second project, shipped and live.</p>
           <div class="tech">HTML, CSS, JS</div>
+          <p class="now" data-repo="cockroach-janta-party"></p>
         </div>
-        <div class="links"><a href="https://cockroach-janta-party-six.vercel.app">Live site</a><a href="https://github.com/Senvor/cockroach-janta-party">Repository</a></div>
+        <div class="links"><a href="projects/cockroach-janta-party/">Details</a><a href="https://cockroach-janta-party-six.vercel.app">Live site</a><a href="https://github.com/Senvor/cockroach-janta-party">Repository</a></div>
       </article>
     </div>
     <h3 class="group">Games</h3>
@@ -209,13 +218,14 @@
           <h3>EvoGen<span class="tag">on pause</span></h3>
           <p>Generational life-sim where inheritance replaces respawning. Taking a break from it for now.</p>
           <div class="tech">Godot Engine, GDScript, Aseprite</div>
+          <p class="now" data-repo="EvoGen"></p>
         </div>
-        <div class="links"><a href="https://github.com/Senvor/EvoGen">Repository</a></div>
+        <div class="links"><a href="projects/evogen/">Details</a><a href="https://github.com/Senvor/EvoGen">Repository</a></div>
       </article>
     </div>
   </section>
 
-  <section id="connect">
+  <section id="connect" class="reveal">
     <h2>Connect</h2>
     <ul class="social">
       <li><a href="https://github.com/Senvor"><b><img class="brand" src="assets/github.svg" alt="" width="22" height="22">GitHub</b><span>Senvor</span></a></li>
@@ -224,6 +234,7 @@
       <li><a href="https://x.com/s3nvor"><b><img class="brand" src="assets/x.svg" alt="" width="22" height="22">X</b><span>@s3nvor</span></a></li>
       <li><a href="https://instagram.com/s3nvor"><b><img class="brand" src="assets/instagram.svg" alt="" width="22" height="22">Instagram</b><span>@s3nvor</span></a></li>
       <li><a href="https://youtube.com/@s3nvor"><b><img class="brand" src="assets/youtube.svg" alt="" width="22" height="22">YouTube</b><span>@s3nvor</span></a></li>
+      <li><a href="mailto:senvor@lazydeveloper.org" data-copy="senvor@lazydeveloper.org" title="Copy my email"><b><img class="brand" src="assets/mail.svg" alt="" width="22" height="22">Email</b><span>senvor@lazydeveloper.org</span></a></li>
     </ul>
   </section>
 </div>
@@ -231,5 +242,7 @@
 <footer><div class="wrap">© 2026 Senvor</div></footer>
 
 <script src="script.js"></script>
+<script type="module" src="github-status.js"></script>
+<script type="module" src="extras.js"></script>
 </body>
 </html>
