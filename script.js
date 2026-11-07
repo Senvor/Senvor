@@ -187,7 +187,7 @@
 (function(){
   var cv=document.getElementById('orbit');if(!cv||!cv.getContext)return;
   var box=cv.parentNode,ctx=cv.getContext('2d'),W=240,H=135,cx=W/2,cy=H/2;
-  var MAX=24,SOFT=30,SOFTP=6,PX=2;
+  var MAX=24,SOFT=30,SOFTP=6,PX=1;
   var $=function(id){return document.getElementById(id)};
   var pauseBtn=$('orbit-pause'),gIn=$('og'),sIn=$('os'),mIn=$('om'),tIn=$('ot'),pIn=$('op'),fsBtn=$('orbit-fs');
   var bodies=[],suns=[],bg=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,scale=1,aim=null,time=0,simT=0;
@@ -350,10 +350,17 @@
   // Tap: drop a planet into orbit. Drag: pull back like a slingshot and let go to fling it.
   cv.addEventListener('pointerdown',function(e){var p=pt(e);aim={x:p[0],y:p[1],ex:p[0],ey:p[1]};try{cv.setPointerCapture(e.pointerId)}catch(_){}draw()});
   cv.addEventListener('pointermove',function(e){if(!aim)return;var p=pt(e);aim.ex=p[0];aim.ey=p[1];if(paused)draw()});
+  // A drag flings on release; a plain tap is handled by 'click', which every browser and input type fires reliably.
+  var flung=false;
   cv.addEventListener('pointerup',function(){
     if(!aim)return;var dx=aim.x-aim.ex,dy=aim.y-aim.ey;
-    if(dx*dx+dy*dy<25/(zoom*zoom))launch(aim.x,aim.y);else add(aim.x,aim.y,dx*1.5*zoom,dy*1.5*zoom);
-    aim=null;accel();draw();run();
+    flung=dx*dx+dy*dy>=25/(zoom*zoom);
+    if(flung){add(aim.x,aim.y,dx*1.5*zoom,dy*1.5*zoom);accel();run()}
+    aim=null;draw();
+  });
+  cv.addEventListener('click',function(e){
+    if(flung){flung=false;return}
+    var p=pt(e);launch(p[0],p[1]);accel();draw();run();
   });
   cv.addEventListener('pointercancel',function(){aim=null});
   cv.addEventListener('keydown',function(e){
