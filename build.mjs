@@ -9,6 +9,9 @@ const template = await readFile("project.template.html", "utf8");
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
            .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+// Which animated pixel hero a project without a photo gets.
+const art = (p) => p.slug === "pocket-gravity-lab" ? "orbit" : p.slug === "marbew" ? "marbles"
+  : p.category === "Web" ? "particles" : p.category === "Game" ? "life" : "pcb";
 const has = (v) => v && v.trim() && v.trim() !== "TODO";
 
 projects.forEach((p, i) => {
@@ -18,6 +21,8 @@ projects.forEach((p, i) => {
     p.live && `<a class="primary" href="${esc(p.live)}">Open live site ↗</a>`,
     `<a ${p.live ? "" : 'class="primary" '}href="https://github.com/Senvor/${esc(p.repo)}">View repository ↗</a>`,
   ].filter(Boolean).join("");
+  const secs = [["What I built", p.built], ["Where I got stuck", p.stuck], ["What I learned", p.learned]].filter(([, v]) => has(v));
+  const n = secs.length;
   const values = {
     title: esc(p.title),
     tagline: esc(p.tagline),
@@ -29,14 +34,26 @@ projects.forEach((p, i) => {
     ogImage: SITE + (p.image ?? p.og ?? "/assets/og.jpg"),
     actions,
     hero: p.image
-      ? `<figure class="pj-hero"><img src="${esc(p.image)}" alt="${esc(p.title)}"></figure>`
-      : `<div class="pj-hero blank" aria-hidden="true"><span>${esc(p.title)}</span></div>`,
-    sections: [["What I built", p.built], ["Where I got stuck", p.stuck], ["What I learned", p.learned]]
-      .filter(([, v]) => has(v))
-      .map(([h, v]) => `<section><h2>${h}</h2><p>${esc(v)}</p></section>`).join("\n      "),
+      ? `<figure class="pj-hero"><img src="${esc(p.image)}" alt="${esc(p.title)}" data-zoom></figure>`
+      : `<div class="pj-hero art" data-art="${art(p)}" aria-hidden="true"><canvas width="240" height="100"></canvas><span>${esc(p.title)}</span></div>`,
+    statusText: esc(p.status ? p.status[0].toUpperCase() + p.status.slice(1) : "Shipped"),
+    toolCount: p.stack.length ? String(p.stack.length) : "—",
+    demo: p.live
+      ? `<section class="pj-demo"><h2><i>${String(n + 1).padStart(2, "0")}</i>Try it live</h2>` +
+        `<div class="pj-frame" data-src="${esc(p.live)}"><button type="button">▶ Load the live demo</button><small>Runs ${esc(p.live.replace("https://", ""))} right here${p.slug === "sound-galaxy" ? ", and asks for your mic" : ""}.</small></div></section>`
+      : "",
+    more: (() => {
+      const same = projects.filter((q) => q.slug !== p.slug && q.category === p.category);
+      const pool = [...same, ...projects.filter((q) => q.slug !== p.slug && q.category !== p.category)].slice(0, 3);
+      return `<section class="pj-more"><h2>More ${same.length ? esc(p.category.toLowerCase()) + " " : ""}projects</h2><div class="pj-cards">` +
+        pool.map((q) => `<a href="/projects/${q.slug}/">` +
+          (q.image ? `<img src="${esc(q.image)}" alt="" loading="lazy">` : `<span class="tile">${esc(q.title)}</span>`) +
+          `<b>${esc(q.title)}</b><small>${esc(q.tagline)}</small></a>`).join("") + `</div></section>`;
+    })(),
+    sections: secs.map(([h, v], k) => `<section><h2><i>${String(k + 1).padStart(2, "0")}</i>${h}</h2><p>${esc(v)}</p></section>`).join("\n      "),
     gallery: p.gallery?.length
       ? `<section><h2>Gallery</h2><div class="pj-gallery">` +
-        p.gallery.map(([src, cap]) => `<figure><img src="${esc(src)}" alt="${esc(cap)}" loading="lazy"><figcaption>${esc(cap)}</figcaption></figure>`).join("") +
+        p.gallery.map(([src, cap]) => `<figure><img src="${esc(src)}" alt="${esc(cap)}" loading="lazy" data-zoom><figcaption>${esc(cap)}</figcaption></figure>`).join("") +
         `</div></section>`
       : "",
     stackBlock: p.stack.length
@@ -46,8 +63,8 @@ projects.forEach((p, i) => {
       ? `<div class="pj-hire"><p>Want a fast, responsive site like this for your business?</p><a href="${FIVERR}">Hire me on Fiverr ↗</a></div>`
       : "",
     prevNext:
-      `<a href="/projects/${prev.slug}/"><small>← Previous</small><b>${esc(prev.title)}</b></a>` +
-      `<a class="next" href="/projects/${next.slug}/"><small>Next →</small><b>${esc(next.title)}</b></a>`,
+      `<a rel="prev" href="/projects/${prev.slug}/"><small>← Previous</small><b>${esc(prev.title)}</b></a>` +
+      `<a class="next" rel="next" href="/projects/${next.slug}/"><small>Next →</small><b>${esc(next.title)}</b></a>`,
   };
 
   let html = template;

@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="/project.css">
 </head>
 <body>
+<div class="pj-progress" aria-hidden="true"></div>
 <header class="top"><div class="wrap">
   <a class="logo" href="/">senvor</a>
   <nav aria-label="Main"><a href="/#work">All work</a><a href="/#connect">Connect</a></nav>
@@ -36,12 +37,21 @@
     <div class="pj-kicker"><span>Hardware</span><span class="pill">in progress</span></div>
     <h1>Pocket Gravity Lab</h1>
     <p class="pj-tagline">A portable physics lab for exploring gravity and orbital mechanics through real-time simulations and physical controls.</p>
-    <div class="pj-actions"><a class="primary" href="https://github.com/Senvor/Pocket-Gravity-Lab">View repository ↗</a></div>
+    <div class="pj-actions"><a class="primary" href="https://github.com/Senvor/Pocket-Gravity-Lab">View repository ↗</a><button class="pj-share" type="button">Copy link</button></div>
   </div>
-  <div class="pj-hero blank" aria-hidden="true"><span>Pocket Gravity Lab</span></div>
+  <div class="pj-hero art" data-art="orbit" aria-hidden="true"><canvas width="240" height="100"></canvas><span>Pocket Gravity Lab</span></div>
+  <ul class="pj-stats" data-repo-stats="Pocket-Gravity-Lab">
+    <li><small>Status</small><b>In progress</b></li>
+    <li><small>Type</small><b>Hardware</b></li>
+    <li><small>Tools</small><b>2</b></li>
+    <li><small>Last push</small><b data-gh="pushed">…</b></li>
+    <li><small>Main language</small><b data-gh="language">…</b></li>
+    <li><small>Stars</small><b data-gh="stars">…</b></li>
+  </ul>
   <div class="pj-grid">
     <div class="pj-body">
-      <section><h2>What I built</h2><p>Just getting started. The goal is a portable, interactive physics lab for exploring gravity and orbital mechanics: real-time simulations, physical controls, and embedded hardware, written in C++ for the ESP32-S3.</p></section>
+      <section><h2><i>01</i>What I built</h2><p>Just getting started. The goal is a portable, interactive physics lab for exploring gravity and orbital mechanics: real-time simulations, physical controls, and embedded hardware, written in C++ for the ESP32-S3.</p></section>
+      
       
     </div>
     <aside class="pj-side">
@@ -50,14 +60,16 @@
       </dl>
       <dl><dt>Built with</dt><dd><ul class="chips"><li class="solid">C++</li><li class="solid">ESP32-S3</li></ul></dd></dl>
       <dl>
-        <dt>Activity</dt><dd><span class="now" data-repo="Pocket-Gravity-Lab">See the repository</span></dd>
+        <dt>Recent commits</dt><dd><ol class="pj-commits" data-commits="Pocket-Gravity-Lab"><li class="muted">Loading from GitHub…</li></ol></dd>
       </dl>
+      <a class="pj-repo" href="https://github.com/Senvor/Pocket-Gravity-Lab">Senvor/Pocket-Gravity-Lab ↗</a>
     </aside>
   </div>
   
-  <nav class="pj-nav" aria-label="More projects"><a href="/projects/evogen/"><small>← Previous</small><b>EvoGen</b></a><a class="next" href="/projects/marbew/"><small>Next →</small><b>Marbew</b></a></nav>
+  <section class="pj-more"><h2>More hardware projects</h2><div class="pj-cards"><a href="/projects/marbew/"><span class="tile">Marbew</span><b>Marbew</b><small>A custom 3D-printed marble race, designed from scratch.</small></a><a href="/projects/starbie/"><img src="/assets/projects/starbie-render.webp" alt="" loading="lazy"><b>Starbie</b><small>A motion-controlled desktop pet on a custom PCB.</small></a><a href="/projects/devruler/"><img src="/assets/projects/devruler-render.webp" alt="" loading="lazy"><b>DevRuler</b><small>A custom PCB ruler for developers, with hardware footprints, everyday commands, and SI unit conversions.</small></a></div></section>
+  <nav class="pj-nav" aria-label="More projects"><a rel="prev" href="/projects/evogen/"><small>← Previous</small><b>EvoGen</b></a><a class="next" rel="next" href="/projects/marbew/"><small>Next →</small><b>Marbew</b></a></nav>
 </div></main>
 <footer><div class="wrap">© 2026 Senvor</div></footer>
-<script type="module" src="/github-status.js"></script>
+<script src="/project.js" defer></script>
 </body>
 </html>

@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="/project.css">
 </head>
 <body>
+<div class="pj-progress" aria-hidden="true"></div>
 <header class="top"><div class="wrap">
   <a class="logo" href="/">senvor</a>
   <nav aria-label="Main"><a href="/#work">All work</a><a href="/#connect">Connect</a></nav>
@@ -36,12 +37,21 @@
     <div class="pj-kicker"><span>Game</span><span class="pill">in progress</span></div>
     <h1>EvoGen</h1>
     <p class="pj-tagline">Generational life-sim where inheritance replaces respawning.</p>
-    <div class="pj-actions"><a class="primary" href="https://github.com/Senvor/EvoGen">View repository ↗</a></div>
+    <div class="pj-actions"><a class="primary" href="https://github.com/Senvor/EvoGen">View repository ↗</a><button class="pj-share" type="button">Copy link</button></div>
   </div>
-  <div class="pj-hero blank" aria-hidden="true"><span>EvoGen</span></div>
+  <div class="pj-hero art" data-art="life" aria-hidden="true"><canvas width="240" height="100"></canvas><span>EvoGen</span></div>
+  <ul class="pj-stats" data-repo-stats="EvoGen">
+    <li><small>Status</small><b>In progress</b></li>
+    <li><small>Type</small><b>Game</b></li>
+    <li><small>Tools</small><b>3</b></li>
+    <li><small>Last push</small><b data-gh="pushed">…</b></li>
+    <li><small>Main language</small><b data-gh="language">…</b></li>
+    <li><small>Stars</small><b data-gh="stars">…</b></li>
+  </ul>
   <div class="pj-grid">
     <div class="pj-body">
-      <section><h2>What I built</h2><p>A generational life-sim in Godot where inheritance replaces respawning: each life passes its traits on, with a few mutations. Try a tiny version of it in the Bloodline demo on the homepage.</p></section>
+      <section><h2><i>01</i>What I built</h2><p>A generational life-sim in Godot where inheritance replaces respawning: each life passes its traits on, with a few mutations. Try a tiny version of it in the Bloodline demo on the homepage.</p></section>
+      
       
     </div>
     <aside class="pj-side">
@@ -50,14 +60,16 @@
       </dl>
       <dl><dt>Built with</dt><dd><ul class="chips"><li class="solid">Godot Engine</li><li class="solid">GDScript</li><li class="solid">Aseprite</li></ul></dd></dl>
       <dl>
-        <dt>Activity</dt><dd><span class="now" data-repo="EvoGen">See the repository</span></dd>
+        <dt>Recent commits</dt><dd><ol class="pj-commits" data-commits="EvoGen"><li class="muted">Loading from GitHub…</li></ol></dd>
       </dl>
+      <a class="pj-repo" href="https://github.com/Senvor/EvoGen">Senvor/EvoGen ↗</a>
     </aside>
   </div>
   
-  <nav class="pj-nav" aria-label="More projects"><a href="/projects/cockroach-janta-party/"><small>← Previous</small><b>Cockroach Janta Party</b></a><a class="next" href="/projects/pocket-gravity-lab/"><small>Next →</small><b>Pocket Gravity Lab</b></a></nav>
+  <section class="pj-more"><h2>More projects</h2><div class="pj-cards"><a href="/projects/pocket-gravity-lab/"><span class="tile">Pocket Gravity Lab</span><b>Pocket Gravity Lab</b><small>A portable physics lab for exploring gravity and orbital mechanics through real-time simulations and physical controls.</small></a><a href="/projects/marbew/"><span class="tile">Marbew</span><b>Marbew</b><small>A custom 3D-printed marble race, designed from scratch.</small></a><a href="/projects/starbie/"><img src="/assets/projects/starbie-render.webp" alt="" loading="lazy"><b>Starbie</b><small>A motion-controlled desktop pet on a custom PCB.</small></a></div></section>
+  <nav class="pj-nav" aria-label="More projects"><a rel="prev" href="/projects/cockroach-janta-party/"><small>← Previous</small><b>Cockroach Janta Party</b></a><a class="next" rel="next" href="/projects/pocket-gravity-lab/"><small>Next →</small><b>Pocket Gravity Lab</b></a></nav>
 </div></main>
 <footer><div class="wrap">© 2026 Senvor</div></footer>
-<script type="module" src="/github-status.js"></script>
+<script src="/project.js" defer></script>
 </body>
 </html>

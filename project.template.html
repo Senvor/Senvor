@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="/project.css">
 </head>
 <body>
+<div class="pj-progress" aria-hidden="true"></div>
 <header class="top"><div class="wrap">
   <a class="logo" href="/">senvor</a>
   <nav aria-label="Main"><a href="/#work">All work</a><a href="/#connect">Connect</a></nav>
@@ -36,12 +37,21 @@
     <div class="pj-kicker"><span>{{category}}</span>{{statusPill}}</div>
     <h1>{{title}}</h1>
     <p class="pj-tagline">{{tagline}}</p>
-    <div class="pj-actions">{{actions}}</div>
+    <div class="pj-actions">{{actions}}<button class="pj-share" type="button">Copy link</button></div>
   </div>
   {{hero}}
+  <ul class="pj-stats" data-repo-stats="{{repo}}">
+    <li><small>Status</small><b>{{statusText}}</b></li>
+    <li><small>Type</small><b>{{category}}</b></li>
+    <li><small>Tools</small><b>{{toolCount}}</b></li>
+    <li><small>Last push</small><b data-gh="pushed">…</b></li>
+    <li><small>Main language</small><b data-gh="language">…</b></li>
+    <li><small>Stars</small><b data-gh="stars">…</b></li>
+  </ul>
   <div class="pj-grid">
     <div class="pj-body">
       {{sections}}
+      {{demo}}
       {{gallery}}
     </div>
     <aside class="pj-side">
@@ -50,14 +60,16 @@
       </dl>
       {{stackBlock}}
       <dl>
-        <dt>Activity</dt><dd><span class="now" data-repo="{{repo}}">See the repository</span></dd>
+        <dt>Recent commits</dt><dd><ol class="pj-commits" data-commits="{{repo}}"><li class="muted">Loading from GitHub…</li></ol></dd>
       </dl>
+      <a class="pj-repo" href="https://github.com/Senvor/{{repo}}">Senvor/{{repo}} ↗</a>
     </aside>
   </div>
   {{hire}}
+  {{more}}
   <nav class="pj-nav" aria-label="More projects">{{prevNext}}</nav>
 </div></main>
 <footer><div class="wrap">© 2026 Senvor</div></footer>
-<script type="module" src="/github-status.js"></script>
+<script src="/project.js" defer></script>
 </body>
 </html>
