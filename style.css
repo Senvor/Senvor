@@ -89,6 +89,9 @@ section h2{font-size:clamp(28px,5vw,40px);margin-bottom:20px}
 .social a:hover{border-color:var(--amber)}
 .social b{display:flex;align-items:center;gap:10px;margin-bottom:6px;font:600 18px var(--body)}
 .social span{font-size:14px;color:var(--soft)}
+.social li.mail{grid-column:1/-1;display:flex;justify-content:center}
+.social li.mail a{width:100%;max-width:320px;text-align:center}
+.social li.mail b{justify-content:center}
 footer{border-top:2px solid var(--line);padding:28px 0 40px;color:var(--soft);font-size:14px}
 
 /* Icons: all share one 24x24 grid. Chips use 24px (2px per art pixel), headings 36px (3px per art pixel),
