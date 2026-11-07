@@ -12,36 +12,51 @@
 <meta property="og:url" content="https://senvor.dev/projects/starbie/">
 <meta property="og:title" content="Starbie — Senvor">
 <meta property="og:description" content="A motion-controlled desktop pet on a custom PCB.">
-<meta property="og:image" content="https://senvor.dev/assets/og.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="https://senvor.dev/assets/projects/starbie-render.webp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Starbie — Senvor">
 <meta name="twitter:description" content="A motion-controlled desktop pet on a custom PCB.">
-<meta name="twitter:image" content="https://senvor.dev/assets/og.jpg">
+<meta name="twitter:image" content="https://senvor.dev/assets/projects/starbie-render.webp">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <title>Starbie — Senvor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/project.css">
 </head>
 <body>
 <header class="top"><div class="wrap">
   <a class="logo" href="/">senvor</a>
-  <nav aria-label="Main"><a href="/#work">← All work</a></nav>
+  <nav aria-label="Main"><a href="/#work">All work</a><a href="/#connect">Connect</a></nav>
 </div></header>
-<main id="top" tabindex="-1"><div class="wrap">
-  <section>
-    <h1>Starbie<span class="tag">designed</span></h1>
-    <p class="role">A motion-controlled desktop pet on a custom PCB.</p>
-    <img class="shot" src="/assets/starbie.webp" alt="Starbie">
-    <ul class="chips"><li class="solid">XIAO ESP32-C3</li><li class="solid">Arduino</li><li class="solid">KiCad</li><li class="solid">MPU6050</li><li class="solid">DHT11</li><li class="solid">OLED</li></ul>
-    <h2>What I built</h2><p>A tiny motion-controlled digital pet, basically a desktop Tamagotchi, on a custom PCB around the XIAO ESP32-C3. It detects movement with an MPU6050, reads temperature and humidity with a DHT11, shows info on an OLED, gives feedback with an RGB LED, and takes input from Cherry MX switches. Schematic and PCB designed in KiCad for Hack Club's HalfLife, following their Week 1 PCB tutorial.</p>
-    <h2>What I learned</h2><p>My second hardware project, so I pushed for something more interesting than the first one, and HalfLife gave me a reason to actually design, build and document it instead of leaving it as an idea.</p>
-    <p class="now" data-repo="Starbie"></p>
-    <p><a href="https://github.com/Senvor/Starbie">Repository</a></p>
-  </section>
+<main id="top" tabindex="-1"><div class="wrap pj">
+  <a class="crumb" href="/#work">← Back to all work</a>
+  <div class="pj-head">
+    <div class="pj-kicker"><span>Hardware</span></div>
+    <h1>Starbie</h1>
+    <p class="pj-tagline">A motion-controlled desktop pet on a custom PCB.</p>
+    <div class="pj-actions"><a class="primary" href="https://github.com/Senvor/Starbie">View repository ↗</a></div>
+  </div>
+  <figure class="pj-hero"><img src="/assets/projects/starbie-render.webp" alt="Starbie"></figure>
+  <div class="pj-grid">
+    <div class="pj-body">
+      <section><h2>What I built</h2><p>A tiny motion-controlled digital pet, basically a desktop Tamagotchi, on a custom PCB around the XIAO ESP32-C3. It detects movement with an MPU6050, reads temperature and humidity with a DHT11, shows info on an OLED, gives feedback with an RGB LED, and takes input from Cherry MX switches. Schematic and PCB designed in KiCad for Hack Club's HalfLife, following their Week 1 PCB tutorial.</p></section>
+      <section><h2>What I learned</h2><p>My second hardware project, so I pushed for something more interesting than the first one, and HalfLife gave me a reason to actually design, build and document it instead of leaving it as an idea.</p></section>
+      <section><h2>Gallery</h2><div class="pj-gallery"><figure><img src="/assets/projects/starbie-pcb.webp" alt="PCB layout in KiCad" loading="lazy"><figcaption>PCB layout in KiCad</figcaption></figure><figure><img src="/assets/projects/starbie-schematic.webp" alt="Schematic" loading="lazy"><figcaption>Schematic</figcaption></figure></div></section>
+    </div>
+    <aside class="pj-side">
+      <dl>
+        <dt>Type</dt><dd>Hardware</dd>
+      </dl>
+      <dl><dt>Built with</dt><dd><ul class="chips"><li class="solid">XIAO ESP32-C3</li><li class="solid">Arduino</li><li class="solid">KiCad</li><li class="solid">MPU6050</li><li class="solid">DHT11</li><li class="solid">OLED</li></ul></dd></dl>
+      <dl>
+        <dt>Activity</dt><dd><span class="now" data-repo="Starbie">See the repository</span></dd>
+      </dl>
+    </aside>
+  </div>
+  
+  <nav class="pj-nav" aria-label="More projects"><a href="/projects/marbew/"><small>← Previous</small><b>Marbew</b></a><a class="next" href="/projects/devruler/"><small>Next →</small><b>DevRuler</b></a></nav>
 </div></main>
 <footer><div class="wrap">© 2026 Senvor</div></footer>
 <script type="module" src="/github-status.js"></script>
