@@ -9,7 +9,7 @@ I'm currently building Pocket Gravity Lab, a portable physics lab for exploring 
 [![Portfolio](https://img.shields.io/badge/portfolio-E0632B?style=for-the-badge)](https://senvor.dev/)
 [![GitHub](https://img.shields.io/badge/github-0F130C?style=for-the-badge&logo=github&logoColor=EFE8D8)](https://github.com/Senvor)
 [![Reddit](https://img.shields.io/badge/reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://reddit.com/user/senvor)
-[![Discord](https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/users/s3nvor)
+[![Discord](https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/users/1297888931169177653)
 [![X](https://img.shields.io/badge/x-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/s3nvor)
 [![Instagram](https://img.shields.io/badge/instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/s3nvor)
 [![YouTube](https://img.shields.io/badge/youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@s3nvor)
