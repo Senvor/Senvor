@@ -191,7 +191,7 @@
   var $=function(id){return document.getElementById(id)};
   var pauseBtn=$('orbit-pause'),gIn=$('og'),sIn=$('os'),mIn=$('om'),tIn=$('ot'),pIn=$('op'),fsBtn=$('orbit-fs');
   var bodies=[],suns=[],bg=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,scale=1,aim=null,time=0,simT=0;
-  var G=1,warp=1,mutual=false,trails=true,preset='solar',binary=null;
+  var G=1,warp=1,mutual=false,trails=true,preset='solar',binary=null,phase=0;
   var amber='#ffb84d',sky='#6ec1ff';
   function readColors(){var s=getComputedStyle(document.documentElement);amber=s.getPropertyValue('--amber').trim()||amber;sky=s.getPropertyValue('--sky').trim()||sky}
   readColors();
@@ -217,16 +217,16 @@
     var v=Math.sqrt(totalGM()/r)*(speed||(0.85+Math.random()*0.25)),sp=spin||1;
     add(x,y,-dy/r*v*sp,dx/r*v*sp,size,hue,comet);
   }
-  function placeSuns(t){
+  function placeSuns(){
     if(!binary)return;
-    var a=binary.w*t;suns[0].x=cx+Math.cos(a)*binary.d;suns[0].y=cy+Math.sin(a)*binary.d;
+    var a=phase;suns[0].x=cx+Math.cos(a)*binary.d;suns[0].y=cy+Math.sin(a)*binary.d;
     suns[1].x=cx-Math.cos(a)*binary.d;suns[1].y=cy-Math.sin(a)*binary.d;
   }
   function load(name){
-    preset=name;bodies=[];flashes=[];simT=0;binary=null;
+    preset=name;bodies=[];flashes=[];simT=0;binary=null;phase=0;aim=null;
     if(name==='binary'){
       suns=[{x:0,y:0,gm:20000,r:4.5,hue:38},{x:0,y:0,gm:20000,r:4.5,hue:200}];
-      binary={d:8,w:Math.sqrt(40000*G/Math.pow(16,3))};placeSuns(0);
+      binary={d:8,w:Math.sqrt(40000*G/Math.pow(16,3))};placeSuns();
       launch(cx+48,cy,1,1,2.4,20);launch(cx-72,cy,1,1,3.2,150);launch(cx+100,cy,1,1,2.6,300);
     }else{
       suns=[{x:cx,y:cy,gm:40000,r:6,hue:38}];
@@ -258,7 +258,7 @@
   function step(dt){
     var i;
     for(i=0;i<bodies.length;i++){var b=bodies[i];b.vx+=b.ax*dt/2;b.vy+=b.ay*dt/2;b.x+=b.vx*dt;b.y+=b.vy*dt}
-    simT+=dt;placeSuns(simT);accel();
+    simT+=dt;if(binary)phase+=binary.w*dt;placeSuns();accel();
     for(i=0;i<bodies.length;i++){var c=bodies[i];c.vx+=c.ax*dt/2;c.vy+=c.ay*dt/2}
     // swallowed by a sun, or escaped far away
     for(i=bodies.length-1;i>=0;i--){
@@ -348,8 +348,8 @@
   });
   pauseBtn.addEventListener('click',function(){setPaused(!paused)});
   $('orbit-reset').addEventListener('click',function(){load(preset);run()});
-  if($('orbit-clear'))$('orbit-clear').addEventListener('click',function(){bodies=[];draw()});
-  if(gIn)gIn.addEventListener('input',function(){G=parseFloat(gIn.value);if(binary)binary.w=Math.sqrt(40000*G/Math.pow(16,3));draw()});
+  if($('orbit-clear'))$('orbit-clear').addEventListener('click',function(){bodies=[];flashes=[];aim=null;draw()});
+  if(gIn)gIn.addEventListener('input',function(){var g=parseFloat(gIn.value),f=Math.sqrt(g/G);G=g;bodies.forEach(function(b){b.vx*=f;b.vy*=f});if(binary)binary.w=Math.sqrt(40000*G/Math.pow(16,3));accel();draw()});  // orbits keep their shape and just speed up or slow down
   if(sIn)sIn.addEventListener('input',function(){warp=parseFloat(sIn.value);draw()});
   if(mIn)mIn.addEventListener('change',function(){mutual=mIn.checked;accel();draw()});
   if(tIn)tIn.addEventListener('change',function(){trails=tIn.checked;if(!trails)bodies.forEach(function(b){b.trail=[]});draw()});
