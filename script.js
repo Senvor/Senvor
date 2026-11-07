@@ -187,7 +187,7 @@
 (function(){
   var cv=document.getElementById('orbit');if(!cv||!cv.getContext)return;
   var box=cv.parentNode,ctx=cv.getContext('2d'),W=240,H=135,cx=W/2,cy=H/2;
-  var MAX=24,SOFT=30,SOFTP=6;
+  var MAX=24,SOFT=30,SOFTP=6,PX=2;
   var $=function(id){return document.getElementById(id)};
   var pauseBtn=$('orbit-pause'),gIn=$('og'),sIn=$('os'),mIn=$('om'),tIn=$('ot'),pIn=$('op'),fsBtn=$('orbit-fs');
   var bodies=[],suns=[],bg=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,scale=1,aim=null,time=0,simT=0;
@@ -199,11 +199,10 @@
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function resize(){
-    var w=cv.clientWidth||640,dpr=Math.min(window.devicePixelRatio||1,2);
-    cv.width=Math.round(w*dpr);cv.height=Math.round(w*dpr*H/W);scale=cv.width/W;draw();
+    // Deliberately low-res: a 480x270 buffer blown up with crisp pixels (CSS image-rendering: pixelated).
+    cv.width=W*PX;cv.height=H*PX;scale=PX;ctx.imageSmoothingEnabled=false;draw();
   }
-  if('ResizeObserver' in window)new ResizeObserver(resize).observe(cv);else window.addEventListener('resize',resize);
-  for(var i=0;i<110;i++)bg.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()<.8?.45:.9,p:Math.random()*6.28,s:.5+Math.random()*1.5});
+  for(var i=0;i<80;i++)bg.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()<.8?.45:.9,p:Math.random()*6.28,s:.5+Math.random()*1.5});
 
   function totalGM(){var t=0;suns.forEach(function(s){t+=s.gm});return t*G}
   function add(x,y,vx,vy,size,hue,comet){
@@ -278,36 +277,37 @@
       }
     }
   }
+  // Rough stepped glow: a few flat rings instead of a smooth gradient (cheaper, and it looks retro).
   function glow(x,y,r,color,alpha){
-    var g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.globalAlpha=alpha;ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.fill();ctx.globalAlpha=1;
+    ctx.fillStyle=color;
+    for(var k=3;k>=1;k--){ctx.globalAlpha=alpha*(0.22+(3-k)*0.12);ctx.beginPath();ctx.arc(x,y,r*k/3,0,6.283);ctx.fill()}
+    ctx.globalAlpha=1;
   }
   var NAMES={solar:'SOLAR SYSTEM',binary:'BINARY STAR',moon:'PLANET + MOON',chaos:'CHAOS'};
   function draw(){
     ctx.setTransform(1,0,0,1,0,0);
-    var g=ctx.createRadialGradient(cv.width/2,cv.height/2,0,cv.width/2,cv.height/2,cv.width*.65);
-    g.addColorStop(0,'#1a1440');g.addColorStop(1,'#06050e');ctx.fillStyle=g;ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.fillStyle='#0b0920';ctx.fillRect(0,0,cv.width,cv.height);
     ctx.setTransform(scale,0,0,scale,0,0);
-    bg.forEach(function(s){ctx.globalAlpha=.45+.4*Math.sin(s.p+time*s.s);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(s.x,s.y,s.r*.6,0,6.283);ctx.fill()});
+    ctx.fillStyle='#fff';bg.forEach(function(s){ctx.globalAlpha=Math.sin(s.p+time*s.s)>0?.85:.35;ctx.fillRect(Math.round(s.x),Math.round(s.y),s.r>.5?1:.5,s.r>.5?1:.5)});
     ctx.globalAlpha=1;ctx.lineCap='round';
     if(trails)bodies.forEach(function(b){
-      var t=b.trail,n=t.length;for(var k=1;k<n;k++){
-        ctx.globalAlpha=(k/n)*(b.comet?.9:.75);ctx.strokeStyle=b.comet?'#bfe6ff':'hsl('+b.hue+' 90% 66%)';
-        ctx.lineWidth=Math.max(.4,(b.comet?1.6:b.size*.55)*(k/n));
-        ctx.beginPath();ctx.moveTo(t[k-1][0],t[k-1][1]);ctx.lineTo(t[k][0],t[k][1]);ctx.stroke();
-      }
+      // trail as 3 chunks of one path each, fading out (3 strokes instead of ~120)
+      var t=b.trail,n=t.length;if(n<2)return;ctx.strokeStyle=b.comet?'#bfe6ff':'hsl('+b.hue+' 90% 66%)';
+      for(var c=0;c<3;c++){var a=Math.floor(n*c/3),z=Math.floor(n*(c+1)/3);if(z-a<1)continue;
+        ctx.globalAlpha=(c+1)*.25;ctx.lineWidth=b.comet?1:Math.max(.5,b.size*.35*(c+1)/3);
+        ctx.beginPath();ctx.moveTo(t[a][0],t[a][1]);for(var k=a+1;k<=Math.min(z,n-1);k++)ctx.lineTo(t[k][0],t[k][1]);ctx.stroke()}
     });
     ctx.globalAlpha=1;
     suns.forEach(function(s,i){
       var c=i===0?amber:sky,p=1+.07*Math.sin(time*2+i);
-      glow(s.x,s.y,s.r*6*p,c,.35);glow(s.x,s.y,s.r*2.4,c,.95);
+      glow(s.x,s.y,s.r*5*p,c,.35);glow(s.x,s.y,s.r*2.2,c,.9);
       ctx.fillStyle='#fffbef';ctx.beginPath();ctx.arc(s.x,s.y,s.r*.75,0,6.283);ctx.fill();
     });
     bodies.forEach(function(b){
-      var c=b.comet?'#dff3ff':'hsl('+b.hue+' 85% 64%)';glow(b.x,b.y,b.size*3.2,c,.5);
-      var sh=ctx.createRadialGradient(b.x-b.size*.4,b.y-b.size*.4,b.size*.1,b.x,b.y,b.size);
-      sh.addColorStop(0,'#ffffff');sh.addColorStop(.35,c);sh.addColorStop(1,'hsl('+b.hue+' 60% 28%)');
-      ctx.fillStyle=sh;ctx.beginPath();ctx.arc(b.x,b.y,b.size,0,6.283);ctx.fill();
+      var c=b.comet?'#dff3ff':'hsl('+b.hue+' 85% 64%)';glow(b.x,b.y,b.size*2.4,c,.45);
+      ctx.fillStyle='hsl('+b.hue+' 60% 32%)';ctx.beginPath();ctx.arc(b.x,b.y,b.size,0,6.283);ctx.fill();          // shadow side
+      ctx.fillStyle=c;ctx.beginPath();ctx.arc(b.x-b.size*.2,b.y-b.size*.2,b.size*.78,0,6.283);ctx.fill();       // lit side
+      ctx.fillStyle='#fff';ctx.fillRect(b.x-b.size*.5,b.y-b.size*.5,Math.max(.5,b.size*.25),Math.max(.5,b.size*.25)); // pixel highlight
     });
     flashes.forEach(function(f){ctx.strokeStyle='hsl('+f.hue+' 90% 72%)';ctx.globalAlpha=1-f.t;ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,4+f.t*26,0,6.283);ctx.stroke()});
     ctx.globalAlpha=1;
@@ -324,8 +324,8 @@
   }
   function frame(t){
     raf=0;var dt=Math.min((t-lastT)/1000,0.05);lastT=t;time+=dt;
-    var n=Math.ceil(8*warp),h=dt*warp/n;for(var k=0;k<n;k++)step(h);
-    bodies.forEach(function(b){b.trail.push([b.x,b.y]);var L=b.comet?160:120;if(b.trail.length>L)b.trail.shift()});
+    var n=Math.ceil(4*warp),h=dt*warp/n;for(var k=0;k<n;k++)step(h);
+    if(trails)bodies.forEach(function(b){b.trail.push([b.x,b.y]);var L=b.comet?90:60;if(b.trail.length>L)b.trail.shift()});
     for(var i=flashes.length-1;i>=0;i--){flashes[i].t+=dt*1.5;if(flashes[i].t>=1)flashes.splice(i,1)}
     draw();
     if(!paused&&onScreen&&!document.hidden)raf=requestAnimationFrame(frame);
@@ -362,7 +362,7 @@
   document.addEventListener('visibilitychange',run);
   if('IntersectionObserver' in window)new IntersectionObserver(function(en){onScreen=en[0].isIntersecting;if(onScreen)run()},{threshold:0}).observe(cv);
 
-  load('solar');resize();
+  resize();load('solar');
   if(reduce)setPaused(true);else run();                           // respect "reduce motion": start paused on one frame
 })();
 
