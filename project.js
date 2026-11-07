@@ -137,7 +137,11 @@
   } else if (kind === "particles") {
     S.ps = []; for (var q = 0; q < 320; q++) S.ps.push({ a: R(0, 6.28), r: R(4, 46), w: R(.2, .9) * (Math.random() < .5 ? 1 : -1), h: R(180, 320) });
   } else if (kind === "marbles") {
-    S.ms = []; for (var m = 0; m < 9; m++) S.ms.push({ x: R(6, 120), y: R(-120, -4), vx: R(0, 15), vy: 0, c: "hsl(" + Math.round(R(0, 360)) + " 80% 62%)", r: R(2.5, 4) });
+    // track: pairs of points are ramps, the gap between pairs is a straight drop
+    S.path = [[20, 8], [212, 24], [220, 24], [220, 40], [28, 56], [20, 56], [20, 72], [212, 88], [220, 88], [220, 112]];
+    S.seg = []; S.len = 0;
+    for (var k2 = 1; k2 < S.path.length; k2++) { var L2 = Math.hypot(S.path[k2][0] - S.path[k2 - 1][0], S.path[k2][1] - S.path[k2 - 1][1]); S.seg.push(L2); S.len += L2; }
+    S.ms = []; for (var m = 0; m < 7; m++) S.ms.push({ s: m * S.len / 7, v: 30 + m * 5, c: "hsl(" + Math.round(m * 51) + " 80% 62%)", r: R(2.5, 3.5) });
   } else if (kind === "life") {
     S.cw = 60; S.ch = 25; S.g = []; for (var z = 0; z < S.cw * S.ch; z++) S.g.push(Math.random() < .3 ? 1 : 0); S.acc = 0;
   }
@@ -169,19 +173,18 @@
       S.ps.forEach(function (p) { p.a += p.w * dt * (60 / (p.r + 20)); var r = p.r * (1 + .08 * Math.sin(t * 2 + p.h)); var X = W / 2 + Math.cos(p.a) * r * 2.2, Y = H / 2 + Math.sin(p.a) * r, c = "hsl(" + p.h + " 90% 70%)"; px(X, Y, c, 1); if (p.r < 20) px(X + 1, Y, c, .6); });
       disc(W / 2, H / 2, 3, "#fff", .9);
     } else if (kind === "marbles") {
-      // three zig-zag ramps; marbles roll down each one and drop off its open end onto the next
-      var ramps = [[0, 26, 196, 40], [44, 58, 240, 72], [0, 90, 196, 104]];
-      x.globalAlpha = .8; x.fillStyle = SKY;
-      ramps.forEach(function (rp, k) { var L = rp[2] - rp[0]; for (var q = 0; q <= L; q++) { var yy = k === 1 ? rp[3] - (rp[3] - rp[1]) * q / L : rp[1] + (rp[3] - rp[1]) * q / L; x.fillRect(rp[0] + q, Math.round(yy), 1, 2); } });
+      // Marbles follow a fixed zig-zag track (ramp, drop, ramp back, drop, ...) so they can never get stuck.
+      var P = S.path;
+      x.globalAlpha = .9; x.fillStyle = SKY;
+      for (var k = 0; k < P.length - 1; k++) { var A = P[k], B = P[k + 1], L = Math.abs(B[0] - A[0]); if (L < Math.abs(B[1] - A[1])) continue;   // ramps only
+        for (var q = 0; q <= L; q++) x.fillRect(Math.round(A[0] + (B[0] - A[0]) * q / L), Math.round(A[1] + (B[1] - A[1]) * q / L) + 4, 1, 2); }
+      x.fillStyle = AMB; x.fillRect(P[0][0] - 6, P[0][1] - 6, 12, 2);           // start funnel
       S.ms.forEach(function (b) {
-        b.vy += 140 * dt; b.x += b.vx * dt; b.y += b.vy * dt;
-        ramps.forEach(function (rp, k) {
-          if (b.x < rp[0] || b.x > rp[2]) return; var f = (b.x - rp[0]) / (rp[2] - rp[0]);
-          var yy = (k === 1 ? rp[3] - (rp[3] - rp[1]) * f : rp[1] + (rp[3] - rp[1]) * f) - b.r;
-          if (b.y > yy && b.y < yy + 6) { b.y = yy; b.vy = 0; b.vx += (k === 1 ? -1 : 1) * 90 * dt; b.vx *= .995; }
-        });
-        if (b.y > H + 8 || b.x < -8 || b.x > W + 8) { b.y = R(-30, -4); b.x = R(6, 120); b.vy = 0; b.vx = R(0, 15); }
-        disc(b.x, b.y, b.r, b.c); px(b.x - b.r * .4, b.y - b.r * .4, "#fff", 1);
+        b.v = Math.min(b.v + 40 * dt, 90); b.s += b.v * dt;
+        if (b.s > S.len) { b.s -= S.len; b.v = 15; }
+        var d = b.s, X = P[0][0], Y = P[0][1];
+        for (var k = 1; k < P.length; k++) { var sl = S.seg[k - 1]; if (d <= sl) { var f = d / sl; X = P[k - 1][0] + (P[k][0] - P[k - 1][0]) * f; Y = P[k - 1][1] + (P[k][1] - P[k - 1][1]) * f; break; } d -= sl; }
+        disc(X, Y, b.r, b.c); px(X - b.r * .4, Y - b.r * .4, "#fff", 1);
       });
     } else if (kind === "life") {
       S.acc += dt; if (S.acc > .18) { S.acc = 0; var n = S.g.slice(), cw = S.cw, ch = S.ch;
