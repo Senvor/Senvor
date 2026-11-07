@@ -187,7 +187,7 @@
 (function(){
   var cv=document.getElementById('orbit');if(!cv||!cv.getContext)return;
   var box=cv.parentNode,ctx=cv.getContext('2d'),W=240,H=135,cx=W/2,cy=H/2;
-  var MAX=24,SOFT=30,SOFTP=6,PX=1;
+  var MAX=24,SOFT=30,SOFTP=6;
   var $=function(id){return document.getElementById(id)};
   var pauseBtn=$('orbit-pause'),gIn=$('og'),sIn=$('os'),mIn=$('om'),tIn=$('ot'),pIn=$('op'),fsBtn=$('orbit-fs');
   var bodies=[],suns=[],bg=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,scale=1,aim=null,time=0,simT=0;
@@ -198,10 +198,11 @@
   new MutationObserver(function(){readColors();if(paused)draw()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function resize(){
-    // Deliberately low-res: a 480x270 buffer blown up with crisp pixels (CSS image-rendering: pixelated).
-    cv.width=W*PX;cv.height=H*PX;scale=PX;ctx.imageSmoothingEnabled=false;draw();
-  }
+  // Sharp pixel look in every browser: the scene is drawn into a tiny 240x135 buffer with hard-edged
+  // pixel shapes (no anti-aliasing), then copied 4x onto the visible canvas with smoothing off.
+  // The HUD text is drawn afterwards at full resolution so it stays crisp.
+  var off=document.createElement('canvas'),vctx=ctx;off.width=W;off.height=H;ctx=off.getContext('2d');
+  function resize(){cv.width=W*4;cv.height=H*4;scale=1;draw()}
   for(var i=0;i<80;i++)bg.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()<.8?.45:.9,p:Math.random()*6.28,s:.5+Math.random()*1.5});
 
   function totalGM(){var t=0;suns.forEach(function(s){t+=s.gm});return t*G}
@@ -278,51 +279,58 @@
     }
   }
   // Rough stepped glow: a few flat rings instead of a smooth gradient (cheaper, and it looks retro).
-  function glow(x,y,r,color,alpha){
-    ctx.fillStyle=color;
-    for(var k=3;k>=1;k--){ctx.globalAlpha=alpha*(0.22+(3-k)*0.12);ctx.beginPath();ctx.arc(x,y,r*k/3,0,6.283);ctx.fill()}
+  // world -> buffer pixel
+  function sx(x){return (x-camX)*zoom+W/2}
+  function sy(y){return (y-camY)*zoom+H/2}
+  // filled pixel disc made of 1px-tall spans: hard edges, no blur
+  function disc(x,y,r,color,alpha){
+    if(r<.5)r=.5;var X=Math.round(x),Y=Math.round(y),R=Math.max(0,Math.round(r)),R2=(r+.25)*(r+.25);
+    if(X+R<0||X-R>W||Y+R<0||Y-R>H)return;
+    ctx.fillStyle=color;ctx.globalAlpha=alpha==null?1:alpha;
+    for(var dy=-R;dy<=R;dy++){var w=Math.floor(Math.sqrt(Math.max(0,R2-dy*dy)));ctx.fillRect(X-w,Y+dy,w*2+1,1)}
     ctx.globalAlpha=1;
   }
+  function px(x,y,color,alpha){ctx.fillStyle=color;ctx.globalAlpha=alpha;ctx.fillRect(Math.round(x),Math.round(y),1,1)}
+  // stepped glow: three hard-edged translucent rings
+  function glow(x,y,r,color,alpha){for(var k=3;k>=1;k--)disc(x,y,r*k/3,color,alpha*(0.22+(3-k)*0.12))}
   var NAMES={solar:'SOLAR SYSTEM',binary:'BINARY STAR',moon:'PLANET + MOON',chaos:'CHAOS'};
   function draw(){
-    ctx.setTransform(1,0,0,1,0,0);
-    ctx.fillStyle='#0b0920';ctx.fillRect(0,0,cv.width,cv.height);
-    ctx.setTransform(scale,0,0,scale,0,0);
-    ctx.fillStyle='#fff';bg.forEach(function(s){ctx.globalAlpha=Math.sin(s.p+time*s.s)>0?.85:.35;ctx.fillRect(Math.round(s.x),Math.round(s.y),s.r>.5?1:.5,s.r>.5?1:.5)});
-    ctx.globalAlpha=1;ctx.lineCap='round';
-    ctx.setTransform(scale*zoom,0,0,scale*zoom,scale*(W/2-camX*zoom),scale*(H/2-camY*zoom));   // camera: zoom around (camX,camY)
+    ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;
+    ctx.fillStyle='#0b0920';ctx.fillRect(0,0,W,H);
+    bg.forEach(function(s){px(s.x,s.y,'#fff',Math.sin(s.p+time*s.s)>0?.9:.35)});
     if(trails)bodies.forEach(function(b){
-      // trail as 3 chunks of one path each, fading out (3 strokes instead of ~120)
-      var t=b.trail,n=t.length;if(n<2)return;ctx.strokeStyle=b.comet?'#bfe6ff':'hsl('+b.hue+' 90% 66%)';
-      for(var c=0;c<3;c++){var a=Math.floor(n*c/3),z=Math.floor(n*(c+1)/3);if(z-a<1)continue;
-        ctx.globalAlpha=(c+1)*.25;ctx.lineWidth=b.comet?1:Math.max(.5,b.size*.35*(c+1)/3);
-        ctx.beginPath();ctx.moveTo(t[a][0],t[a][1]);for(var k=a+1;k<=Math.min(z,n-1);k++)ctx.lineTo(t[k][0],t[k][1]);ctx.stroke()}
+      var t=b.trail,n=t.length,c=b.comet?'#bfe6ff':'hsl('+b.hue+' 90% 66%)';
+      for(var k=0;k<n;k+=1)px(sx(t[k][0]),sy(t[k][1]),c,.15+.65*k/n);       // dotted pixel trail, fading out
     });
-    ctx.globalAlpha=1;
     suns.forEach(function(s,i){
-      var c=i===0?amber:sky,p=1+.07*Math.sin(time*2+i);
-      glow(s.x,s.y,s.r*5*p,c,.35);glow(s.x,s.y,s.r*2.2,c,.9);
-      ctx.fillStyle='#fffbef';ctx.beginPath();ctx.arc(s.x,s.y,s.r*.75,0,6.283);ctx.fill();
+      var c=i===0?amber:sky,p=1+.07*Math.sin(time*2+i),x=sx(s.x),y=sy(s.y);
+      glow(x,y,s.r*5*p*zoom,c,.35);glow(x,y,s.r*2.2*zoom,c,.9);disc(x,y,s.r*.75*zoom,'#fffbef');
     });
     bodies.forEach(function(b){
-      var c=b.comet?'#dff3ff':'hsl('+b.hue+' 85% 64%)';glow(b.x,b.y,b.size*2.4,c,.45);
-      ctx.fillStyle='hsl('+b.hue+' 60% 32%)';ctx.beginPath();ctx.arc(b.x,b.y,b.size,0,6.283);ctx.fill();          // shadow side
-      ctx.fillStyle=c;ctx.beginPath();ctx.arc(b.x-b.size*.2,b.y-b.size*.2,b.size*.78,0,6.283);ctx.fill();       // lit side
-      ctx.fillStyle='#fff';ctx.fillRect(b.x-b.size*.5,b.y-b.size*.5,Math.max(.5,b.size*.25),Math.max(.5,b.size*.25)); // pixel highlight
+      var c=b.comet?'#dff3ff':'hsl('+b.hue+' 85% 64%)',x=sx(b.x),y=sy(b.y),r=b.size*zoom;
+      glow(x,y,r*2.4,c,.45);
+      disc(x,y,r,'hsl('+b.hue+' 60% 32%)');                    // shadow side
+      disc(x-r*.2,y-r*.2,r*.78,c);                              // lit side
+      if(r>=2)px(x-r*.45,y-r*.45,'#fff',1);                     // pixel highlight
     });
-    flashes.forEach(function(f){ctx.strokeStyle='hsl('+f.hue+' 90% 72%)';ctx.globalAlpha=1-f.t;ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,4+f.t*26,0,6.283);ctx.stroke()});
-    ctx.globalAlpha=1;
+    flashes.forEach(function(f){
+      var R=(4+f.t*26)*zoom,x=sx(f.x),y=sy(f.y),c='hsl('+f.hue+' 90% 72%)',n=Math.max(12,Math.round(R*5));
+      for(var k=0;k<n;k++){var a=k/n*6.283;px(x+Math.cos(a)*R,y+Math.sin(a)*R,c,1-f.t)}
+    });
     if(aim){
-      var ex=aim.x+(aim.x-aim.ex),ey=aim.y+(aim.y-aim.ey);
-      ctx.setLineDash([3,3]);ctx.strokeStyle=sky;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(aim.x,aim.y);ctx.lineTo(ex,ey);ctx.stroke();ctx.setLineDash([]);
-      ctx.fillStyle=sky;ctx.beginPath();ctx.arc(aim.x,aim.y,3,0,6.283);ctx.fill();
+      var ax=sx(aim.x),ay=sy(aim.y),ex=sx(aim.x+(aim.x-aim.ex)),ey=sy(aim.y+(aim.y-aim.ey)),L=Math.hypot(ex-ax,ey-ay);
+      for(var d=0;d<L;d+=3)px(ax+(ex-ax)*d/L,ay+(ey-ay)*d/L,sky,1);
+      disc(ax,ay,2,sky);
     }
-    ctx.setTransform(scale,0,0,scale,0,0);
-    ctx.font='700 6px ui-monospace,SFMono-Regular,Menlo,monospace';
-    ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillText('POCKET GRAVITY LAB',7,11);
-    ctx.textAlign='right';ctx.fillStyle=amber;ctx.fillText(NAMES[preset]||'',W-7,11);
-    ctx.fillStyle='rgba(255,255,255,.6)';ctx.fillText((zoom>=ZMAX?'ZOOM MAX':zoom<=ZMIN?'ZOOM MIN':'ZOOM \u00d7'+zoom.toFixed(1))+'   G \u00d7'+G.toFixed(2)+'   SPEED \u00d7'+warp,W-7,H-7);
-    ctx.textAlign='left';ctx.fillText(bodies.length+(bodies.length===1?' BODY':' BODIES')+(mutual?'  \u00b7  N-BODY':'')+'  \u00b7  T '+simT.toFixed(0)+'s',7,H-7);
+    ctx.globalAlpha=1;
+    // blow the buffer up with hard pixels, then draw a crisp HUD on top
+    vctx.setTransform(1,0,0,1,0,0);vctx.imageSmoothingEnabled=false;vctx.drawImage(off,0,0,cv.width,cv.height);
+    var k=cv.width/W;vctx.setTransform(k,0,0,k,0,0);
+    vctx.font='700 6px "Pixelify Sans",ui-monospace,monospace';
+    vctx.fillStyle='rgba(255,255,255,.8)';vctx.textAlign='left';vctx.fillText('POCKET GRAVITY LAB',7,11);
+    vctx.textAlign='right';vctx.fillStyle=amber;vctx.fillText(NAMES[preset]||'',W-7,11);
+    vctx.fillStyle='rgba(255,255,255,.65)';vctx.fillText((zoom>=ZMAX?'ZOOM MAX':zoom<=ZMIN?'ZOOM MIN':'ZOOM \u00d7'+zoom.toFixed(1))+'   G \u00d7'+G.toFixed(2)+'   SPEED \u00d7'+warp,W-7,H-7);
+    vctx.textAlign='left';vctx.fillText(bodies.length+(bodies.length===1?' BODY':' BODIES')+(mutual?'  \u00b7  N-BODY':'')+'  \u00b7  T '+simT.toFixed(0)+'s',7,H-7);
   }
   function frame(t){
     raf=0;var dt=Math.min((t-lastT)/1000,0.05);lastT=t;time+=dt;
