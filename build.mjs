@@ -15,9 +15,10 @@ for (const p of projects) {
     tagline: esc(p.tagline),
     status: esc(p.status),
     repo: esc(p.repo),
-    built: esc(p.built),
-    stuck: esc(p.stuck),
-    learned: esc(p.learned),
+    // Only show sections that have real text (skip empty or TODO).
+    sections: [["What I built", p.built], ["Where I got stuck", p.stuck], ["What I learned", p.learned]]
+      .filter(([, v]) => v && v.trim() && v.trim() !== "TODO")
+      .map(([h, v]) => `<h2>${h}</h2><p>${esc(v)}</p>`).join("\n    "),
     url: `${SITE}/projects/${p.slug}/`,
     ogImage: SITE + (p.og ?? "/assets/og.jpg"),
     imageTag: p.image
@@ -35,4 +36,9 @@ for (const p of projects) {
   await mkdir(`projects/${p.slug}`, { recursive: true });
   await writeFile(`projects/${p.slug}/index.html`, html);
 }
-console.log(`Built ${projects.length} project pages`);
+// Sitemap for search engines.
+const urls = [`${SITE}/`, ...projects.map((p) => `${SITE}/projects/${p.slug}/`)];
+await writeFile("sitemap.xml",
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n") + `\n</urlset>\n`);
+console.log(`Built ${projects.length} project pages + sitemap.xml`);
