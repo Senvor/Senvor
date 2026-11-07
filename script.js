@@ -180,42 +180,49 @@
   };
 })();
 
-// ---------- Pocket Gravity Lab: tiny orbit demo ----------
+// ---------- Pocket Gravity Lab: orbit sandbox ----------
 // Each planet feels a pull toward the star that weakens with distance (inverse-square law, a = GM / r^2).
-// The motion is stepped with "velocity Verlet", which keeps orbits stable for a long time. The simpler Euler
-// method slowly gains energy, so planets would gradually spiral outward.
+// Motion is stepped with velocity Verlet, which keeps orbits stable for a long time (plain Euler slowly gains
+// energy, so planets would spiral outward). Physics runs in a fixed 320x180 world; drawing scales to the screen.
 (function(){
   var cv=document.getElementById('orbit');if(!cv||!cv.getContext)return;
-  var ctx=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W/2,cy=H/2;
-  var GM=16000,SOFT=16,MAX=12,TRAIL=30;
-  var bodies=[],paused=false,onScreen=true,lastT=0,raf=0;
+  var ctx=cv.getContext('2d'),W=320,H=180,cx=W/2,cy=H/2;
+  var GM=70000,SOFT=40,MAX=14,TRAIL=110;
+  var bodies=[],stars=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,scale=1,aim=null,time=0;
   var pauseBtn=document.getElementById('orbit-pause');
-  // getComputedStyle forces the browser to recalculate styles, so do it once, not 60 times a second.
-  var amber='#c9740a';
-  function readColors(){amber=getComputedStyle(document.documentElement).getPropertyValue('--amber').trim()||amber}
+  var amber='#ffb84d',sky='#6ec1ff';
+  function readColors(){var s=getComputedStyle(document.documentElement);amber=s.getPropertyValue('--amber').trim()||amber;sky=s.getPropertyValue('--sky').trim()||sky}
   readColors();
   new MutationObserver(function(){readColors();if(paused)draw()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
-  if(window.matchMedia){
-    var mq=window.matchMedia('(prefers-color-scheme: dark)');
-    if(mq.addEventListener)mq.addEventListener('change',function(){readColors();if(paused)draw()});
-  }
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Size the canvas to its on-screen width times the pixel ratio, so it stays sharp on every screen.
+  function resize(){
+    var w=cv.clientWidth||640,dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(w*dpr);cv.height=Math.round(w*dpr*H/W);scale=cv.width/W;
+    if(paused||reduce)draw();
+  }
+  if('ResizeObserver' in window)new ResizeObserver(resize).observe(cv);else window.addEventListener('resize',resize);
+
+  for(var i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()<.85?.35:.7,p:Math.random()*6.28,s:.5+Math.random()*1.5});
 
   function acc(x,y){
     var dx=cx-x,dy=cy-y,r2=dx*dx+dy*dy+SOFT,inv=GM/(r2*Math.sqrt(r2));   // SOFT stops the pull blowing up right at the star
     return [dx*inv,dy*inv];
   }
-  // Launch a planet at (x,y), moving sideways to the star at about the speed that gives a circular orbit.
-  function launch(x,y,spin,speed){
-    var dx=x-cx,dy=y-cy,r=Math.max(Math.sqrt(dx*dx+dy*dy),10);
-    var v=Math.sqrt(GM/r)*(speed||(0.8+Math.random()*0.3));
-    var sp=spin||(Math.random()<.5?1:-1);
-    bodies.push({x:x,y:y,vx:-dy/r*v*sp,vy:dx/r*v*sp,hue:Math.floor(Math.random()*360),trail:[]});
+  function add(x,y,vx,vy){
+    bodies.push({x:x,y:y,vx:vx,vy:vy,hue:Math.floor(Math.random()*360),size:1.4+Math.random()*1.8,trail:[]});
     if(bodies.length>MAX)bodies.shift();
   }
+  // Launch at (x,y), moving sideways to the star at about the speed of a circular orbit.
+  function launch(x,y,spin,speed){
+    var dx=x-cx,dy=y-cy,r=Math.max(Math.sqrt(dx*dx+dy*dy),14);
+    var v=Math.sqrt(GM/r)*(speed||(0.8+Math.random()*0.3)),sp=spin||(Math.random()<.5?1:-1);
+    add(x,y,-dy/r*v*sp,dy===0&&dx===0?v:dx/r*v*sp);
+  }
   function seed(){
-    bodies=[];
-    launch(cx+34,cy,1,1);launch(cx-58,cy+6,-1,0.85);launch(cx+8,cy-40,1,0.95);
+    bodies=[];flashes=[];
+    launch(cx+38,cy,1,1);launch(cx-70,cy+8,1,0.9);launch(cx+12,cy-58,1,0.97);launch(cx+110,cy+20,1,0.75);
   }
   function step(dt){
     for(var i=bodies.length-1;i>=0;i--){
@@ -224,40 +231,84 @@
       var n=acc(b.x,b.y);
       b.vx+=0.5*(a[0]+n[0])*dt;b.vy+=0.5*(a[1]+n[1])*dt;
       var dx=b.x-cx,dy=b.y-cy,r=Math.sqrt(dx*dx+dy*dy);
-      if(r<3||r>W){bodies.splice(i,1);continue}      // fell into the star, or flew away
+      if(r<5){flashes.push({x:cx,y:cy,t:0,hue:b.hue});bodies.splice(i,1);continue}   // swallowed by the star
+      if(r>W*1.2)bodies.splice(i,1);                                                  // escaped
     }
   }
+  function glow(x,y,r,color,alpha){
+    var g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.globalAlpha=alpha;ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.fill();ctx.globalAlpha=1;
+  }
   function draw(){
-    ctx.clearRect(0,0,W,H);
+    ctx.setTransform(1,0,0,1,0,0);
+    var bg=ctx.createRadialGradient(cv.width/2,cv.height/2,0,cv.width/2,cv.height/2,cv.width*.7);
+    bg.addColorStop(0,'#141030');bg.addColorStop(1,'#07060f');ctx.fillStyle=bg;ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.setTransform(scale,0,0,scale,0,0);
+    stars.forEach(function(s){ctx.globalAlpha=.35+.35*Math.sin(s.p+time*s.s);ctx.fillStyle='#fff';ctx.fillRect(s.x,s.y,s.r,s.r)});
+    ctx.globalAlpha=1;
+    // faint orbit guides
+    ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=.5;
+    [40,75,115].forEach(function(r){ctx.beginPath();ctx.arc(cx,cy,r,0,6.283);ctx.stroke()});
+    // trails fade from the tail to the planet
+    ctx.lineCap='round';
     bodies.forEach(function(b){
-      ctx.fillStyle='hsl('+b.hue+' 70% 58%)';
-      b.trail.forEach(function(p,i){ctx.globalAlpha=.15+.5*i/b.trail.length;ctx.fillRect(p[0],p[1],1,1)});
-      ctx.globalAlpha=1;ctx.fillRect(Math.round(b.x)-1,Math.round(b.y)-1,2,2);
+      var t=b.trail;for(var k=1;k<t.length;k++){
+        ctx.globalAlpha=(k/t.length)*.8;ctx.strokeStyle='hsl('+b.hue+' 85% 65%)';ctx.lineWidth=b.size*.7*(k/t.length);
+        ctx.beginPath();ctx.moveTo(t[k-1][0],t[k-1][1]);ctx.lineTo(t[k][0],t[k][1]);ctx.stroke();
+      }
     });
-    ctx.globalAlpha=1;ctx.fillStyle=amber;                      // the star: a small pixel plus-sign
-    ctx.fillRect(cx-1,cy-1,3,3);ctx.fillRect(cx-2,cy,5,1);ctx.fillRect(cx,cy-2,1,5);
+    ctx.globalAlpha=1;
+    // the star
+    var pulse=1+.06*Math.sin(time*2);
+    glow(cx,cy,26*pulse,amber,.35);glow(cx,cy,10,amber,.9);
+    ctx.fillStyle='#fff8e6';ctx.beginPath();ctx.arc(cx,cy,3.2,0,6.283);ctx.fill();
+    // planets
+    bodies.forEach(function(b){
+      var c='hsl('+b.hue+' 85% 65%)';glow(b.x,b.y,b.size*4,c,.45);
+      ctx.fillStyle=c;ctx.beginPath();ctx.arc(b.x,b.y,b.size,0,6.283);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,.7)';ctx.beginPath();ctx.arc(b.x-b.size*.35,b.y-b.size*.35,b.size*.35,0,6.283);ctx.fill();
+    });
+    // swallowed-planet flashes
+    flashes.forEach(function(f){ctx.strokeStyle='hsl('+f.hue+' 90% 70%)';ctx.globalAlpha=1-f.t;ctx.lineWidth=1;ctx.beginPath();ctx.arc(f.x,f.y,6+f.t*30,0,6.283);ctx.stroke()});
+    ctx.globalAlpha=1;
+    // slingshot aim line
+    if(aim){
+      ctx.setLineDash([3,3]);ctx.strokeStyle=sky;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(aim.x,aim.y);ctx.lineTo(aim.x+(aim.x-aim.ex),aim.y+(aim.y-aim.ey));ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle=sky;ctx.beginPath();ctx.arc(aim.x,aim.y,2.2,0,6.283);ctx.fill();
+    }
+    // HUD
+    ctx.font='600 7px ui-monospace,SFMono-Regular,Menlo,monospace';ctx.fillStyle='rgba(255,255,255,.55)';
+    ctx.fillText('POCKET GRAVITY LAB',8,13);
+    ctx.fillStyle='rgba(255,255,255,.4)';ctx.fillText(bodies.length+(bodies.length===1?' BODY':' BODIES')+'  \u00b7  a = GM/r\u00b2',8,H-8);
   }
   function frame(t){
     raf=0;
-    var dt=Math.min((t-lastT)/1000,0.05);lastT=t;
-    for(var k=0;k<4;k++)step(dt/4);                              // 4 small steps per frame: smoother and more accurate orbits
-    bodies.forEach(function(b){b.trail.push([Math.round(b.x),Math.round(b.y)]);if(b.trail.length>TRAIL)b.trail.shift()});
+    var dt=Math.min((t-lastT)/1000,0.05);lastT=t;time+=dt;
+    for(var k=0;k<6;k++)step(dt/6);
+    bodies.forEach(function(b){b.trail.push([b.x,b.y]);if(b.trail.length>TRAIL)b.trail.shift()});
+    for(var i=flashes.length-1;i>=0;i--){flashes[i].t+=dt*1.6;if(flashes[i].t>=1)flashes.splice(i,1)}
     draw();
     if(!paused&&onScreen&&!document.hidden)raf=requestAnimationFrame(frame);
   }
   function run(){if(!raf&&!paused&&onScreen&&!document.hidden){lastT=performance.now();raf=requestAnimationFrame(frame)}}
   function setPaused(p){paused=p;pauseBtn.textContent=p?'Play':'Pause';if(!p)run()}
+  function pt(e){var r=cv.getBoundingClientRect();return [(e.clientX-r.left)/r.width*W,(e.clientY-r.top)/r.height*H]}
 
-  cv.addEventListener('click',function(e){
-    var r=cv.getBoundingClientRect();
-    launch((e.clientX-r.left)/r.width*W,(e.clientY-r.top)/r.height*H);
-    if(paused)draw();else run();
+  // Tap: launch a planet into orbit. Drag: pull back like a slingshot and let go to fling it.
+  cv.addEventListener('pointerdown',function(e){var p=pt(e);aim={x:p[0],y:p[1],ex:p[0],ey:p[1]};try{cv.setPointerCapture(e.pointerId)}catch(_){}});
+  cv.addEventListener('pointermove',function(e){if(!aim)return;var p=pt(e);aim.ex=p[0];aim.ey=p[1];if(paused)draw()});
+  cv.addEventListener('pointerup',function(){
+    if(!aim)return;var dx=aim.x-aim.ex,dy=aim.y-aim.ey;
+    if(dx*dx+dy*dy<36)launch(aim.x,aim.y);else add(aim.x,aim.y,dx*1.6,dy*1.6);
+    aim=null;if(paused)draw();else run();
   });
+  cv.addEventListener('pointercancel',function(){aim=null});
   cv.addEventListener('keydown',function(e){
     if(e.key==='Enter'||e.key===' '){
       e.preventDefault();
-      var a=Math.random()*6.283,d=22+Math.random()*50;
-      launch(cx+Math.cos(a)*d,cy+Math.sin(a)*d*0.6);
+      var a=Math.random()*6.283,d=30+Math.random()*90;
+      launch(cx+Math.cos(a)*d,cy+Math.sin(a)*d*0.55);
       if(paused)draw();else run();
     }
   });
@@ -266,8 +317,8 @@
   document.addEventListener('visibilitychange',run);
   if('IntersectionObserver' in window)new IntersectionObserver(function(en){onScreen=en[0].isIntersecting;if(onScreen)run()},{threshold:0}).observe(cv);
 
-  seed();draw();
-  if(reduce)setPaused(true);else run();                           // respect "reduce motion": start paused, one frame is shown
+  seed();resize();draw();
+  if(reduce)setPaused(true);else run();                           // respect "reduce motion": start paused on one frame
 })();
 
 // ---------- Easter egg: Konami code (or tap the name 5 times on a phone) ----------

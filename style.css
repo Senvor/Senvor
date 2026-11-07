@@ -245,8 +245,8 @@ main:focus{outline:none}
 .gen.sel canvas:focus-visible{outline-color:var(--sky)}
 
 /* 12. Pocket Gravity Lab orbit demo */
-.orbit{margin-top:8px;max-width:560px}
-.orbit canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;image-rendering:pixelated;background:var(--chip);border:2px solid var(--line);cursor:crosshair;touch-action:manipulation}
+.orbit{margin-top:8px;max-width:720px}
+.orbit canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#07060f;border:2px solid var(--line);cursor:crosshair;touch-action:none}
 .orbit canvas:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
 .orbit-bar{display:flex;justify-content:space-between;align-items:center;gap:8px 14px;flex-wrap:wrap;margin-top:8px;font-size:14px;color:var(--soft)}
 .orbit-btns{display:flex;gap:8px}
