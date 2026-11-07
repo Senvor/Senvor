@@ -191,7 +191,7 @@
   var $=function(id){return document.getElementById(id)};
   var pauseBtn=$('orbit-pause'),gIn=$('og'),sIn=$('os'),mIn=$('om'),tIn=$('ot'),pIn=$('op'),fsBtn=$('orbit-fs');
   var bodies=[],suns=[],bg=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,scale=1,aim=null,time=0,simT=0;
-  var zoom=1,camX=120,camY=67.5,ZMIN=0.5,ZMAX=4,G=1,warp=1,mutual=false,trails=true,preset='solar',binary=null,phase=0;
+  var zoom=1,camX=120,camY=67.5,ZMIN=0.25,ZMAX=12,G=1,warp=1,mutual=false,trails=true,preset='solar',binary=null,phase=0;
   var amber='#ffb84d',sky='#6ec1ff';
   function readColors(){var s=getComputedStyle(document.documentElement);amber=s.getPropertyValue('--amber').trim()||amber;sky=s.getPropertyValue('--sky').trim()||sky}
   readColors();
@@ -263,7 +263,7 @@
     for(i=bodies.length-1;i>=0;i--){
       var d=bodies[i],gone=false;
       suns.forEach(function(s){var dx=d.x-s.x,dy=d.y-s.y;if(dx*dx+dy*dy<(s.r+d.size*.5)*(s.r+d.size*.5)){gone=true;flashes.push({x:s.x,y:s.y,t:0,hue:d.hue})}});
-      if(!gone&&(Math.abs(d.x-cx)>W*1.5||Math.abs(d.y-cy)>W*1.5))gone=true;
+      if(!gone&&(Math.abs(d.x-cx)>W*2.5||Math.abs(d.y-cy)>W*2.5))gone=true;
       if(gone)bodies.splice(i,1);
     }
     // planets that touch merge, keeping their momentum
@@ -321,7 +321,7 @@
     ctx.font='700 6px ui-monospace,SFMono-Regular,Menlo,monospace';
     ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillText('POCKET GRAVITY LAB',7,11);
     ctx.textAlign='right';ctx.fillStyle=amber;ctx.fillText(NAMES[preset]||'',W-7,11);
-    ctx.fillStyle='rgba(255,255,255,.6)';ctx.fillText('ZOOM \u00d7'+zoom.toFixed(1)+'   G \u00d7'+G.toFixed(2)+'   SPEED \u00d7'+warp,W-7,H-7);
+    ctx.fillStyle='rgba(255,255,255,.6)';ctx.fillText((zoom>=ZMAX?'ZOOM MAX':zoom<=ZMIN?'ZOOM MIN':'ZOOM \u00d7'+zoom.toFixed(1))+'   G \u00d7'+G.toFixed(2)+'   SPEED \u00d7'+warp,W-7,H-7);
     ctx.textAlign='left';ctx.fillText(bodies.length+(bodies.length===1?' BODY':' BODIES')+(mutual?'  \u00b7  N-BODY':'')+'  \u00b7  T '+simT.toFixed(0)+'s',7,H-7);
   }
   function frame(t){
@@ -341,6 +341,7 @@
     z=Math.max(ZMIN,Math.min(ZMAX,z));if(sx==null){sx=W/2;sy=H/2}
     var wx=(sx-W/2)/zoom+camX,wy=(sy-H/2)/zoom+camY;zoom=z;
     if(zoom===1){camX=cx;camY=cy}else{camX=wx-(sx-W/2)/zoom;camY=wy-(sy-H/2)/zoom}
+    if($('orbit-zin'))$('orbit-zin').disabled=zoom>=ZMAX;if($('orbit-zout'))$('orbit-zout').disabled=zoom<=ZMIN;
     draw();
   }
   cv.addEventListener('wheel',function(e){e.preventDefault();var q=scr(e);setZoom(zoom*(e.deltaY<0?1.15:1/1.15),q[0],q[1])},{passive:false});

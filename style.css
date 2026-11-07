@@ -259,6 +259,7 @@ main:focus{outline:none}
 .orbit-btns{display:flex;flex-wrap:wrap;gap:8px}
 .mini{font:600 13px var(--body);color:var(--ink);background:var(--panel);border:2px solid var(--line);padding:4px 12px;cursor:pointer}
 .mini:hover{border-color:var(--ink)}
+.mini:disabled{opacity:.4;cursor:default;border-color:var(--line)}
 
 /* 13. Toast + party mode (Konami code / tap the name 5 times) */
 .toast{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;opacity:0;pointer-events:none;background:var(--amber);color:#1b1840;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 16px;font:700 18px var(--display)}
