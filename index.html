@@ -32,11 +32,13 @@
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#top">senvor</a>
     <nav aria-label="Main">
       <a href="#about">About</a><a href="#skills">Skills</a><a href="#work">Work</a><a href="#connect">Connect</a>
+      <button class="kbtn" id="kbtn" type="button" aria-label="Open command menu" title="Command menu (Ctrl+K)"><kbd>⌘K</kbd></button>
       <button class="theme" id="theme" type="button" aria-label="Toggle light and dark theme">Theme</button>
     </nav>
   </div>
@@ -45,11 +47,15 @@
 <main id="top" tabindex="-1">
 <div class="wrap">
   <div class="hero">
+    <canvas class="sky" id="sky" aria-hidden="true"></canvas>
     <div>
       <h1>Senvor</h1>
       <p class="role">Developer and graphic designer. I learn by building things.</p>
+      <p class="typed" aria-label="I build websites, PCBs, games and pixel art">I build <span id="typed">websites</span><i class="caret" aria-hidden="true"></i></p>
       <p class="hc">Hack Club member</p>
       <p class="contact">Need a website? <a href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio">Hire me on Fiverr</a> for a fast, responsive landing page or portfolio.</p>
+      <div class="cta"><a class="btn" href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio">Hire me on Fiverr</a><a class="btn alt" href="#work">See my work ↓</a></div>
+      <ul class="stats" aria-label="At a glance"><li><b id="st-shipped">5</b><small>shipped</small></li><li><b id="st-wip">3</b><small>in progress</small></li><li><b id="repos">—</b><small>public repos</small></li></ul>
       <p class="contact">Want to talk? Message me on <a href="https://discord.com/users/s3nvor" data-copy="s3nvor" title="Copy my Discord username">Discord: s3nvor</a>, email <a href="mailto:senvor@lazydeveloper.org" data-copy="senvor@lazydeveloper.org" title="Copy my email">senvor@lazydeveloper.org</a>, or find me <a href="#connect">anywhere else</a>.</p>
     </div>
     <div class="lineage">
@@ -257,10 +263,12 @@
   </section>
 </div>
 </main>
-<footer><div class="wrap">© 2026 Senvor</div></footer>
+<footer><div class="wrap foot"><span>© 2026 Senvor · hand-built with HTML, CSS and JS</span><span class="last" id="last-commit"></span><a href="#top" class="totop">Back to top ↑</a></div></footer>
+<div class="pal" id="pal" hidden><div class="pal-box" role="dialog" aria-modal="true" aria-label="Command menu"><input id="pal-q" type="text" placeholder="Jump to a section, project or profile…" autocomplete="off" spellcheck="false"><ul id="pal-list" role="listbox"></ul><p class="pal-hint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p></div></div>
 
 <script src="script.js"></script>
 <script type="module" src="github-status.js"></script>
 <script type="module" src="extras.js"></script>
+<script src="home.js" defer></script>
 </body>
 </html>

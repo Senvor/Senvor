@@ -309,3 +309,49 @@ a,button{touch-action:manipulation}
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* 15. HT1 pass: hero starfield, typing line, stats, CTA, spotlight cards, command menu, progress, footer */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;background:var(--amber);transform:scaleX(0);transform-origin:0 50%;z-index:30;pointer-events:none}
+.hero{position:relative;isolation:isolate}
+.hero>.sky{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;z-index:-1;opacity:.55;pointer-events:none;
+  -webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.typed{margin:10px 0 0;font:500 18px var(--mono);color:var(--ink)}
+.typed span{color:var(--amber-text)}
+.caret{display:inline-block;width:.6em;height:1.05em;margin-left:2px;vertical-align:-3px;background:var(--amber);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.cta .btn{margin-top:0;text-decoration:none;display:inline-flex;align-items:center}
+.cta .btn.alt{color:var(--ink)}
+.stats{list-style:none;padding:0;margin:22px 0 0;display:flex;gap:0;border:2px solid var(--line);background:var(--panel);width:max-content;max-width:100%}
+.stats li{padding:10px 18px;display:grid;gap:2px;border-right:2px solid var(--line)}
+.stats li:last-child{border-right:0}
+.stats b{font:700 28px var(--display);color:var(--ink);line-height:1}
+.stats small{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--soft)}
+/* spotlight: a soft amber light follows the pointer across cards */
+.proj,.social a{position:relative;isolation:isolate}
+.proj::before,.social a::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .25s;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--amber) 16%,transparent),transparent 70%)}
+.proj:hover::before,.social a:hover::before{opacity:1}
+@media (hover:hover){.proj{transition:transform .2s,box-shadow .2s,border-color .2s}.proj:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--line);border-color:var(--amber)}}
+/* command menu */
+.kbtn{font:500 12px var(--mono);background:none;border:2px solid var(--line);color:var(--soft);padding:4px 8px;cursor:pointer}
+.kbtn:hover{color:var(--ink);border-color:var(--ink)}
+.kbtn kbd,.pal kbd{font:inherit}
+.pal{position:fixed;inset:0;z-index:60;background:rgba(6,5,14,.6);display:flex;justify-content:center;align-items:flex-start;padding:12vh 16px 16px}
+.pal[hidden]{display:none}
+.pal-box{width:min(560px,100%);background:var(--panel);border:2px solid var(--ink);box-shadow:8px 8px 0 var(--amber)}
+.pal-box input{width:100%;box-sizing:border-box;font:500 17px var(--body);padding:16px 18px;border:0;border-bottom:2px solid var(--line);background:none;color:var(--ink);outline:none}
+.pal-box ul{list-style:none;margin:0;padding:6px;max-height:50vh;overflow:auto}
+.pal-box li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;color:var(--ink)}
+.pal-box li small{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--soft)}
+.pal-box li.on{background:var(--chip);box-shadow:inset 3px 0 0 var(--amber)}
+.pal-box li.none{color:var(--soft);cursor:default}
+.pal-hint{margin:0;padding:10px 18px;border-top:2px solid var(--line);font:500 12px var(--mono);color:var(--soft)}
+.pal-hint kbd{border:1px solid var(--line);padding:0 5px;margin-right:2px}
+/* footer */
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;align-items:center}
+.foot a{color:var(--soft)}
+.foot a:hover{color:var(--ink)}
+.totop{text-decoration:none;font:500 13px var(--mono)}
+@media (max-width:760px){.kbtn{display:none}.stats li{padding:8px 12px}.stats b{font-size:22px}.hero>.sky{opacity:.4}}
+@media (prefers-reduced-motion:reduce){.caret{animation:none}.proj:hover{transform:none}}
