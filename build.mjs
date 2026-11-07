@@ -40,7 +40,7 @@ projects.forEach((p, i) => {
     toolCount: p.stack.length ? String(p.stack.length) : "—",
     demo: p.live
       ? `<section class="pj-demo"><h2><i>${String(n + 1).padStart(2, "0")}</i>Try it live</h2>` +
-        `<div class="pj-frame" data-src="${esc(p.live)}"><button type="button">▶ Load the live demo</button><small>Runs ${esc(p.live.replace("https://", ""))} right here${p.slug === "sound-galaxy" ? ", and asks for your mic" : ""}.</small></div></section>`
+        `<div class="pj-frame" data-src="${esc(p.live)}"><button type="button">▶ Load the live demo</button><small>Runs ${esc(p.live.replace("https://", ""))} right here${p.slug === "sound-galaxy" ? ". Click inside it to turn on your mic" : ""}.</small></div></section>`
       : "",
     more: (() => {
       const same = projects.filter((q) => q.slug !== p.slug && q.category === p.category);

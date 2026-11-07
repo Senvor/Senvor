@@ -41,9 +41,15 @@
   document.querySelectorAll(".pj-frame").forEach(function (box) {
     var btn = box.querySelector("button");
     btn.addEventListener("click", function () {
-      var f = document.createElement("iframe");
-      f.src = box.dataset.src; f.title = "Live demo"; f.allow = "microphone; fullscreen"; f.loading = "lazy";
-      box.innerHTML = ""; box.appendChild(f); box.classList.add("on");
+      // The demo runs at a real desktop size (1280x800) and is scaled down to fit, so its layout
+      // looks exactly like the real site instead of squashing into a narrow column.
+      var f = document.createElement("iframe"), stage = document.createElement("div");
+      f.src = box.dataset.src; f.title = "Live demo"; f.allow = "microphone; autoplay; fullscreen";
+      stage.className = "pj-stage"; stage.appendChild(f);
+      var open = document.createElement("a"); open.className = "pj-open"; open.href = box.dataset.src; open.target = "_blank"; open.rel = "noopener"; open.textContent = "Open full size ↗";
+      box.innerHTML = ""; box.appendChild(stage); box.appendChild(open); box.classList.add("on");
+      var fit = function () { stage.style.transform = "scale(" + box.clientWidth / 1280 + ")"; };
+      fit(); if ("ResizeObserver" in window) new ResizeObserver(fit).observe(box); else addEventListener("resize", fit);
     });
   });
 

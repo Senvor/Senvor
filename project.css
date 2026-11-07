@@ -60,8 +60,10 @@
 .pj-frame button{font:700 20px var(--display);color:#1b1840;background:var(--amber);border:2px solid var(--ink);padding:12px 22px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}
 .pj-frame button:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
 .pj-frame small{color:var(--soft);font-size:14px}
-.pj-frame.on{display:block;background:#000}
-.pj-frame iframe{display:block;width:100%;height:100%;border:0}
+.pj-frame.on{display:block;position:relative;overflow:hidden;background:#000}
+.pj-stage{position:absolute;top:0;left:0;width:1280px;height:800px;transform-origin:0 0}
+.pj-stage iframe{display:block;width:1280px;height:800px;border:0;background:#fff}
+.pj-open{position:absolute;right:10px;bottom:10px;font:600 14px var(--body);color:#1b1840;background:var(--amber);border:2px solid #1b1840;padding:6px 12px;text-decoration:none;box-shadow:3px 3px 0 #1b1840}
 /* commits */
 .pj-commits{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .pj-commits li{display:grid;gap:2px;font-size:14px;line-height:1.35;border-left:3px solid var(--amber);padding-left:10px}
