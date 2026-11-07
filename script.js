@@ -151,10 +151,10 @@
 
   var root=document.documentElement,btn=document.getElementById('theme');
   btn.addEventListener('click',function(){
-    var dark=getComputedStyle(root).getPropertyValue('--bg').trim()==='#15132b';
+    var dark=root.getAttribute('data-theme')==='dark';
     var next=dark?'light':'dark';
     function apply(){
-      root.setAttribute('data-theme',next);
+      if(window.senvorTheme)window.senvorTheme.apply(next);else root.setAttribute('data-theme',next);
       try{localStorage.setItem('theme',next)}catch(e){}
     }
     var calm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
