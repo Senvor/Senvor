@@ -191,7 +191,7 @@
   var $=function(id){return document.getElementById(id)};
   var pauseBtn=$('orbit-pause'),gIn=$('og'),sIn=$('os'),mIn=$('om'),tIn=$('ot'),pIn=$('op'),fsBtn=$('orbit-fs');
   var bodies=[],suns=[],bg=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,scale=1,aim=null,time=0,simT=0;
-  var G=1,warp=1,mutual=false,trails=true,preset='solar',binary=null,phase=0;
+  var zoom=1,camX=120,camY=67.5,ZMIN=0.5,ZMAX=4,G=1,warp=1,mutual=false,trails=true,preset='solar',binary=null,phase=0;
   var amber='#ffb84d',sky='#6ec1ff';
   function readColors(){var s=getComputedStyle(document.documentElement);amber=s.getPropertyValue('--amber').trim()||amber;sky=s.getPropertyValue('--sky').trim()||sky}
   readColors();
@@ -290,6 +290,7 @@
     ctx.setTransform(scale,0,0,scale,0,0);
     ctx.fillStyle='#fff';bg.forEach(function(s){ctx.globalAlpha=Math.sin(s.p+time*s.s)>0?.85:.35;ctx.fillRect(Math.round(s.x),Math.round(s.y),s.r>.5?1:.5,s.r>.5?1:.5)});
     ctx.globalAlpha=1;ctx.lineCap='round';
+    ctx.setTransform(scale*zoom,0,0,scale*zoom,scale*(W/2-camX*zoom),scale*(H/2-camY*zoom));   // camera: zoom around (camX,camY)
     if(trails)bodies.forEach(function(b){
       // trail as 3 chunks of one path each, fading out (3 strokes instead of ~120)
       var t=b.trail,n=t.length;if(n<2)return;ctx.strokeStyle=b.comet?'#bfe6ff':'hsl('+b.hue+' 90% 66%)';
@@ -316,10 +317,11 @@
       ctx.setLineDash([3,3]);ctx.strokeStyle=sky;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(aim.x,aim.y);ctx.lineTo(ex,ey);ctx.stroke();ctx.setLineDash([]);
       ctx.fillStyle=sky;ctx.beginPath();ctx.arc(aim.x,aim.y,3,0,6.283);ctx.fill();
     }
+    ctx.setTransform(scale,0,0,scale,0,0);
     ctx.font='700 6px ui-monospace,SFMono-Regular,Menlo,monospace';
     ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillText('POCKET GRAVITY LAB',7,11);
     ctx.textAlign='right';ctx.fillStyle=amber;ctx.fillText(NAMES[preset]||'',W-7,11);
-    ctx.fillStyle='rgba(255,255,255,.6)';ctx.fillText('G \u00d7'+G.toFixed(2)+'   SPEED \u00d7'+warp,W-7,H-7);
+    ctx.fillStyle='rgba(255,255,255,.6)';ctx.fillText('ZOOM \u00d7'+zoom.toFixed(1)+'   G \u00d7'+G.toFixed(2)+'   SPEED \u00d7'+warp,W-7,H-7);
     ctx.textAlign='left';ctx.fillText(bodies.length+(bodies.length===1?' BODY':' BODIES')+(mutual?'  \u00b7  N-BODY':'')+'  \u00b7  T '+simT.toFixed(0)+'s',7,H-7);
   }
   function frame(t){
@@ -332,18 +334,32 @@
   }
   function run(){if(!raf&&!paused&&onScreen&&!document.hidden){lastT=performance.now();raf=requestAnimationFrame(frame)}}
   function setPaused(p){paused=p;pauseBtn.textContent=p?'Play':'Pause';if(!p)run()}
-  function pt(e){var r=cv.getBoundingClientRect();return [(e.clientX-r.left)/r.width*W,(e.clientY-r.top)/r.height*H]}
+  function scr(e){var r=cv.getBoundingClientRect();return [(e.clientX-r.left)/r.width*W,(e.clientY-r.top)/r.height*H]}
+  function pt(e){var q=scr(e);return [(q[0]-W/2)/zoom+camX,(q[1]-H/2)/zoom+camY]}
+  // Zoom so the world point under screen point (sx,sy) stays put.
+  function setZoom(z,sx,sy){
+    z=Math.max(ZMIN,Math.min(ZMAX,z));if(sx==null){sx=W/2;sy=H/2}
+    var wx=(sx-W/2)/zoom+camX,wy=(sy-H/2)/zoom+camY;zoom=z;
+    if(zoom===1){camX=cx;camY=cy}else{camX=wx-(sx-W/2)/zoom;camY=wy-(sy-H/2)/zoom}
+    draw();
+  }
+  cv.addEventListener('wheel',function(e){e.preventDefault();var q=scr(e);setZoom(zoom*(e.deltaY<0?1.15:1/1.15),q[0],q[1])},{passive:false});
+  if($('orbit-zin'))$('orbit-zin').addEventListener('click',function(){setZoom(zoom*1.4)});
+  if($('orbit-zout'))$('orbit-zout').addEventListener('click',function(){setZoom(zoom/1.4)});
 
   // Tap: drop a planet into orbit. Drag: pull back like a slingshot and let go to fling it.
   cv.addEventListener('pointerdown',function(e){var p=pt(e);aim={x:p[0],y:p[1],ex:p[0],ey:p[1]};try{cv.setPointerCapture(e.pointerId)}catch(_){}draw()});
   cv.addEventListener('pointermove',function(e){if(!aim)return;var p=pt(e);aim.ex=p[0];aim.ey=p[1];if(paused)draw()});
   cv.addEventListener('pointerup',function(){
     if(!aim)return;var dx=aim.x-aim.ex,dy=aim.y-aim.ey;
-    if(dx*dx+dy*dy<25)launch(aim.x,aim.y);else add(aim.x,aim.y,dx*1.5,dy*1.5);
+    if(dx*dx+dy*dy<25/(zoom*zoom))launch(aim.x,aim.y);else add(aim.x,aim.y,dx*1.5*zoom,dy*1.5*zoom);
     aim=null;accel();draw();run();
   });
   cv.addEventListener('pointercancel',function(){aim=null});
   cv.addEventListener('keydown',function(e){
+    if(e.key==='+'||e.key==='='){setZoom(zoom*1.4);return}
+    if(e.key==='-'||e.key==='_'){setZoom(zoom/1.4);return}
+    if(e.key==='0'){setZoom(1);return}
     if(e.key==='Enter'||e.key===' '){e.preventDefault();var a=Math.random()*6.283,d=25+Math.random()*35;launch(cx+Math.cos(a)*d*1.5,cy+Math.sin(a)*d);accel();draw();run()}
   });
   pauseBtn.addEventListener('click',function(){setPaused(!paused)});
