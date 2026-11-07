@@ -27,7 +27,7 @@ a{color:inherit}
 .wrap{max-width:980px;margin:0 auto;padding:0 max(24px,env(safe-area-inset-left)) 0 max(24px,env(safe-area-inset-right))}
 .hero>*,.proj>*,.two>*{min-width:0}
 img,svg,canvas{max-width:100%}
-h1,h2,h3,.px{font-family:var(--display);font-weight:700;line-height:1.1;margin:0}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;margin:0}
 
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:2px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
@@ -287,7 +287,6 @@ a,button{touch-action:manipulation}
 .conv-out{margin:16px 0 4px;font:600 20px/1.4 var(--mono);color:var(--ink);overflow-wrap:anywhere}
 .conv-note{margin:0;font-size:13px;color:var(--soft)}
 @media (max-width:600px){.conv-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.conv-out{font-size:18px}}
-main img.shot { max-width: 100%; height: auto; border-radius: 12px; }
 
 .js .reveal {
   opacity: 0;
