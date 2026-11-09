@@ -1,6 +1,6 @@
 // Random theme: the first page of every visit uses the default theme;
-// every refresh after that gets a brand-new random colour palette.
-// Hue, saturation and accent colours are picked at random, so the combinations never run out.
+// every refresh after that picks one of 10 hand-picked colour palettes at random
+// (never the same one twice in a row).
 // Lightness stays fixed per role, so text always stays readable in both light and dark mode.
 (function () {
   var r = document.documentElement;
@@ -18,13 +18,28 @@
     return "hsl(" + H.toFixed(1) + ", " + Math.min(100, S).toFixed(1) + "%, " + L.toFixed(1) + "%)";
   }
 
+  // 10 curated palettes: base hue (h), base saturation (s), accent hue (a), second accent hue (k).
+  var PALETTES = [
+    { name: "Midnight Amber", h: 248, s: 45, a: 38,  k: 200 },
+    { name: "Forest Coral",   h: 150, s: 35, a: 12,  k: 45  },
+    { name: "Ocean Gold",     h: 192, s: 50, a: 45,  k: 330 },
+    { name: "Plum Mint",      h: 290, s: 40, a: 160, k: 45  },
+    { name: "Ember Sky",      h: 20,  s: 30, a: 200, k: 50  },
+    { name: "Rose Teal",      h: 340, s: 45, a: 175, k: 45  },
+    { name: "Slate Lime",     h: 220, s: 35, a: 85,  k: 330 },
+    { name: "Sage Magenta",   h: 95,  s: 25, a: 320, k: 200 },
+    { name: "Wine Cyan",      h: 355, s: 50, a: 188, k: 48  },
+    { name: "Lavender Peach", h: 265, s: 55, a: 25,  k: 170 }
+  ];
+
   function roll() {
-    var rnd = Math.random;
-    var h = rnd() * 360;                         // base hue
-    var s = 30 + rnd() * 50;                     // base saturation 30-80%
-    var a = (h + 90 + rnd() * 180) % 360;        // accent hue, away from the base
-    var k = (a + 60 + rnd() * 120) % 360;        // second accent hue
-    hue = Math.round(h);
+    var last = -1;
+    try { last = parseInt(sessionStorage.getItem("palette"), 10); } catch (e) {}
+    var i;
+    do { i = Math.floor(Math.random() * PALETTES.length); } while (i === last && PALETTES.length > 1);
+    try { sessionStorage.setItem("palette", String(i)); } catch (e) {}
+    var P = PALETTES[i], h = P.h, s = P.s, a = P.a, k = P.k;
+    hue = h;
     palettes = {
       dark: {
         "--bg": c(h, s * 0.5, 9), "--panel": c(h, s * 0.45, 14), "--line": c(h, s * 0.4, 28),
