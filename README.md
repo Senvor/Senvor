@@ -36,3 +36,21 @@ I'm currently building Pocket Gravity Lab, a portable physics lab for exploring 
 
 
 
+## `Site Files`
+
+This repo also hosts [senvor.dev](https://senvor.dev/) via GitHub Pages.
+
+```
+index.html               home page
+404.html                 not-found page
+project.template.html    template for project pages
+projects.json            project data (order matches the home page)
+build.mjs                node build.mjs → projects/*/index.html + sitemap.xml
+projects/<slug>/         generated project pages (don't edit by hand)
+css/                     style.css (site), project.css (project pages)
+js/                      theme.js, script.js, home.js, extras.js, github-status.js, project.js
+assets/                  favicon, touch icon, og.jpg
+assets/icons/            social and brand SVGs
+assets/projects/         project photos, renders and thumbnails
+CNAME, robots.txt, sitemap.xml, .github/
+```

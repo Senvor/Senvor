@@ -6,7 +6,7 @@
 <meta name="description" content="Senvor: web developer and graphic designer. Fast, responsive landing pages and portfolio sites, plus custom PCBs and games through Hack Club.">
 <meta name="theme-color" content="#15132b">
 <link rel="canonical" href="https://senvor.dev/">
-<script src="/theme.js"></script>
+<script src="/js/theme.js"></script>
 
 <!-- Link preview (Discord, X, WhatsApp, iMessage, Slack) -->
 <meta property="og:type" content="website">
@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
@@ -130,24 +130,7 @@
     <h3 class="group">Hardware</h3>
     <div class="projects">
       <article class="proj">
-        <div>
-          <h3>Pocket Gravity Lab<span class="tag">in progress</span></h3>
-          <p>A portable physics lab for exploring gravity and orbital mechanics through real-time simulations and physical controls.</p>
-          <div class="tech">C++, ESP32-S3</div>
-          <p class="now" data-repo="Pocket-Gravity-Lab"></p>
-        </div>
-        <div class="links"><a href="projects/pocket-gravity-lab/">Details</a><a href="https://github.com/Senvor/Pocket-Gravity-Lab">Repository</a></div>
-      </article>
-      <article class="proj">
-        <div>
-          <h3>Marbew<span class="tag">in progress</span></h3>
-          <p>A custom 3D-printed marble race, designed from scratch.</p>
-          <p class="now" data-repo="Marbew"></p>
-        </div>
-        <div class="links"><a href="projects/marbew/">Details</a><a href="https://github.com/Senvor/Marbew">Repository</a></div>
-      </article>
-      <article class="proj">
-        <img class="thumb" src="assets/starbie.webp" alt="PCB render of Starbie, a star-shaped board with an OLED, sensor and two buttons" loading="lazy" decoding="async">
+        <img class="thumb" src="assets/projects/starbie-thumb.webp" alt="PCB render of Starbie, a star-shaped board with an OLED, sensor and two buttons" loading="lazy" decoding="async">
         <div>
           <h3>Starbie</h3>
           <p>A motion-controlled desktop pet on a custom PCB.</p>
@@ -157,7 +140,7 @@
         <div class="links"><a href="projects/starbie/">Details</a><a href="https://github.com/Senvor/Starbie">Repository</a></div>
       </article>
       <article class="proj">
-        <img class="thumb" src="assets/devruler.webp" alt="Render of the DevRuler, a custom PCB ruler" loading="lazy" decoding="async">
+        <img class="thumb" src="assets/projects/devruler-thumb.webp" alt="Render of the DevRuler, a custom PCB ruler" loading="lazy" decoding="async">
         <div>
           <h3>DevRuler</h3>
           <p>A custom PCB ruler for developers, with hardware footprints, everyday commands, and SI unit conversions. Made for Hack Club's Forge.</p>
@@ -185,6 +168,23 @@
           <p class="conv-out" id="cv-out" role="status"></p>
           <p class="conv-note">Uses exact conversion factors, so results can differ slightly from the rounded numbers printed on the ruler.</p>
         </details>
+      </article>
+      <article class="proj">
+        <div>
+          <h3>Pocket Gravity Lab<span class="tag">in progress</span></h3>
+          <p>A portable physics lab for exploring gravity and orbital mechanics through real-time simulations and physical controls.</p>
+          <div class="tech">C++, ESP32-S3</div>
+          <p class="now" data-repo="Pocket-Gravity-Lab"></p>
+        </div>
+        <div class="links"><a href="projects/pocket-gravity-lab/">Details</a><a href="https://github.com/Senvor/Pocket-Gravity-Lab">Repository</a></div>
+      </article>
+      <article class="proj">
+        <div>
+          <h3>Marbew<span class="tag">in progress</span></h3>
+          <p>A custom 3D-printed marble race, designed from scratch.</p>
+          <p class="now" data-repo="Marbew"></p>
+        </div>
+        <div class="links"><a href="projects/marbew/">Details</a><a href="https://github.com/Senvor/Marbew">Repository</a></div>
       </article>
       <article class="proj next">
         <div>
@@ -251,23 +251,23 @@
   <section id="connect" class="reveal">
     <h2>Connect</h2>
     <ul class="social">
-      <li><a href="https://github.com/Senvor"><b><img class="brand" src="assets/github.svg" alt="" width="22" height="22">GitHub</b><span>Senvor</span></a></li>
-      <li><a href="https://reddit.com/user/senvor"><b><img class="brand" src="assets/reddit.svg" alt="" width="22" height="22">Reddit</b><span>u/senvor</span></a></li>
-      <li><a href="https://discord.com/users/1297888931169177653" data-copy="s3nvor" title="Copy my Discord username"><b><img class="brand" src="assets/discord.svg" alt="" width="22" height="22">Discord</b><span>s3nvor</span></a></li>
-      <li><a href="https://x.com/s3nvor"><b><img class="brand" src="assets/x.svg" alt="" width="22" height="22">X</b><span>@s3nvor</span></a></li>
-      <li><a href="https://instagram.com/s3nvor"><b><img class="brand" src="assets/instagram.svg" alt="" width="22" height="22">Instagram</b><span>@s3nvor</span></a></li>
-      <li><a href="https://youtube.com/@s3nvor"><b><img class="brand" src="assets/youtube.svg" alt="" width="22" height="22">YouTube</b><span>@s3nvor</span></a></li>
-      <li><a href="https://www.tiktok.com/@s3nvor"><b><img class="brand" src="assets/tiktok.svg" alt="" width="22" height="22">TikTok</b><span>@s3nvor</span></a></li>
-      <li><a href="https://www.twitch.tv/s3nvor"><b><img class="brand" src="assets/twitch.svg" alt="" width="22" height="22">Twitch</b><span>s3nvor</span></a></li>
-      <li><a href="https://www.threads.com/@s3nvor"><b><img class="brand" src="assets/threads.svg" alt="" width="22" height="22">Threads</b><span>@s3nvor</span></a></li>
-      <li><a href="https://t.me/s3nvor"><b><img class="brand" src="assets/telegram.svg" alt="" width="22" height="22">Telegram</b><span>@s3nvor</span></a></li>
-      <li><a href="https://www.pinterest.com/s3nvor/"><b><img class="brand" src="assets/pinterest.svg" alt="" width="22" height="22">Pinterest</b><span>s3nvor</span></a></li>
-      <li><a href="https://modrinth.com/user/Senvor"><b><img class="brand" src="assets/modrinth.svg" alt="" width="22" height="22">Modrinth</b><span>Senvor</span></a></li>
-      <li><a href="https://dev.to/senvor"><b><img class="brand" src="assets/devto.svg" alt="" width="22" height="22">DEV</b><span>@senvor</span></a></li>
-      <li><a href="https://app.daily.dev/senvor"><b><img class="brand" src="assets/dailydev.svg" alt="" width="22" height="22">daily.dev</b><span>@senvor</span></a></li>
-      <li><a href="https://lospec.com/senvor"><b><img class="brand" src="assets/lospec.svg" alt="" width="22" height="22">Lospec</b><span>senvor</span></a></li>
-      <li><a href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio"><b><img class="brand" src="assets/fiverr.svg" alt="" width="22" height="22">Fiverr</b><span>senvor</span></a></li>
-      <li class="mail"><a href="mailto:senvor@lazydeveloper.org" data-copy="senvor@lazydeveloper.org" title="Copy my email"><b><img class="brand" src="assets/mail.svg" alt="" width="22" height="22">Email</b><span>senvor@lazydeveloper.org</span></a></li>
+      <li><a href="https://github.com/Senvor"><b><img class="brand" src="assets/icons/github.svg" alt="" width="22" height="22">GitHub</b><span>Senvor</span></a></li>
+      <li><a href="https://reddit.com/user/senvor"><b><img class="brand" src="assets/icons/reddit.svg" alt="" width="22" height="22">Reddit</b><span>u/senvor</span></a></li>
+      <li><a href="https://discord.com/users/1297888931169177653" data-copy="s3nvor" title="Copy my Discord username"><b><img class="brand" src="assets/icons/discord.svg" alt="" width="22" height="22">Discord</b><span>s3nvor</span></a></li>
+      <li><a href="https://x.com/s3nvor"><b><img class="brand" src="assets/icons/x.svg" alt="" width="22" height="22">X</b><span>@s3nvor</span></a></li>
+      <li><a href="https://instagram.com/s3nvor"><b><img class="brand" src="assets/icons/instagram.svg" alt="" width="22" height="22">Instagram</b><span>@s3nvor</span></a></li>
+      <li><a href="https://youtube.com/@s3nvor"><b><img class="brand" src="assets/icons/youtube.svg" alt="" width="22" height="22">YouTube</b><span>@s3nvor</span></a></li>
+      <li><a href="https://www.tiktok.com/@s3nvor"><b><img class="brand" src="assets/icons/tiktok.svg" alt="" width="22" height="22">TikTok</b><span>@s3nvor</span></a></li>
+      <li><a href="https://www.twitch.tv/s3nvor"><b><img class="brand" src="assets/icons/twitch.svg" alt="" width="22" height="22">Twitch</b><span>s3nvor</span></a></li>
+      <li><a href="https://www.threads.com/@s3nvor"><b><img class="brand" src="assets/icons/threads.svg" alt="" width="22" height="22">Threads</b><span>@s3nvor</span></a></li>
+      <li><a href="https://t.me/s3nvor"><b><img class="brand" src="assets/icons/telegram.svg" alt="" width="22" height="22">Telegram</b><span>@s3nvor</span></a></li>
+      <li><a href="https://www.pinterest.com/s3nvor/"><b><img class="brand" src="assets/icons/pinterest.svg" alt="" width="22" height="22">Pinterest</b><span>s3nvor</span></a></li>
+      <li><a href="https://modrinth.com/user/Senvor"><b><img class="brand" src="assets/icons/modrinth.svg" alt="" width="22" height="22">Modrinth</b><span>Senvor</span></a></li>
+      <li><a href="https://dev.to/senvor"><b><img class="brand" src="assets/icons/devto.svg" alt="" width="22" height="22">DEV</b><span>@senvor</span></a></li>
+      <li><a href="https://app.daily.dev/senvor"><b><img class="brand" src="assets/icons/dailydev.svg" alt="" width="22" height="22">daily.dev</b><span>@senvor</span></a></li>
+      <li><a href="https://lospec.com/senvor"><b><img class="brand" src="assets/icons/lospec.svg" alt="" width="22" height="22">Lospec</b><span>senvor</span></a></li>
+      <li><a href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio"><b><img class="brand" src="assets/icons/fiverr.svg" alt="" width="22" height="22">Fiverr</b><span>senvor</span></a></li>
+      <li class="mail"><a href="mailto:senvor@lazydeveloper.org" data-copy="senvor@lazydeveloper.org" title="Copy my email"><b><img class="brand" src="assets/icons/mail.svg" alt="" width="22" height="22">Email</b><span>senvor@lazydeveloper.org</span></a></li>
     </ul>
   </section>
 </div>
@@ -275,9 +275,9 @@
 <footer><div class="wrap foot"><span>© 2026 Senvor · hand-built with HTML, CSS and JS</span><span class="last" id="last-commit"></span><a href="#top" class="totop">Back to top ↑</a></div></footer>
 <div class="pal" id="pal" hidden><div class="pal-box" role="dialog" aria-modal="true" aria-label="Command menu"><input id="pal-q" type="text" placeholder="Jump to a section, project or profile…" autocomplete="off" spellcheck="false"><ul id="pal-list" role="listbox"></ul><p class="pal-hint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p></div></div>
 
-<script src="script.js"></script>
-<script type="module" src="github-status.js"></script>
-<script type="module" src="extras.js"></script>
-<script src="home.js" defer></script>
+<script src="js/script.js"></script>
+<script type="module" src="js/github-status.js"></script>
+<script type="module" src="js/extras.js"></script>
+<script src="js/home.js" defer></script>
 </body>
 </html>
