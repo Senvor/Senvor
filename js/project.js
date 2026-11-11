@@ -136,6 +136,14 @@
       S.traces.push({ p: pts, o: R(0, 400), c: Math.random() < .35 ? AMB : "#3fae6a" }); }
   } else if (kind === "particles") {
     S.ps = []; for (var q = 0; q < 320; q++) S.ps.push({ a: R(0, 6.28), r: R(4, 46), w: R(.2, .9) * (Math.random() < .5 ? 1 : -1), h: R(180, 320) });
+  } else if (kind === "food") {
+    // Tapdish: dishes ride a counter belt, a tap cursor picks one, it hops into the bag and the count ticks up.
+    S.items = []; S.n = 0; S.cur = { x: W * .62, y: 18, tap: 0 }; S.next = 1.2; S.fly = [];
+    for (var f0 = 0; f0 < 5; f0++) S.items.push({ x: f0 * 52 - 20, k: f0 % 4 });
+  } else if (kind === "sound") {
+    // Sound Galaxy: a spiral galaxy whose arms swell with a fake beat, an equalizer glowing underneath.
+    S.st = []; for (var g0 = 0; g0 < 260; g0++) { var arm = g0 % 3; S.st.push({ arm: arm, d: R(3, 48), o: R(-.35, .35), h: 190 + arm * 60 + R(-20, 20) }); }
+    S.bars = []; for (var b0 = 0; b0 < 30; b0++) S.bars.push(0);
   } else if (kind === "marbles") {
     // track: pairs of points are ramps, the gap between pairs is a straight drop
     S.path = [[20, 8], [212, 24], [220, 24], [220, 40], [28, 56], [20, 56], [20, 72], [212, 88], [220, 88], [220, 112]];
@@ -172,6 +180,63 @@
     } else if (kind === "particles") {
       S.ps.forEach(function (p) { p.a += p.w * dt * (60 / (p.r + 20)); var r = p.r * (1 + .08 * Math.sin(t * 2 + p.h)); var X = W / 2 + Math.cos(p.a) * r * 2.2, Y = H / 2 + Math.sin(p.a) * r, c = "hsl(" + p.h + " 90% 70%)"; px(X, Y, c, 1); if (p.r < 20) px(X + 1, Y, c, .6); });
       disc(W / 2, H / 2, 3, "#fff", .9);
+    } else if (kind === "food") {
+      var belt = 74, sp = 26;
+      // counter + belt
+      x.globalAlpha = 1; x.fillStyle = "#2a2346"; x.fillRect(0, belt + 6, W, 3); x.fillStyle = "#3b3266"; x.fillRect(0, belt + 9, W, H - belt - 9);
+      for (var bx = -((t * sp) % 8); bx < W; bx += 8) { x.fillStyle = "#4b4180"; x.fillRect(Math.round(bx), belt + 6, 3, 1); }
+      // bag on the right with order count
+      var gx = W - 30, gy = 30; x.fillStyle = "#c98a4b"; x.fillRect(gx, gy, 22, 24); x.fillStyle = "#a8703a"; x.fillRect(gx, gy, 22, 3);
+      x.fillStyle = "#6b4423"; x.fillRect(gx + 6, gy - 5, 1, 5); x.fillRect(gx + 15, gy - 5, 1, 5); x.fillRect(gx + 6, gy - 5, 10, 1);
+      x.fillStyle = "#fff6e0"; x.font = "8px monospace"; x.textAlign = "center"; x.fillText(String(S.n % 100), gx + 11, gy + 16);
+      var drawDish = function (X, Y, k, a) {
+        x.globalAlpha = a == null ? 1 : a; X = Math.round(X); Y = Math.round(Y);
+        if (k === 0) { // burger
+          x.fillStyle = "#e0a050"; x.fillRect(X - 6, Y - 9, 12, 3); x.fillRect(X - 5, Y - 10, 10, 1);
+          x.fillStyle = "#7cf29a"; x.fillRect(X - 7, Y - 6, 14, 1); x.fillStyle = "#7a3b1e"; x.fillRect(X - 6, Y - 5, 12, 2);
+          x.fillStyle = "#ffd34d"; x.fillRect(X - 6, Y - 6, 12, 1); x.fillStyle = "#e0a050"; x.fillRect(X - 6, Y - 3, 12, 2);
+        } else if (k === 1) { // pizza slice
+          for (var r = 0; r < 10; r++) { x.fillStyle = r < 2 ? "#d9913f" : "#ffcf5a"; x.fillRect(X - 6 + r * .6, Y - 11 + r, 12 - r * 1.2, 1); }
+          x.fillStyle = "#e0453a"; x.fillRect(X - 2, Y - 7, 2, 2); x.fillRect(X + 1, Y - 5, 2, 2); x.fillRect(X - 1, Y - 3, 1, 1);
+        } else if (k === 2) { // curry bowl with steam
+          x.fillStyle = "#f2f2f2"; x.fillRect(X - 7, Y - 5, 14, 2); x.fillRect(X - 6, Y - 3, 12, 2); x.fillRect(X - 4, Y - 1, 8, 1);
+          x.fillStyle = "#e07a2e"; x.fillRect(X - 6, Y - 6, 12, 1);
+          for (var s3 = 0; s3 < 3; s3++) px(X - 3 + s3 * 3 + Math.sin(t * 4 + s3) , Y - 8 - ((t * 10 + s3 * 3) % 7), "#fff", .5);
+        } else { // wrap
+          x.fillStyle = "#e8c27a"; x.fillRect(X - 7, Y - 6, 14, 5); x.fillStyle = "#d4a95c"; x.fillRect(X - 7, Y - 6, 2, 5);
+          x.fillStyle = "#7cf29a"; x.fillRect(X + 5, Y - 6, 2, 1); x.fillStyle = "#e0453a"; x.fillRect(X + 5, Y - 4, 2, 1);
+        }
+        x.globalAlpha = 1;
+      };
+      S.items.forEach(function (it) { it.x += sp * dt; if (it.x > W + 12) { it.x -= 5 * 52; it.k = Math.floor(R(0, 4)); it.gone = false; } if (!it.gone) drawDish(it.x, belt + 5, it.k); });
+      // tap cursor: every ~1.6s it taps the dish under it, which arcs into the bag
+      S.next -= dt; var c = S.cur;
+      if (S.next <= 0) { S.next = 1.6;
+        var pick = null; S.items.forEach(function (it) { if (!it.gone && Math.abs(it.x - c.x) < 18 && (!pick || Math.abs(it.x - c.x) < Math.abs(pick.x - c.x))) pick = it; });
+        if (pick) { pick.gone = true; c.tap = .25; S.fly.push({ x0: pick.x, y0: belt + 5, k: pick.k, p: 0 }); } }
+      if (c.tap > 0) c.tap -= dt;
+      var cy = c.y + (c.tap > 0 ? 40 : 34) + Math.sin(t * 3) * 2;
+      x.fillStyle = "#fff"; for (var hy = 0; hy < 7; hy++) x.fillRect(Math.round(c.x) - 1, Math.round(cy) + hy, 3, 1); x.fillRect(Math.round(c.x) - 1, Math.round(cy) + 6, 7, 3);
+      if (c.tap > 0) disc(c.x, belt - 2, 6 * (1 - c.tap / .25) + 2, AMB, .35 * c.tap / .25 + .1);
+      S.fly = S.fly.filter(function (f) { f.p += dt * 1.4; var tx = gx + 11, ty = gy + 8, X = f.x0 + (tx - f.x0) * f.p, Y = f.y0 + (ty - f.y0) * f.p - Math.sin(f.p * Math.PI) * 30;
+        if (f.p >= 1) { S.n++; disc(tx, gy - 8, 3, "#7cf29a", .9); return false; } drawDish(X, Y, f.k, 1); return true; });
+      x.fillStyle = "#7cf29a"; x.globalAlpha = .9; x.font = "7px monospace"; x.textAlign = "left"; x.fillText("ORDER UP", 6, 12);
+    } else if (kind === "sound") {
+      var cx = W / 2, cy2 = H / 2 - 6, beat = Math.pow(Math.max(0, Math.sin(t * 5.2)), 6), lvl = .55 + .45 * Math.sin(t * 1.3) * Math.sin(t * .7);
+      disc(cx, cy2, 7 + beat * 4, "#d58cff", .18); disc(cx, cy2, 4 + beat * 2, "#fff", .85);
+      S.st.forEach(function (p) {
+        var swell = 1 + beat * .25 * (1 - p.d / 48);
+        var a = p.arm * 2.094 + p.d * .085 + p.o * (1 + p.d / 30) - t * (.35 + 4 / (p.d + 8));
+        var X = cx + Math.cos(a) * p.d * 2.1 * swell, Y = cy2 + Math.sin(a) * p.d * .75 * swell;
+        px(X, Y, "hsl(" + p.h + " 90% " + (60 + beat * 25) + "%)", .55 + beat * .45);
+      });
+      // equalizer bars along the bottom, fed by a fake spectrum
+      for (var e = 0; e < S.bars.length; e++) {
+        var target = (Math.abs(Math.sin(t * (2 + e * .37) + e)) * .6 + beat * (1 - e / S.bars.length)) * lvl * 16;
+        S.bars[e] += (target - S.bars[e]) * Math.min(1, dt * 12);
+        var bh = Math.max(1, Math.round(S.bars[e])), bxp = 3 + e * 8;
+        for (var hh = 0; hh < bh; hh++) { x.globalAlpha = .35 + .5 * hh / 16; x.fillStyle = "hsl(" + (200 + hh * 8) + " 90% 65%)"; x.fillRect(bxp, H - 2 - hh, 6, 1); }
+      }
     } else if (kind === "marbles") {
       // Marbles follow a fixed zig-zag track (ramp, drop, ramp back, drop, ...) so they can never get stuck.
       var P = S.path;
