@@ -30,7 +30,7 @@ Programming is one of my profound interests, and recently I heard about [Hack Cl
 
 It really inspired me to start making cool and useful things of my own. So far, I'm still pretty new to this field and I haven't made any great projects yet, just a few small ones. But I'm excited to keep learning, building, and seeing what I can create.
 
-I'm currently building **Pocket Gravity Lab**, a portable physics lab for exploring gravity and orbital mechanics, written in C++ for the ESP32-S3.
+I'm currently building **Pocket Gravity Lab**, a portable physics lab for exploring gravity and orbital mechanics, written in C++ for the Teensy 4.1.
 
 ## My Projects
 
