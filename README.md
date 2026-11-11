@@ -2,9 +2,9 @@
 
 Programming is one of my profound interests, and recently I heard about [Hack Club](https://hackclub.com/), a community for teens, by teens, where everyone gets to make cool projects.
 
-It really inspired me to start making cool and useful things of my own. So far, I’m still pretty new to this field and I haven’t made any great projects yet, just a few small ones. But I’m excited to keep learning, building, and seeing what I can create.
+It really inspired me to start making cool and useful things of my own. So far, I'm still pretty new to this field and I haven't made any great projects yet, just a few small ones. But I'm excited to keep learning, building, and seeing what I can create.
 
-I'm currently building Pocket Gravity Lab, a portable physics lab for exploring gravity and orbital mechanics, written in C++ for the Teensy 4.1.
+I'm currently building [Pocket Gravity Lab](https://github.com/Senvor/Pocket-Gravity-Lab), a portable physics lab for exploring gravity and orbital mechanics, written in C++ for the Teensy 4.1.
 
 [![Portfolio](https://img.shields.io/badge/portfolio-E0632B?style=for-the-badge)](https://senvor.dev/)
 [![GitHub](https://img.shields.io/badge/github-0F130C?style=for-the-badge&logo=github&logoColor=EFE8D8)](https://github.com/Senvor)
@@ -18,23 +18,20 @@ I'm currently building Pocket Gravity Lab, a portable physics lab for exploring 
 
 # Coding
 
-## `HackaTime`
+## `Hackatime`
 
 ![Hackatime Stats](https://github-readme-stats.hackclub.dev/api/wakatime?username=Senvor&api_domain=hackatime.hackclub.com&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8&theme=neon)
 
-## `Github Activity`
+## `GitHub Activity`
 
-[![GitHub Streak](https://streak-stats.demolab.com?user=Senvor&theme=highcontrast&timezone=IST)](https://git.io/streak-stats)
+[![GitHub Streak](https://streak-stats.demolab.com?user=Senvor&theme=highcontrast&timezone=Asia/Kolkata)](https://git.io/streak-stats)
 <div align="center">
-  
+
 ![snake](https://raw.githubusercontent.com/Senvor/Senvor/output/snake-dark.svg)
 
 </div>
 
 ---
-
-
-
 
 ## `Site Files`
 
