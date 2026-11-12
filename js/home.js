@@ -28,13 +28,14 @@
   // ---------- pixel starfield in the hero (low-res canvas scaled up = chunky pixels) ----------
   var sky = $("sky");
   if (sky && sky.getContext) {
-    var c = sky.getContext("2d"), W = 160, H = 90, stars = [], shoot = null, mx = .5, my = .5;
-    sky.width = W; sky.height = H;
-    for (var k = 0; k < 70; k++) stars.push({ x: Math.random() * W, y: Math.random() * H, z: Math.random(), p: Math.random() * 6 });
-    var col = function () { return getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#ece8ff"; };
-    var amber = function () { return getComputedStyle(document.documentElement).getPropertyValue("--amber").trim() || "#ffb84d"; };
-    var ink = col(), amb = amber();
-    new MutationObserver(function () { ink = col(); amb = amber(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    var c = sky.getContext("2d"), H = 80, W = 160, stars = [], shoot = null, mx = .5, my = .5;
+    // Buffer keeps the banner's aspect ratio (2/1 on phones, 12/5 on desktop) so pixels stay square.
+    var fit = function () { var r = sky.getBoundingClientRect(); if (r.height) { W = Math.max(80, Math.round(H * r.width / r.height)); sky.width = W; sky.height = H; } };
+    fit(); addEventListener("resize", fit, { passive: true });
+    for (var k = 0; k < 90; k++) stars.push({ x: Math.random() * 220, y: Math.random() * H, z: Math.random(), p: Math.random() * 6 });
+    var cssv = function (n, d) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || d; };
+    var ink = cssv("--ink", "#ededed"), amb = cssv("--sky", "#6ec1ff");
+    new MutationObserver(function () { ink = cssv("--ink", "#ededed"); amb = cssv("--sky", "#6ec1ff"); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     addEventListener("pointermove", function (e) { mx = e.clientX / innerWidth; my = e.clientY / innerHeight; }, { passive: true });
     var t = 0, last = 0, on = true;
     var draw = function (ts) {
@@ -86,15 +87,6 @@
     a.textContent = "Last updated " + (d < 1 ? "today" : d === 1 ? "yesterday" : d + " days ago"); el.appendChild(a);
   }).catch(function () {});
 
-  // ---------- spotlight: cards light up where the pointer is ----------
-  if (matchMedia("(hover:hover)").matches) {
-    document.querySelectorAll(".proj, .social a").forEach(function (el) {
-      el.addEventListener("pointermove", function (e) {
-        var r = el.getBoundingClientRect(); el.style.setProperty("--mx", (e.clientX - r.left) + "px"); el.style.setProperty("--my", (e.clientY - r.top) + "px");
-      });
-    });
-  }
-
   // ---------- command menu ----------
   var pal = $("pal"), q = $("pal-q"), ul = $("pal-list"), kb = $("kbtn");
   if (!pal) return;
@@ -102,9 +94,9 @@
   document.querySelectorAll("main section[id]").forEach(function (s) { var h = s.querySelector("h2"); if (h) items.push({ t: h.textContent, k: "Section", u: "#" + s.id }); });
   document.querySelectorAll(".proj").forEach(function (p) {
     var h = p.querySelector("h3"), a = p.querySelector('a[href^="projects/"]');
-    if (h && a) items.push({ t: h.childNodes[0].textContent.trim(), k: "Project", u: a.getAttribute("href") });
+    if (h && a) items.push({ t: h.textContent.trim(), k: "Project", u: a.getAttribute("href") });
   });
-  document.querySelectorAll(".social a").forEach(function (a) { var b = a.querySelector("b"); if (b) items.push({ t: b.textContent.trim(), k: "Profile", u: a.href }); });
+  document.querySelectorAll("#connect .clinks a").forEach(function (a) { items.push({ t: a.textContent.trim(), k: "Profile", u: a.href }); });
   items.push({ t: "Toggle theme", k: "Action", f: function () { var b = $("theme"); if (b) b.click(); } });
   items.push({ t: "Copy email", k: "Action", f: function () { try { navigator.clipboard.writeText("senvor@lazydeveloper.org"); } catch (e) {} } });
   var sel = 0, shown = [];
@@ -143,4 +135,108 @@
   });
   q.addEventListener("input", function () { sel = 0; render(); });
   pal.addEventListener("click", function (e) { if (e.target === pal) close(); });
+})();
+
+// ---------- restyle extras: clock, filters, More menu, active nav, sticker, copy email, GitHub activity ----------
+(function () {
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // live clock in India (Asia/Kolkata), refreshed every minute on the minute
+  var ct = $("clock-t");
+  if (ct) {
+    var fmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit" });
+    var tickClock = function () { ct.textContent = fmt.format(new Date()); setTimeout(tickClock, 60000 - Date.now() % 60000 + 50); };
+    tickClock();
+  }
+
+  // filter tabs (Work and Skills)
+  document.querySelectorAll(".tabs[data-for]").forEach(function (tabs) {
+    var box = $(tabs.getAttribute("data-for")); if (!box) return;
+    tabs.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-f]"); if (!b) return;
+      var f = b.getAttribute("data-f");
+      tabs.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      Array.prototype.forEach.call(box.children, function (el) {
+        var show = f === "all" || el.getAttribute("data-cat") === f;
+        el.hidden = !show;
+        if (show && !reduce) { el.classList.remove("fadein"); void el.offsetWidth; el.classList.add("fadein"); }
+      });
+    });
+  });
+
+  // "More" dropdown in the nav
+  var mb = $("more-btn"), mm = $("more-menu");
+  if (mb && mm) {
+    var setOpen = function (o) { mm.hidden = !o; mb.setAttribute("aria-expanded", o ? "true" : "false"); };
+    mb.addEventListener("click", function (e) { e.stopPropagation(); setOpen(mm.hidden); });
+    mm.addEventListener("click", function () { setOpen(false); });
+    document.addEventListener("click", function (e) { if (!mm.hidden && !mm.contains(e.target)) setOpen(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !mm.hidden) { setOpen(false); mb.focus(); } });
+  }
+
+  // active section: 4px dot under its nav link
+  var links = document.querySelectorAll("nav [data-sec]");
+  if (links.length && "IntersectionObserver" in window) {
+    var map = { top: "top", work: "work", connect: "connect", about: "about", skills: "skills", building: "building" };
+    var mark = function (id) {
+      links.forEach(function (a) { a.classList.toggle("active", a.getAttribute("data-sec") === id); });
+      if (mb) mb.classList.toggle("active", id === "about" || id === "skills" || id === "building");
+    };
+    var vis = {};
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { vis[x.target.id || "top"] = x.isIntersecting; });
+      var order = ["top", "about", "bloodline", "connect", "building", "work", "skills", "activity", "still"], cur = null;
+      order.forEach(function (id) { if (vis[id] && !cur) cur = id; });
+      mark(map[cur] || null);
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    var hero = document.querySelector(".hero"); if (hero) io.observe(hero);
+    document.querySelectorAll("main section[id]").forEach(function (s) { io.observe(s); });
+  }
+
+  // draggable sticker (pointer events cover mouse, pen and touch; transform only, so no layout shift)
+  var st = $("sticker");
+  if (st) {
+    var dx = 0, dy = 0, sx = 0, sy = 0, drag = false;
+    st.addEventListener("pointerdown", function (e) { drag = true; sx = e.clientX - dx; sy = e.clientY - dy; st.classList.add("drag"); try { st.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); });
+    st.addEventListener("pointermove", function (e) { if (!drag) return; dx = e.clientX - sx; dy = e.clientY - sy; st.style.setProperty("--dx", dx + "px"); st.style.setProperty("--dy", dy + "px"); });
+    var end = function () { drag = false; st.classList.remove("drag"); };
+    st.addEventListener("pointerup", end); st.addEventListener("pointercancel", end);
+  }
+
+  // "Copy email" button in Still here?
+  var ce = $("copy-email");
+  if (ce) ce.addEventListener("click", function () {
+    var mail = "senvor@lazydeveloper.org", label = ce.textContent;
+    var done = function () { ce.textContent = "Copied"; setTimeout(function () { ce.textContent = label; }, 2000); };
+    var fb = function () { var ta = document.createElement("textarea"); ta.value = mail; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} document.body.removeChild(ta); done(); };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(mail).then(done, fb); else fb();
+  });
+
+  // GitHub activity: 53 weeks x 7 days, five shades; fails quietly
+  var grid = $("cgrid"), load = $("cload"), tot = $("ctotal");
+  if (grid) {
+    var fail = function () { if (load) load.textContent = "See my activity on GitHub"; };
+    var key = "gh:contrib";
+    var got = null;
+    try { var c0 = JSON.parse(localStorage.getItem(key)); if (c0 && Date.now() - c0.t < 6 * 36e5) got = Promise.resolve(c0.d); } catch (e) {}
+    (got || fetch("https://github-contributions-api.jogruber.de/v4/Senvor?y=last").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} return d; }))
+      .then(function (d) {
+        var days = (d && d.contributions) || []; if (!days.length) return fail();
+        // 53 columns: 52 full weeks plus the current week, ending on the latest day
+        var wd = new Date(days[days.length - 1].date + "T00:00:00Z").getUTCDay();
+        days = days.slice(-(52 * 7 + wd + 1));
+        var pad = new Date(days[0].date + "T00:00:00Z").getUTCDay();
+        var frag = document.createDocumentFragment();
+        for (var p = 0; p < pad; p++) { var e0 = document.createElement("i"); e0.className = "pad"; frag.appendChild(e0); }
+        days.forEach(function (x) {
+          var i = document.createElement("i"); i.className = "l" + Math.max(0, Math.min(4, x.level | 0));
+          i.title = x.count + (x.count === 1 ? " contribution on " : " contributions on ") + x.date; frag.appendChild(i);
+        });
+        grid.appendChild(frag); if (load) load.remove();
+        var total = d.total && (d.total.lastYear != null ? d.total.lastYear : null);
+        if (total == null) total = days.reduce(function (a, x) { return a + x.count; }, 0);
+        if (tot) tot.textContent = total + " contributions in the last year";
+      }).catch(fail);
+  }
 })();

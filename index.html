@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Senvor: web developer and graphic designer. Fast, responsive landing pages and portfolio sites, plus custom PCBs and games through Hack Club.">
-<meta name="theme-color" content="#15132b">
+<meta name="theme-color" content="#0f0f0f">
 <link rel="canonical" href="https://senvor.dev/">
 <script src="/js/theme.js"></script>
 
@@ -27,7 +27,7 @@
 <title>Senvor — web developer & graphic designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -37,51 +37,77 @@
   <div class="wrap">
     <a class="logo" href="#top">senvor</a>
     <nav aria-label="Main">
-      <a href="#about">About</a><a href="#skills">Skills</a><a href="#work">Work</a><a href="#connect">Connect</a>
+      <a href="#top" data-sec="top">Home</a><a href="#work" data-sec="work">Work</a><a href="#connect" data-sec="connect">Connect</a>
+      <div class="more"><button class="more-btn" id="more-btn" type="button" aria-expanded="false" aria-controls="more-menu">More</button>
+        <div class="more-menu" id="more-menu" hidden><a href="#about" data-sec="about">About</a><a href="#skills" data-sec="skills">Skills</a><a href="#building" data-sec="building">Currently building</a></div>
+      </div>
       <button class="kbtn" id="kbtn" type="button" aria-label="Open command menu" title="Command menu (Ctrl+K)"><kbd>⌘K</kbd></button>
-      <button class="theme" id="theme" type="button" aria-label="Toggle light and dark theme">Theme</button>
+      <button class="theme" id="theme" type="button" aria-label="Toggle light and dark theme"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
     </nav>
   </div>
 </header>
 
 <main id="top" tabindex="-1">
 <div class="wrap">
-  <div class="hero">
-    <canvas class="sky" id="sky" aria-hidden="true"></canvas>
-    <div>
-      <h1>Senvor</h1>
-      <p class="role">Developer and graphic designer. I learn by building things.</p>
-      <p class="typed" aria-label="I build websites, PCBs, games and pixel art">I build <span id="typed">websites</span><i class="caret" aria-hidden="true"></i></p>
-      <p class="hc">Hack Club member</p>
-      <p class="contact">Need a website? <a href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio">Hire me on Fiverr</a> for a fast, responsive landing page or portfolio.</p>
-      <div class="cta"><a class="btn" href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio">Hire me on Fiverr</a><a class="btn alt" href="#work">See my work ↓</a></div>
-      <ul class="stats" aria-label="At a glance"><li><b id="st-shipped">5</b><small>shipped</small></li><li><b id="st-wip">3</b><small>in progress</small></li><li><b id="repos">—</b><small>public repos</small></li></ul>
-      <p class="contact">Want to talk? Message me on <a href="https://discord.com/users/1297888931169177653" data-copy="s3nvor" title="Copy my Discord username">Discord: s3nvor</a>, email <a href="mailto:senvor@lazydeveloper.org" data-copy="senvor@lazydeveloper.org" title="Copy my email">senvor@lazydeveloper.org</a>, or find me <a href="#connect">anywhere else</a>.</p>
-    </div>
-    <div class="lineage">
-      <h2>Bloodline</h2>
-      <p class="hint">A tiny taste of EvoGen: each life passes its traits on, with a few mutations. Tap a creature to inspect it.</p>
-      <div class="tree" id="tree"></div>
-      <noscript><p class="hint">Turn on JavaScript to try the Bloodline demo.</p></noscript>
-      <div class="btns">
-        <button class="btn" id="next" type="button">Pass it on</button>
-        <button class="btn alt" id="reset" type="button">New lineage</button>
-        <button class="btn alt" id="save" type="button" title="Download the selected creature as a PNG">Save PNG</button>
+  <section class="hero" aria-label="Intro">
+    <div class="banner"><canvas class="sky" id="sky" aria-hidden="true"></canvas></div>
+    <div class="sticker" id="sticker" aria-hidden="true"><svg viewBox="0 0 8 8" shape-rendering="crispEdges"><g fill="#6ec1ff"><rect x="2" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/></g><g fill="#0f0f0f"><rect x="2" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/></g></svg></div>
+    <div class="id">
+      <div class="avatar"><img src="assets/avatar.webp" alt="Senvor's profile picture: a blue cat with horns and a green flame" width="144" height="144"></div>
+      <div class="who">
+        <h1>Senvor</h1>
+        <p class="role">Developer &amp; Graphic Designer</p>
+        <p class="meta">Self-taught · IST (UTC+5:30) · Hack Club member</p>
       </div>
-      <p class="trait" id="trait" aria-live="polite"></p>
     </div>
-  </div>
+    <div class="pills">
+      <a class="pill" href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio"><i class="ping" aria-hidden="true"></i>Open to work</a>
+      <span class="pill" id="clock"><span aria-hidden="true">🕐</span> <span id="clock-t">--:--</span> in India</span>
+    </div>
+    <p class="typed" aria-label="I build websites, PCBs, games and pixel art">I build <span id="typed">websites</span><i class="caret" aria-hidden="true"></i></p>
+    <div class="cta"><a class="btn" href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio">Hire me on Fiverr</a><a class="btn alt" href="#work">See my work ↓</a></div>
+    <p class="stats" aria-label="At a glance"><span><b id="st-shipped">5</b> shipped</span><span aria-hidden="true">·</span><span><b id="st-wip">3</b> in progress</span><span aria-hidden="true">·</span><span><b id="repos">—</b> public repos</span></p>
+  </section>
 
   <section id="about" class="reveal">
-    <h2>About</h2>
-    <div class="two">
-      <p>I'm self-taught. Most of what I know about code came from getting stuck on a real project and finding a way through, not from working through tutorials.</p>
-      <p>Alongside code, I do graphic design: logos, layouts, and visual identity work. I also design hardware, like custom PCBs for small devices.</p>
+    <div class="sh"><span class="num" aria-hidden="true">01</span><h2>About</h2></div>
+    <ul class="bullets">
+      <li>I'm self-taught: most of what I know came from getting stuck on real projects and finding a way through.</li>
+      <li>I build websites, games (<a class="il" href="projects/evogen/">EvoGen</a> in Godot) and custom PCBs (<a class="il" href="projects/starbie/">Starbie</a>, <a class="il" href="projects/devruler/">DevRuler</a>).</li>
+      <li>I do graphic design too: logos, layouts and visual identity.</li>
+      <li>Right now I'm building <a class="il" href="projects/tapdish/">Tapdish</a> for Hack Club's Pixl and the <a class="il" href="projects/pocket-gravity-lab/">Pocket Gravity Lab</a>.</li>
+    </ul>
+  </section>
+
+  <section id="bloodline" class="lineage reveal">
+    <div class="sh"><span class="num" aria-hidden="true">demo</span><h2>Bloodline</h2></div>
+    <p class="hint">A tiny taste of EvoGen: each life passes its traits on, with a few mutations. Tap a creature to inspect it.</p>
+    <div class="tree" id="tree"></div>
+    <noscript><p class="hint">Turn on JavaScript to try the Bloodline demo.</p></noscript>
+    <div class="btns">
+      <button class="btn" id="next" type="button">Pass it on</button>
+      <button class="btn alt" id="reset" type="button">New lineage</button>
+      <button class="btn alt" id="save" type="button" title="Download the selected creature as a PNG">Save PNG</button>
     </div>
+    <p class="trait" id="trait" aria-live="polite"></p>
+  </section>
+
+  <section id="connect" class="reveal">
+    <div class="sh"><span class="num" aria-hidden="true">02</span><h2>Contact</h2></div>
+    <div class="clinks">
+      <a href="https://github.com/Senvor"><span>GitHub</span></a>
+      <a href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio"><span>Fiverr</span></a>
+      <a href="https://discord.com/users/1297888931169177653" data-copy="s3nvor" title="Copy my Discord username (s3nvor)"><span>Discord</span></a>
+      <a href="mailto:senvor@lazydeveloper.org" data-copy="senvor@lazydeveloper.org" title="Copy my email (senvor@lazydeveloper.org)"><span>Email</span></a>
+      <a href="https://youtube.com/@s3nvor"><span>YouTube</span></a>
+      <a href="https://instagram.com/s3nvor"><span>Instagram</span></a>
+      <a href="https://x.com/s3nvor"><span>X</span></a>
+    </div>
+    <details class="morelinks"><summary>More</summary><div class="clinks"><a href="https://reddit.com/user/senvor"><span>Reddit</span></a><a href="https://www.tiktok.com/@s3nvor"><span>TikTok</span></a><a href="https://www.twitch.tv/s3nvor"><span>Twitch</span></a><a href="https://www.threads.com/@s3nvor"><span>Threads</span></a><a href="https://t.me/s3nvor"><span>Telegram</span></a><a href="https://www.pinterest.com/s3nvor/"><span>Pinterest</span></a><a href="https://modrinth.com/user/Senvor"><span>Modrinth</span></a><a href="https://dev.to/senvor"><span>DEV</span></a><a href="https://app.daily.dev/senvor"><span>daily.dev</span></a><a href="https://lospec.com/senvor"><span>Lospec</span></a></div></details>
   </section>
 
   <section id="building" class="reveal">
-    <h2>Currently building</h2>
+    <div class="sh"><span class="num" aria-hidden="true">03</span><h2>Currently building</h2></div>
     <div class="build">
       <h3>Pocket Gravity Lab</h3>
       <p>A portable, interactive physics lab for exploring gravity and orbital mechanics, with real-time simulations, physical controls, and embedded hardware. Written in C++ for the Teensy 4.1.</p>
@@ -103,48 +129,27 @@
     </div>
   </section>
 
-  <section id="skills" class="reveal">
-    <h2>Skills</h2>
-    <h3 class="sg sg-code">Code</h3>
-    <ul class="chips">
-      <li class="solid">HTML</li><li class="solid">CSS</li><li class="solid">JavaScript</li><li class="solid">Java</li><li class="solid">GDScript</li>
-      <li class="learning">Python</li><li class="learning">C++</li>
-    </ul>
-
-    <h3 class="sg sg-hw">Hardware</h3>
-    <ul class="chips">
-      <li class="solid">KiCad</li>
-      <li class="learning">EasyEDA</li><li class="learning">Arduino</li>
-    </ul>
-
-    <h3 class="sg sg-design">Design</h3>
-    <ul class="chips">
-      <li class="solid">Aseprite</li><li class="solid">Canva</li><li class="solid">CapCut</li>
-    </ul>
-    <p class="legend"><b><span class="s"></span>Comfortable</b><b><span class="l"></span>Still learning</b></p>
-  </section>
-
   <section id="work" class="reveal">
-    <h2>Work</h2>
-    <p class="now" id="project-count"></p>
-    <h3 class="group">Hardware</h3>
-    <div class="projects">
-      <article class="proj">
-        <img class="thumb" src="assets/projects/starbie-thumb.webp" alt="PCB render of Starbie, a star-shaped board with an OLED, sensor and two buttons" loading="lazy" decoding="async">
-        <div>
-          <h3>Starbie</h3>
-          <p>A motion-controlled desktop pet on a custom PCB.</p>
-          <div class="tech">XIAO ESP32-C3, Arduino, KiCad, MPU6050, DHT11, OLED</div>
+    <div class="sh"><span class="num" aria-hidden="true">04</span><h2>Work</h2></div>
+    <p class="now count" id="project-count"></p>
+    <div class="tabs" role="group" aria-label="Filter projects" data-for="projects"><button type="button" aria-pressed="true" data-f="all">All</button><button type="button" aria-pressed="false" data-f="web">Web</button><button type="button" aria-pressed="false" data-f="hardware">Hardware</button><button type="button" aria-pressed="false" data-f="games">Games</button></div>
+    <div class="projects" id="projects">
+      <article class="proj" data-cat="hardware">
+        <div class="media"><img src="assets/projects/starbie-thumb.webp" alt="PCB render of Starbie, a star-shaped board with an OLED, sensor and two buttons" loading="lazy" decoding="async"></div>
+        <div class="body">
+          <div class="ptop"><h3>Starbie</h3><span class="badge live">Live</span></div>
+          <p class="tagline">A motion-controlled desktop pet on a custom PCB.</p>
+          <ul class="tech" aria-label="Built with"><li>XIAO ESP32-C3</li><li>Arduino</li><li>KiCad</li><li>MPU6050</li><li>DHT11</li><li>OLED</li></ul>
           <p class="now" data-repo="Starbie"></p>
         </div>
         <div class="links"><a href="projects/starbie/">Details</a><a href="https://github.com/Senvor/Starbie">Repository</a></div>
       </article>
-      <article class="proj">
-        <img class="thumb" src="assets/projects/devruler-thumb.webp" alt="Render of the DevRuler, a custom PCB ruler" loading="lazy" decoding="async">
-        <div>
-          <h3>DevRuler</h3>
-          <p>A custom PCB ruler for developers, with hardware footprints, everyday commands, and SI unit conversions. Made for Hack Club's Forge.</p>
-          <div class="tech">KiCad, JLCPCB</div>
+      <article class="proj" data-cat="hardware">
+        <div class="media"><img src="assets/projects/devruler-thumb.webp" alt="Render of the DevRuler, a custom PCB ruler" loading="lazy" decoding="async"></div>
+        <div class="body">
+          <div class="ptop"><h3>DevRuler</h3><span class="badge live">Live</span></div>
+          <p class="tagline">A custom PCB ruler for developers, with hardware footprints, everyday commands, and SI unit conversions. Made for Hack Club's Forge.</p>
+          <ul class="tech" aria-label="Built with"><li>KiCad</li><li>JLCPCB</li></ul>
           <p class="now" data-repo="DevRuler"></p>
         </div>
         <div class="links"><a href="projects/devruler/">Details</a><a href="https://github.com/Senvor/DevRuler">Repository</a></div>
@@ -169,78 +174,80 @@
           <p class="conv-note">Uses exact conversion factors, so results can differ slightly from the rounded numbers printed on the ruler.</p>
         </details>
       </article>
-      <article class="proj">
-        <div>
-          <h3>Pocket Gravity Lab<span class="tag">in progress</span></h3>
-          <p>A portable physics lab for exploring gravity and orbital mechanics through real-time simulations and physical controls.</p>
-          <div class="tech">C++, Teensy 4.1</div>
+      <article class="proj" data-cat="hardware">
+        <div class="media tile" data-tile="orbit" aria-hidden="true"><span>Pocket Gravity Lab</span></div>
+        <div class="body">
+          <div class="ptop"><h3>Pocket Gravity Lab</h3><span class="badge wip">In progress</span></div>
+          <p class="tagline">A portable physics lab for exploring gravity and orbital mechanics through real-time simulations and physical controls.</p>
+          <ul class="tech" aria-label="Built with"><li>C++</li><li>Teensy 4.1</li></ul>
           <p class="now" data-repo="Pocket-Gravity-Lab"></p>
         </div>
         <div class="links"><a href="projects/pocket-gravity-lab/">Details</a><a href="https://github.com/Senvor/Pocket-Gravity-Lab">Repository</a></div>
       </article>
-      <article class="proj">
-        <div>
-          <h3>Marbew<span class="tag">in progress</span></h3>
-          <p>A custom 3D-printed marble race, designed from scratch.</p>
+      <article class="proj" data-cat="hardware">
+        <div class="media tile" data-tile="marbles" aria-hidden="true"><span>Marbew</span></div>
+        <div class="body">
+          <div class="ptop"><h3>Marbew</h3><span class="badge wip">In progress</span></div>
+          <p class="tagline">A custom 3D-printed marble race, designed from scratch.</p>
           <p class="now" data-repo="Marbew"></p>
         </div>
         <div class="links"><a href="projects/marbew/">Details</a><a href="https://github.com/Senvor/Marbew">Repository</a></div>
       </article>
-      <article class="proj next">
-        <div>
-          <h3>Obsidian<span class="tag">up next</span></h3>
-          <p>An obsidian-themed keyboard project. Planned, not started yet.</p>
+      <article class="proj next" data-cat="hardware">
+        <div class="media tile" data-tile="pcb" aria-hidden="true"><span>Obsidian</span></div>
+        <div class="body">
+          <div class="ptop"><h3>Obsidian</h3><span class="badge next">Up next</span></div>
+          <p class="tagline">An obsidian-themed keyboard project. Planned, not started yet.</p>
           <p class="now" data-repo="Obsidian"></p>
         </div>
         <div class="links"><a href="projects/obsidian/">Details</a><a href="https://github.com/Senvor/Obsidian">Repository</a></div>
       </article>
-    </div>
-    <h3 class="group">Web</h3>
-    <div class="projects">
-      <article class="proj">
-        <div>
-          <h3>Sound Galaxy</h3>
-          <p>Turns microphone input into a moving galaxy of particles in real time. Built by following a Hack Club workshop.</p>
-          <div class="tech">HTML, JavaScript</div>
+      <article class="proj" data-cat="web">
+        <div class="media tile" data-tile="sound" aria-hidden="true"><span>Sound Galaxy</span></div>
+        <div class="body">
+          <div class="ptop"><h3>Sound Galaxy</h3><span class="badge live">Live</span></div>
+          <p class="tagline">Turns microphone input into a moving galaxy of particles in real time. Built by following a Hack Club workshop.</p>
+          <ul class="tech" aria-label="Built with"><li>HTML</li><li>JavaScript</li></ul>
           <p class="now" data-repo="Sound-Galaxy"></p>
         </div>
         <div class="links"><a href="projects/sound-galaxy/">Details</a><a href="https://soundgalaxy.senvor.dev">Live site</a><a href="https://github.com/Senvor/Sound-Galaxy">Repository</a></div>
       </article>
-      <article class="proj">
-        <div>
-          <h3>Particle Physics</h3>
-          <p>A gravity simulation where particles pull on each other like tiny planets. Built by following a Hack Club workshop.</p>
-          <div class="tech">p5.js, JavaScript</div>
+      <article class="proj" data-cat="web">
+        <div class="media tile" data-tile="particles" aria-hidden="true"><span>Particle Physics</span></div>
+        <div class="body">
+          <div class="ptop"><h3>Particle Physics</h3><span class="badge live">Live</span></div>
+          <p class="tagline">A gravity simulation where particles pull on each other like tiny planets. Built by following a Hack Club workshop.</p>
+          <ul class="tech" aria-label="Built with"><li>p5.js</li><li>JavaScript</li></ul>
           <p class="now" data-repo="Particle-Physics"></p>
         </div>
         <div class="links"><a href="projects/particle-physics/">Details</a><a href="https://particlephysics.senvor.dev">Live site</a><a href="https://github.com/Senvor/Particle-Physics">Repository</a></div>
       </article>
-      <article class="proj">
-        <div>
-          <h3>Cockroach Janta Party</h3>
-          <p>An informational site about the CJP movement. My second project, shipped and live.</p>
-          <div class="tech">HTML, CSS, JS</div>
+      <article class="proj" data-cat="web">
+        <div class="media"><img src="assets/projects/cjp-hero.webp" alt="Cockroach Janta Party website" loading="lazy" decoding="async"></div>
+        <div class="body">
+          <div class="ptop"><h3>Cockroach Janta Party</h3><span class="badge live">Live</span></div>
+          <p class="tagline">An informational site about the CJP movement. My second project, shipped and live.</p>
+          <ul class="tech" aria-label="Built with"><li>HTML</li><li>CSS</li><li>JS</li></ul>
           <p class="now" data-repo="cockroach-janta-party"></p>
         </div>
         <div class="links"><a href="projects/cockroach-janta-party/">Details</a><a href="https://cockroachjantaparty.senvor.dev">Live site</a><a href="https://github.com/Senvor/cockroach-janta-party">Repository</a></div>
       </article>
-      <article class="proj">
-        <div>
-          <h3>Tapdish<span class="tag">in progress</span></h3>
-          <p>A food-ordering web app: tap what you crave, customize it, and pick it up fresh. Made for Pixl's Order Up trial.</p>
-          <div class="tech">HTML, CSS, JavaScript</div>
+      <article class="proj" data-cat="web">
+        <div class="media tile" data-tile="food" aria-hidden="true"><span>Tapdish</span></div>
+        <div class="body">
+          <div class="ptop"><h3>Tapdish</h3><span class="badge wip">In progress</span></div>
+          <p class="tagline">A food-ordering web app: tap what you crave, customize it, and pick it up fresh. Made for Pixl's Order Up trial.</p>
+          <ul class="tech" aria-label="Built with"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
           <p class="now" data-repo="Tapdish"></p>
         </div>
         <div class="links"><a href="projects/tapdish/">Details</a><a href="https://tapdish.senvor.dev">Live site</a><a href="https://github.com/Senvor/Tapdish">Repository</a></div>
       </article>
-    </div>
-    <h3 class="group">Games</h3>
-    <div class="projects">
-      <article class="proj">
-        <div>
-          <h3>EvoGen<span class="tag">in progress</span></h3>
-          <p>Generational life-sim where inheritance replaces respawning.</p>
-          <div class="tech">Godot Engine, GDScript, Aseprite</div>
+      <article class="proj" data-cat="games">
+        <div class="media tile" data-tile="life" aria-hidden="true"><span>EvoGen</span></div>
+        <div class="body">
+          <div class="ptop"><h3>EvoGen</h3><span class="badge wip">In progress</span></div>
+          <p class="tagline">Generational life-sim where inheritance replaces respawning.</p>
+          <ul class="tech" aria-label="Built with"><li>Godot Engine</li><li>GDScript</li><li>Aseprite</li></ul>
           <p class="now" data-repo="EvoGen"></p>
         </div>
         <div class="links"><a href="projects/evogen/">Details</a><a href="https://github.com/Senvor/EvoGen">Repository</a></div>
@@ -248,31 +255,30 @@
     </div>
   </section>
 
-  <section id="connect" class="reveal">
-    <h2>Connect</h2>
-    <ul class="social">
-      <li><a href="https://github.com/Senvor"><b><img class="brand" src="assets/icons/github.svg" alt="" width="22" height="22">GitHub</b><span>Senvor</span></a></li>
-      <li><a href="https://reddit.com/user/senvor"><b><img class="brand" src="assets/icons/reddit.svg" alt="" width="22" height="22">Reddit</b><span>u/senvor</span></a></li>
-      <li><a href="https://discord.com/users/1297888931169177653" data-copy="s3nvor" title="Copy my Discord username"><b><img class="brand" src="assets/icons/discord.svg" alt="" width="22" height="22">Discord</b><span>s3nvor</span></a></li>
-      <li><a href="https://x.com/s3nvor"><b><img class="brand" src="assets/icons/x.svg" alt="" width="22" height="22">X</b><span>@s3nvor</span></a></li>
-      <li><a href="https://instagram.com/s3nvor"><b><img class="brand" src="assets/icons/instagram.svg" alt="" width="22" height="22">Instagram</b><span>@s3nvor</span></a></li>
-      <li><a href="https://youtube.com/@s3nvor"><b><img class="brand" src="assets/icons/youtube.svg" alt="" width="22" height="22">YouTube</b><span>@s3nvor</span></a></li>
-      <li><a href="https://www.tiktok.com/@s3nvor"><b><img class="brand" src="assets/icons/tiktok.svg" alt="" width="22" height="22">TikTok</b><span>@s3nvor</span></a></li>
-      <li><a href="https://www.twitch.tv/s3nvor"><b><img class="brand" src="assets/icons/twitch.svg" alt="" width="22" height="22">Twitch</b><span>s3nvor</span></a></li>
-      <li><a href="https://www.threads.com/@s3nvor"><b><img class="brand" src="assets/icons/threads.svg" alt="" width="22" height="22">Threads</b><span>@s3nvor</span></a></li>
-      <li><a href="https://t.me/s3nvor"><b><img class="brand" src="assets/icons/telegram.svg" alt="" width="22" height="22">Telegram</b><span>@s3nvor</span></a></li>
-      <li><a href="https://www.pinterest.com/s3nvor/"><b><img class="brand" src="assets/icons/pinterest.svg" alt="" width="22" height="22">Pinterest</b><span>s3nvor</span></a></li>
-      <li><a href="https://modrinth.com/user/Senvor"><b><img class="brand" src="assets/icons/modrinth.svg" alt="" width="22" height="22">Modrinth</b><span>Senvor</span></a></li>
-      <li><a href="https://dev.to/senvor"><b><img class="brand" src="assets/icons/devto.svg" alt="" width="22" height="22">DEV</b><span>@senvor</span></a></li>
-      <li><a href="https://app.daily.dev/senvor"><b><img class="brand" src="assets/icons/dailydev.svg" alt="" width="22" height="22">daily.dev</b><span>@senvor</span></a></li>
-      <li><a href="https://lospec.com/senvor"><b><img class="brand" src="assets/icons/lospec.svg" alt="" width="22" height="22">Lospec</b><span>senvor</span></a></li>
-      <li><a href="https://www.fiverr.com/senvor/build-a-responsive-website-for-your-business-or-portfolio"><b><img class="brand" src="assets/icons/fiverr.svg" alt="" width="22" height="22">Fiverr</b><span>senvor</span></a></li>
-      <li class="mail"><a href="mailto:senvor@lazydeveloper.org" data-copy="senvor@lazydeveloper.org" title="Copy my email"><b><img class="brand" src="assets/icons/mail.svg" alt="" width="22" height="22">Email</b><span>senvor@lazydeveloper.org</span></a></li>
-    </ul>
+  <section id="skills" class="reveal">
+    <div class="sh"><span class="num" aria-hidden="true">05</span><h2>Skills</h2></div>
+    <div class="tabs" role="group" aria-label="Filter skills" data-for="skill-chips"><button type="button" aria-pressed="true" data-f="all">All</button><button type="button" aria-pressed="false" data-f="code">Code</button><button type="button" aria-pressed="false" data-f="hardware">Hardware</button><button type="button" aria-pressed="false" data-f="design">Design</button></div>
+    <ul class="chips" id="skill-chips"><li class="solid" data-cat="code">HTML</li><li class="solid" data-cat="code">CSS</li><li class="solid" data-cat="code">JavaScript</li><li class="solid" data-cat="code">Java</li><li class="solid" data-cat="code">GDScript</li><li class="learning" data-cat="code">Python</li><li class="learning" data-cat="code">C++</li><li class="solid" data-cat="hardware">KiCad</li><li class="learning" data-cat="hardware">EasyEDA</li><li class="learning" data-cat="hardware">Arduino</li><li class="solid" data-cat="design">Aseprite</li><li class="solid" data-cat="design">Canva</li><li class="solid" data-cat="design">CapCut</li></ul>
+    <p class="legend"><b><span class="s"></span>Comfortable</b><b><span class="l"></span>Still learning</b></p>
+  </section>
+
+  <section id="activity" class="reveal">
+    <div class="sh"><span class="num" aria-hidden="true">06</span><h2>GitHub Activity</h2></div>
+    <a class="contrib" id="contrib" href="https://github.com/Senvor" aria-label="Senvor's GitHub contributions over the last year">
+      <div class="cgrid-wrap"><div class="cgrid" id="cgrid"></div><p class="cload" id="cload">Loading contributions…</p></div>
+      <div class="clegend"><span id="ctotal"></span><span class="cl">Less <i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i> More</span></div>
+    </a>
+  </section>
+
+  <section id="still" class="reveal">
+    <div class="sh"><span class="num" aria-hidden="true">07</span><h2>Still here?</h2></div>
+    <p class="lead">You scrolled all the way down, that's basically a handshake. Let's build something together.</p>
+    <div class="cta"><a class="btn" href="mailto:senvor@lazydeveloper.org">Say hi</a><button class="btn alt" id="copy-email" type="button">Copy email</button></div>
+    <blockquote class="quote"><p>“Fake it until you Make it”</p><cite>Senvor, probably</cite></blockquote>
   </section>
 </div>
 </main>
-<footer><div class="wrap foot"><span>© 2026 Senvor · hand-built with HTML, CSS and JS</span><span class="last" id="last-commit"></span><a href="#top" class="totop">Back to top ↑</a></div></footer>
+<footer><div class="wrap foot"><p>Designed &amp; built by Senvor</p><p>© 2026 · Made in India</p><a href="#top" class="totop">Back to top ↑</a></div></footer>
 <div class="pal" id="pal" hidden><div class="pal-box" role="dialog" aria-modal="true" aria-label="Command menu"><input id="pal-q" type="text" placeholder="Jump to a section, project or profile…" autocomplete="off" spellcheck="false"><ul id="pal-list" role="listbox"></ul><p class="pal-hint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p></div></div>
 
 <script src="js/script.js"></script>

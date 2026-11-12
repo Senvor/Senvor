@@ -155,7 +155,7 @@
   }
 
   function frame(dt) {
-    t += dt; x.globalAlpha = 1; x.fillStyle = "#0b0920"; x.fillRect(0, 0, W, H);
+    t += dt; x.globalAlpha = 1; x.fillStyle = "#0a0a0a"; x.fillRect(0, 0, W, H);
     stars.forEach(function (s) { px(s[0], s[1], "#fff", Math.sin(s[2] + t * 1.5) > 0 ? .7 : .2); });
     if (kind === "orbit") {
       var c0 = W / 2, c1 = H / 2;

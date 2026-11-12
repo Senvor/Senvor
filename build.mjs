@@ -10,11 +10,13 @@ const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
            .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 // Which animated pixel hero a project without a photo gets.
-const art = (p) => p.slug === "pocket-gravity-lab" ? "orbit" : p.slug === "marbew" ? "marbles"
-  : p.category === "Web" ? "particles" : p.category === "Game" ? "life" : "pcb";
+// Per-slug overrides first, so Tapdish keeps its food art and Sound Galaxy its sound art.
+const ART_BY_SLUG = { "pocket-gravity-lab": "orbit", marbew: "marbles", tapdish: "food", "sound-galaxy": "sound" };
+const art = (p) => ART_BY_SLUG[p.slug]
+  ?? (p.category === "Web" ? "particles" : p.category === "Game" ? "life" : "pcb");
 const has = (v) => v && v.trim() && v.trim() !== "TODO";
 
-projects.forEach((p, i) => {
+await Promise.all(projects.map((p, i) => {
   const prev = projects[(i - 1 + projects.length) % projects.length];
   const next = projects[(i + 1) % projects.length];
   const actions = [
@@ -74,7 +76,7 @@ projects.forEach((p, i) => {
   }
   return mkdir(`projects/${p.slug}`, { recursive: true })
     .then(() => writeFile(`projects/${p.slug}/index.html`, html));
-});
+}));
 
 // Sitemap for search engines.
 const urls = [`${SITE}/`, ...projects.map((p) => `${SITE}/projects/${p.slug}/`)];

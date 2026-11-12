@@ -21,7 +21,7 @@
     for(var y=0;y<8;y++)for(var i=0;i<4;i++){
       if(g.bits[y*4+i]){x.fillRect(i,y,1,1);x.fillRect(7-i,y,1,1)}
     }
-    x.fillStyle='#1b1840';x.fillRect(2,3,1,1);x.fillRect(5,3,1,1);
+    x.fillStyle='#0f0f0f';x.fillRect(2,3,1,1);x.fillRect(5,3,1,1);
   }
   var sel=0;
   function describe(g){
@@ -74,7 +74,7 @@
     var small=document.createElement('canvas');small.width=small.height=8;draw(small,g);
     var big=document.createElement('canvas');big.width=big.height=256;
     var x=big.getContext('2d');x.imageSmoothingEnabled=false;
-    x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--chip').trim()||'#e6e2ff';
+    x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--card').trim()||'#171717';
     x.fillRect(0,0,256,256);x.drawImage(small,0,0,256,256);
     big.toBlob(function(blob){
       var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='senvor-bloodline-gen-'+g.n+'.png';
@@ -133,41 +133,7 @@
     });
   });
 
-  // Scroll reveal: each project card steps in the first time it scrolls into view.
-  // Cards that arrive together are staggered slightly so they cascade instead of popping at once.
-  if('IntersectionObserver' in window){
-    var cards=document.querySelectorAll('.proj');
-    var io=new IntersectionObserver(function(entries){
-      var n=0;
-      entries.forEach(function(en){
-        if(!en.isIntersecting)return;
-        en.target.style.setProperty('--d',(n++*0.08)+'s');
-        en.target.classList.add('in');
-        io.unobserve(en.target);   // animate once, then stop watching
-      });
-    },{threshold:0.12});
-    cards.forEach(function(c){c.classList.add('reveal');io.observe(c)});
-  }
-
-  var root=document.documentElement,btn=document.getElementById('theme');
-  btn.addEventListener('click',function(){
-    var dark=root.getAttribute('data-theme')==='dark';
-    var next=dark?'light':'dark';
-    function apply(){
-      if(window.senvorTheme)window.senvorTheme.apply(next);else root.setAttribute('data-theme',next);
-      try{localStorage.setItem('theme',next)}catch(e){}
-    }
-    var calm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(document.startViewTransition&&!calm){
-      document.startViewTransition(apply);       // browser cross-fades a snapshot of the old page into the new one
-    }else if(calm){
-      apply();                                    // reduced motion: switch instantly
-    }else{
-      root.classList.add('fade');                 // older browsers: fade the colours instead
-      apply();
-      setTimeout(function(){root.classList.remove('fade')},350);
-    }
-  });
+  // Theme toggle lives in js/theme.js (shared with the project pages).
 })();
 
 // ---------- Toast (small pixel notification) ----------
@@ -296,7 +262,7 @@
   var NAMES={solar:'SOLAR SYSTEM',binary:'BINARY STAR',moon:'PLANET + MOON',chaos:'CHAOS'};
   function draw(){
     ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;
-    ctx.fillStyle='#0b0920';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,W,H);
     bg.forEach(function(s){px(s.x,s.y,'#fff',Math.sin(s.p+time*s.s)>0?.9:.35)});
     if(trails)bodies.forEach(function(b){
       var t=b.trail,n=t.length,c=b.comet?'#bfe6ff':'hsl('+b.hue+' 90% 66%)';
