@@ -240,3 +240,21 @@
       }).catch(fail);
   }
 })();
+
+// ---------- tech chips: show at most 4 per card, fold the rest into a "+N" chip ----------
+// extra items stay in the list (visually hidden) so screen readers still hear the full stack
+(function () {
+  var MAX = 4;
+  document.querySelectorAll(".proj .tech").forEach(function (ul) {
+    var items = ul.querySelectorAll("li");
+    if (items.length <= MAX + 1) return;
+    var rest = [];
+    for (var i = MAX; i < items.length; i++) { items[i].classList.add("xtra"); rest.push(items[i].textContent.trim()); }
+    var more = document.createElement("li");
+    more.className = "more-n";
+    more.setAttribute("aria-hidden", "true");
+    more.title = rest.join(", ");
+    more.textContent = "+" + rest.length;
+    ul.appendChild(more);
+  });
+})();

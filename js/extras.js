@@ -16,5 +16,5 @@ try {
   for (const p of list) by[p.status] = (by[p.status] || 0) + 1;
   document.getElementById("project-count").textContent =
     `${list.length} projects · ` +
-    Object.entries(by).map(([s, n]) => `${n} ${s}`).join(" · ");
+    Object.entries(by).map(([s, n]) => `${n} ${s || "live"}`).join(" · ");
 } catch { /* leave empty */ }
