@@ -33,7 +33,7 @@ await Promise.all(projects.map((p, i) => {
     statusPill: p.status ? `<span class="pill">${esc(p.status)}</span>` : "",
     repo: esc(p.repo),
     url: `${SITE}/projects/${p.slug}/`,
-    ogImage: SITE + (p.image ?? p.og ?? "/assets/og.jpg"),
+    ogImage: SITE + (p.og ?? p.image ?? "/assets/og.jpg"),
     actions,
     hero: p.image
       ? `<figure class="pj-hero"><img src="${esc(p.image)}" alt="${esc(p.title)}" data-zoom></figure>`
