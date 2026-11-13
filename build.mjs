@@ -8,7 +8,7 @@ const template = await readFile("project.template.html", "utf8");
 // Escape text so a stray < or " can't break the HTML.
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-           .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 // Which animated pixel hero a project without a photo gets.
 // Per-slug overrides first, so Tapdish keeps its food art and Sound Galaxy its sound art.
 const ART_BY_SLUG = { "pocket-gravity-lab": "orbit", marbew: "marbles", tapdish: "food", "sound-galaxy": "sound" };
@@ -74,6 +74,8 @@ await Promise.all(projects.map((p, i) => {
     // Function replacer on purpose: a plain string would treat "$&" or "$1" in the text as special patterns.
     html = html.replaceAll(`{{${key}}}`, () => val);
   }
+  // Empty placeholders leave whitespace-only lines; tidy them so the output has no trailing spaces.
+  html = html.replace(/[ \t]+$/gm, "").replace(/\n{3,}/g, "\n\n");
   return mkdir(`projects/${p.slug}`, { recursive: true })
     .then(() => writeFile(`projects/${p.slug}/index.html`, html));
 }));

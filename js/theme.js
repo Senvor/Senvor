@@ -1,6 +1,5 @@
 // Theme: fixed dark/light palettes defined in css/style.css. Dark is the default;
 // the visitor's choice from the toggle is saved in localStorage and reused on every page.
-// (The old random-palette shuffle was removed so the design spec's colours always win.)
 (function () {
   var r = document.documentElement;
   r.classList.add("js");
@@ -17,7 +16,6 @@
     var b = document.getElementById("theme");
     if (b) b.setAttribute("aria-pressed", mode === "light" ? "true" : "false");
   }
-  window.senvorTheme = { apply: apply };
   apply(saved === "light" ? "light" : "dark");
 
   document.addEventListener("DOMContentLoaded", function () {

@@ -1,5 +1,5 @@
-// Homepage extras: pixel starfield behind the hero, typing line, live stats, scroll progress,
-// command menu (Ctrl/Cmd+K or "/"), spotlight on cards, and the latest commit in the footer.
+// Homepage extras: pixel starfield behind the hero, typing line, live stats, scroll progress
+// and the command menu (Ctrl/Cmd+K or "/").
 (function () {
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (id) { return document.getElementById(id); };
@@ -80,12 +80,6 @@
     return fetch(url).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} return d; });
   };
   cached("gh:user", "https://api.github.com/users/Senvor").then(function (u) { countUp($("repos"), u.public_repos); }).catch(function () {});
-  cached("gh:site-commit", "https://api.github.com/repos/Senvor/Senvor/commits?per_page=1").then(function (cs) {
-    var el = $("last-commit"); if (!el || !cs[0]) return;
-    var d = Math.floor((Date.now() - new Date(cs[0].commit.author.date)) / 864e5);
-    el.innerHTML = ""; var a = document.createElement("a"); a.href = cs[0].html_url;
-    a.textContent = "Last updated " + (d < 1 ? "today" : d === 1 ? "yesterday" : d + " days ago"); el.appendChild(a);
-  }).catch(function () {});
 
   // ---------- command menu ----------
   var pal = $("pal"), q = $("pal-q"), ul = $("pal-list"), kb = $("kbtn");

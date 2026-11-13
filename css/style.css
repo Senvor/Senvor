@@ -58,7 +58,6 @@ nav a:hover,.more-btn:hover{color:var(--ink)}
 nav a.active,.more-btn.active{color:var(--ink)}
 nav a.active::after,.more-btn.active::after{content:"";position:absolute;left:50%;bottom:-2px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--ink)}
 .more{position:relative}
-.more-btn::before{content:"";display:none}
 .more-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:190px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px;display:grid;box-shadow:var(--shadow);z-index:30}
 .more-menu[hidden]{display:none}
 .more-menu a{display:block;padding:8px 10px}
@@ -115,6 +114,7 @@ a.il:hover,.bullets a:hover,.build a:hover,.now a:hover{text-decoration-style:so
 .who h1{font-size:48px;cursor:default}
 .role{margin:var(--s2) 0 0;font:500 var(--t-xs) var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
 .meta{margin:var(--s1) 0 0;font-size:var(--t-sm);color:var(--subtle)}
+.meta span{white-space:nowrap}
 .pills{display:flex;flex-wrap:wrap;gap:var(--s2);margin:var(--s5) 0 0}
 .pill{display:inline-flex;align-items:center;gap:var(--s2);font:500 var(--t-xs) var(--body);color:var(--soft);text-decoration:none;background:var(--chip);border:0;border-radius:999px;padding:var(--s1) var(--s3);white-space:nowrap}
 a.pill:hover{color:var(--ink)}
@@ -144,7 +144,7 @@ a.pill:hover{color:var(--ink)}
 .tree{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;min-height:92px;max-width:640px}
 .gen{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
 .gen canvas{width:100%;max-width:56px;aspect-ratio:1;image-rendering:pixelated;background:var(--card);border:1px solid var(--line);border-radius:6px;cursor:pointer}
-.gen.new canvas{border-color:var(--amber)}
+.gen.new canvas{border-color:var(--amber);animation:pop .3s steps(4)}
 .gen small{font:400 var(--t-xs) var(--mono);color:var(--subtle)}
 .gen:not(:last-child)::after{content:"";position:absolute;top:28px;left:calc(50% + 32px);width:calc(100% - 64px + 8px);height:1px;border-top:1px dashed var(--line)}
 .gen.sel canvas{outline:2px solid var(--sky);outline-offset:2px}
@@ -157,14 +157,10 @@ a.pill:hover{color:var(--ink)}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes glowr{50%{box-shadow:0 0 0 4px var(--amber)}}
-.gen.new canvas{animation:pop .3s steps(4)}
 .gen.intro canvas{animation:popin .3s steps(4) both;animation-delay:calc(var(--b,.4s) + var(--i) * .15s)}
 .gen.intro small{animation:fadein .3s steps(3) both;animation-delay:calc(var(--b,.4s) + var(--i) * .15s)}
 .gen.linking::after{transform-origin:left center;animation:grow .3s steps(4) both}
 .gen.new.mut canvas{animation:pop .3s steps(4),glowr .5s steps(2) .3s 2}
-
-.meta span{white-space:nowrap}
-.count{text-wrap:balance}
 
 /* ---------- contact ---------- */
 .clinks{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s2)}
@@ -173,11 +169,10 @@ a.pill:hover{color:var(--ink)}
 .cmail{display:flex;align-items:center;justify-content:center;gap:var(--s2);width:min(320px,100%);font:500 var(--t-sm) var(--body);color:var(--soft);text-decoration:none;background:var(--chip);border-radius:6px;padding:var(--s2) var(--s3);transition:color .15s,background-color .15s}
 .cmail:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 10%,var(--bg))}
 .cmail span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cmail .ci{flex:none;width:16px;height:16px;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+.cmail .ci,.clinks .ci{flex:none;width:16px;height:16px;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
 .clinks a{display:flex;align-items:center;gap:var(--s2);min-width:0;font:500 var(--t-sm) var(--body);color:var(--soft);text-decoration:none;background:var(--chip);border-radius:6px;padding:var(--s2) var(--s3);transition:color .15s,background-color .15s}
 .clinks a span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .clinks a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 10%,var(--bg))}
-.clinks .ci{flex:none;width:16px;height:16px;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
 
 /* ---------- currently building + orbit ---------- */
 .build{display:grid;gap:var(--s3)}
@@ -206,7 +201,7 @@ a.pill:hover{color:var(--ink)}
 .fadein{animation:fadein .2s ease}
 
 /* ---------- work ---------- */
-.count{margin:calc(-1 * var(--s3)) 0 var(--s4);font:400 var(--t-xs) var(--mono);color:var(--subtle)}
+.count{margin:calc(-1 * var(--s3)) 0 var(--s4);font:400 var(--t-xs) var(--mono);color:var(--subtle);text-wrap:balance}
 .projects{display:grid;grid-template-columns:1fr;gap:var(--s7) var(--s6)}
 @media (min-width:768px){.projects{grid-template-columns:1fr 1fr}}
 .proj{display:flex;flex-direction:column;gap:var(--s4);padding:0;border:0;min-width:0}

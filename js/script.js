@@ -87,7 +87,6 @@
   // Icons taken from pixelarticons (https://github.com/halfmage/pixelarticons), MIT License, (c) 2019 Gerrit Halfmann.
   // Every icon is drawn on pixelarticons' 24x24 grid (one art pixel = 2 units), so they all share one viewBox and scale together.
   var RAW={
-    code:'<path d="M5 4h4v2H5zm14 0h-4v2h4zM5 20h4v-2H5zm14 0h-4v-2h4zM3 6h2v12H3zm18 0h-2v12h2zm-10 5h2v2h-2zm-4 0h2v2H7zm8 0h2v2h-2z"/>',
     web:'<path d="M6 2h12v2H6zm0 18h12v2H6zM4 4h2v2H4zm5 0h2v2H9zm0 14h2v2H9zm4 0h2v2h-2zM7 6h2v12H7zm8 0h2v12h-2zm-2-2h2v2h-2zm7 0h-2v2h2zM2 6h2v12H2zm20 0h-2v12h2zM4 18h2v2H4zm16 0h-2v2h2z"/><path d="M3 11h18v2H3z"/>',
     css:'<path d="M2 2h20v2h-20zM2 4h2v2h-2zM20 4h2v2h-2zM2 6h2v2h-2zM8 6h8v2h-8zM20 6h2v2h-2zM2 8h2v2h-2zM14 8h2v2h-2zM20 8h2v2h-2zM2 10h2v2h-2zM10 10h6v2h-6zM20 10h2v2h-2zM2 12h2v2h-2zM14 12h2v2h-2zM20 12h2v2h-2zM4 14h2v2h-2zM8 14h8v2h-8zM18 14h2v2h-2zM4 16h2v2h-2zM18 16h2v2h-2zM6 18h2v2h-2zM16 18h2v2h-2zM8 20h8v2h-8z"/>',
     js:'<path d="M6 4h4v2H6zm12 0h-4v2h4zM6 20h4v-2H6zm12 0h-4v-2h4zM4 6h2v5H4zm16 0h-2v5h2zM4 18h2v-5H4zm16 0h-2v-5h2zM2 11h2v2H2zm20 0h-2v2h2z"/>',
@@ -96,20 +95,14 @@
     py:'<path d="M4 20H20V22H2V18H4V20ZM8 8H12V12H14V4H16V12H18V16H20V8H22V20H20V18H4V14H6V16H16V14H6V12H10V10H6V8H4V6H6V4H8V8ZM4 10H2V8H4V10ZM4 6H2V4H4V6ZM12 6H10V4H8V2H14V4H12V6Z"/>',
     cpp:'<path d="M7 3h2v2H7zm8 10h2v2h-2zM5 5h2v4H5zm8 10h2v4h-2zM9 5h2v4H9zm8 10h2v4h-2zM7 9h2v2H7zm8 10h2v2h-2zM13 3h4v2h-4zM5 13h4v2H5zm10-8h2v4h-2zM7 15h2v4H7zm6-6h6v2h-6zM5 19h6v2H5z"/>',
     board:'<path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zM8 6h2v2H8zm8 12h-2v-2h2zM6 8h2v2H6zm12 8h-2v-2h2zM8 10h2v2H8zm8 4h-2v-2h2zm-6-6h6v2h-6zm4 8H8v-2h6zm2-12h2v4h-2zM8 20H6v-4h2z"/>',
-    cpu:'<path d="M4 4h16v2H4zM4 18h16v2H4zM4 6h2v12H4zM18 6h2v12h-2zM8 8h8v2H8zM8 14h8v2H8zM8 10h2v4H8zM14 10h2v4h-2zM7 2h2v2H7zM11 2h2v2h-2zM15 2h2v2h-2zM7 20h2v2H7zM11 20h2v2h-2zM15 20h2v2h-2zM2 7h2v2H2zM2 11h2v2H2zM2 15h2v2H2zM20 7h2v2h-2zM20 11h2v2h-2zM20 15h2v2h-2z"/>',
     zap:'<path d="M4 13h8v6h2v2h-2v2h-2v-8H2v-4h2v2Zm12 6h-2v-2h2v2Zm2-2h-2v-2h2v2Zm2-2h-2v-2h2v2Zm-6-6h8v4h-2v-2h-8V5h-2V3h2V1h2v8Zm-8 2H4V9h2v2Zm2-2H6V7h2v2Zm2-2H8V5h2v2Z"/>',
-    brush:'<path d="M5 2h12v2H5zm0 2h2v10H5zm12-2h2v12h-2z"/><path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm0 4h14v2H5zm4 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/>',
     shapes:'<path d="M2 13h9v2H2zm0 2h2v5H2zm0 5h9v2H2zm7-5h2v5H9zm6-2h5v2h-5zm-2 2h2v5h-2zm2 5h5v2h-5zm5-5h2v5h-2zM7 9h10v2H7zm0-2h2v2H7zm2-3h2v3H9zm2-2h2v2h-2zm2 2h2v3h-2zm2 3h2v2h-2z"/>',
-    window:'<path d="M4 3h16v2H4zm0 16h16v2H4zM2 5h2v14H2zm18 0h2v14h-2zM4 7h16v2H4zm8-2h2v2h-2zm4 0h2v2h-2z"/>',
-    games:'<path d="M4 14h16v2H4zm0 6h16v2H4zm-2-4h2v4H2zm18 0h2v4h-2zM10 2h4v2h-4zM8 4h2v4H8zm6 0h2v4h-2zm-4 4h4v2h-4zm1 2h2v4h-2zm-4 2h2v2H7z"/>',
     ghost:'<path d="M8 2h8v2h-8zM6 4h2v2h-2zM16 4h2v2h-2zM4 6h2v2h-2zM18 6h2v2h-2zM4 8h2v2h-2zM8 8h2v2h-2zM14 8h2v2h-2zM18 8h2v2h-2zM2 10h2v2h-2zM8 10h2v2h-2zM14 10h2v2h-2zM20 10h2v2h-2zM2 12h2v2h-2zM20 12h2v2h-2zM2 14h2v2h-2zM20 14h2v2h-2zM2 16h2v2h-2zM20 16h2v2h-2zM2 18h2v2h-2zM6 18h2v2h-2zM16 18h2v2h-2zM20 18h2v2h-2zM2 20h4v2h-4zM8 20h8v2h-8zM18 20h4v2h-4z"/>',
     scissors:'<path d="M5 2h4v2H5zm0 12h4v2H5zm0-6h4v2H5zm0 12h4v2H5zM3 4h2v4H3zm0 12h2v4H3zM9 4h2v4H9zm0 12h2v4H9zm0-8h2v2H9zm2 2h2v2h-2zm-2 4h2v2H9zm2-2h2v2h-2zm2-2h2v2h-2zm2 4h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM15 8h2v2h-2zm2-2h2v2h-2zm2-2h2v2h-2z"/>',
     usb:'<path d="M19 22H5V20H19V22ZM7 13H17V4H19V13H21V20H19V15H5V20H3V13H5V4H7V13ZM11 11H9V6H11V11ZM15 11H13V6H15V11ZM17 4H7V2H17V4Z"/>'
   };
   function ic(n){return'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">'+RAW[n]+'</svg>'}
   function tag(sel,map){document.querySelectorAll(sel).forEach(function(el){var k=el.textContent.trim();if(map[k])el.insertAdjacentHTML('afterbegin',ic(map[k]))})}
-  tag('.group',{Hardware:'cpu',Web:'window',Games:'games'});
-  tag('.sg',{Code:'code',Hardware:'cpu',Design:'brush'});
   tag('.chips li',{HTML:'web',CSS:'css',JavaScript:'js',Java:'java',GDScript:'godot',Python:'py','C++':'cpp',Aseprite:'ghost',Canva:'shapes',CapCut:'scissors',KiCad:'board',Arduino:'usb',EasyEDA:'zap'});
 
   // Discord profile links need a numeric user ID, so instead of linking, these copy the username.
@@ -133,7 +126,6 @@
     });
   });
 
-  // Theme toggle lives in js/theme.js (shared with the project pages).
 })();
 
 // ---------- Toast (small pixel notification) ----------
@@ -156,7 +148,7 @@
   var MAX=24,SOFT=30,SOFTP=6;
   var $=function(id){return document.getElementById(id)};
   var pauseBtn=$('orbit-pause'),gIn=$('og'),sIn=$('os'),mIn=$('om'),tIn=$('ot'),pIn=$('op'),fsBtn=$('orbit-fs');
-  var bodies=[],suns=[],bg=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,scale=1,aim=null,time=0,simT=0;
+  var bodies=[],suns=[],bg=[],flashes=[],paused=false,onScreen=true,lastT=0,raf=0,aim=null,time=0,simT=0;
   var zoom=1,camX=120,camY=67.5,ZMIN=0.25,ZMAX=12,G=1,warp=1,mutual=false,trails=true,preset='solar',binary=null,phase=0;
   var amber='#ffb84d',sky='#6ec1ff';
   function readColors(){var s=getComputedStyle(document.documentElement);amber=s.getPropertyValue('--amber').trim()||amber;sky=s.getPropertyValue('--sky').trim()||sky}
@@ -168,7 +160,7 @@
   // pixel shapes (no anti-aliasing), then copied 4x onto the visible canvas with smoothing off.
   // The HUD text is drawn afterwards at full resolution so it stays crisp.
   var off=document.createElement('canvas'),vctx=ctx;off.width=W;off.height=H;ctx=off.getContext('2d');
-  function resize(){cv.width=W*4;cv.height=H*4;scale=1;draw()}
+  function resize(){cv.width=W*4;cv.height=H*4;draw()}
   for(var i=0;i<80;i++)bg.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()<.8?.45:.9,p:Math.random()*6.28,s:.5+Math.random()*1.5});
 
   function totalGM(){var t=0;suns.forEach(function(s){t+=s.gm});return t*G}
@@ -244,7 +236,6 @@
       }
     }
   }
-  // Rough stepped glow: a few flat rings instead of a smooth gradient (cheaper, and it looks retro).
   // world -> buffer pixel
   function sx(x){return (x-camX)*zoom+W/2}
   function sy(y){return (y-camY)*zoom+H/2}
