@@ -167,8 +167,13 @@ a.pill:hover{color:var(--ink)}
 .count{text-wrap:balance}
 
 /* ---------- contact ---------- */
-.clinks{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:var(--s2)}
-@media (max-width:420px){.clinks{grid-template-columns:1fr 1fr}}
+.clinks{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s2)}
+@media (max-width:560px){.clinks{grid-template-columns:1fr 1fr}}
+.cmail-wrap{display:flex;justify-content:center;margin-top:var(--s6)}
+.cmail{display:inline-flex;align-items:center;gap:var(--s2);max-width:100%;font:500 var(--t-sm) var(--body);color:var(--bg);background:var(--ink);text-decoration:none;border-radius:999px;padding:var(--s3) var(--s5);transition:transform .15s,opacity .15s}
+.cmail:hover{opacity:.88;transform:translateY(-1px)}
+.cmail span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmail .ci{flex:none;width:16px;height:16px;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
 .clinks a{display:flex;align-items:center;gap:var(--s2);min-width:0;font:500 var(--t-sm) var(--body);color:var(--soft);text-decoration:none;background:var(--chip);border-radius:6px;padding:var(--s2) var(--s3);transition:color .15s,background-color .15s}
 .clinks a span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .clinks a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 10%,var(--bg))}
