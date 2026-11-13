@@ -24,6 +24,7 @@
   addEventListener("keydown", function (e) {
     if (e.target.closest && e.target.closest("input,textarea,select,iframe") || e.metaKey || e.ctrlKey || e.altKey) return;
     if (document.querySelector(".lb.open")) return;
+    var pal = document.getElementById("pal"); if (pal && !pal.hidden) return;
     var a = e.key === "ArrowLeft" ? document.querySelector('a[rel="prev"]') : e.key === "ArrowRight" ? document.querySelector('a[rel="next"]') : null;
     if (a) location.href = a.href;
   });
@@ -107,7 +108,7 @@
       if (!cs.length) { list.innerHTML = '<li class="muted">No commits yet</li>'; return; }
       cs.forEach(function (c) {
         var li = document.createElement("li"), a = document.createElement("a"), s = document.createElement("small");
-        a.href = c.html_url; a.textContent = c.commit.message.split("\n")[0];
+        a.href = c.html_url; a.textContent = c.commit.message.split("\n")[0]; a.title = c.commit.message;
         s.textContent = ago(c.commit.author.date); li.appendChild(a); li.appendChild(s); list.appendChild(li);
       });
     }).catch(function () { list.innerHTML = '<li class="muted">Open the repository for history</li>'; });
@@ -139,6 +140,9 @@
   } else if (kind === "food") {
     // Tapdish: dishes ride a counter belt, a tap cursor picks one, it hops into the bag and the count ticks up.
     S.items = []; S.n = 0; S.cur = { x: W * .62, y: 18, tap: 0 }; S.next = 1.2; S.fly = [];
+    // 9x11 hand pointing down (cuff on top, curled fingers right, index finger left): o outline, c cream, s shade
+    var HAND = [".ooooooo.", ".ossssso.", "occccccco", "occccccco", "occcococo", "occcococo", "occsocoo.", "occsooo..", "occso....", "occso....", ".ooo....."];
+    var HAND_C = { o: "#0a0a0a", c: "#f2e6d0", s: "#d9c7a8" };
     for (var f0 = 0; f0 < 5; f0++) S.items.push({ x: f0 * 52 - 20, k: f0 % 4 });
   } else if (kind === "sound") {
     // Sound Galaxy: a spiral galaxy whose arms swell with a fake beat, an equalizer glowing underneath.
@@ -216,7 +220,9 @@
         if (pick) { pick.gone = true; c.tap = .25; S.fly.push({ x0: pick.x, y0: belt + 5, k: pick.k, p: 0 }); } }
       if (c.tap > 0) c.tap -= dt;
       var cy = c.y + (c.tap > 0 ? 40 : 34) + Math.sin(t * 3) * 2;
-      x.fillStyle = "#fff"; for (var hy = 0; hy < 7; hy++) x.fillRect(Math.round(c.x) - 1, Math.round(cy) + hy, 3, 1); x.fillRect(Math.round(c.x) - 1, Math.round(cy) + 6, 7, 3);
+      // pixel-art hand, index finger pointing down; the lowest fingertip pixel sits at (c.x, cy + 8), where the old cursor's tip was
+      for (var hy = 0; hy < HAND.length; hy++) for (var hx = 0; hx < 9; hx++) { var hc = HAND_C[HAND[hy].charAt(hx)];
+        if (hc) { x.fillStyle = hc; x.fillRect(Math.round(c.x) - 2 + hx, Math.round(cy) - 1 + hy, 1, 1); } }
       if (c.tap > 0) disc(c.x, belt - 2, 6 * (1 - c.tap / .25) + 2, AMB, .35 * c.tap / .25 + .1);
       S.fly = S.fly.filter(function (f) { f.p += dt * 1.4; var tx = gx + 11, ty = gy + 8, X = f.x0 + (tx - f.x0) * f.p, Y = f.y0 + (ty - f.y0) * f.p - Math.sin(f.p * Math.PI) * 30;
         if (f.p >= 1) { S.n++; disc(tx, gy - 8, 3, "#7cf29a", .9); return false; } drawDish(X, Y, f.k, 1); return true; });

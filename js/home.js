@@ -1,5 +1,5 @@
-// Homepage extras: pixel starfield behind the hero, typing line, live stats, scroll progress
-// and the command menu (Ctrl/Cmd+K or "/").
+// Homepage extras: pixel starfield behind the hero, typing line, live stats, scroll progress.
+// The command menu (Ctrl/Cmd+K or "/") lives in cmdk.js.
 (function () {
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (id) { return document.getElementById(id); };
@@ -80,55 +80,6 @@
     return fetch(url).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} return d; });
   };
   cached("gh:user", "https://api.github.com/users/Senvor").then(function (u) { countUp($("repos"), u.public_repos); }).catch(function () {});
-
-  // ---------- command menu ----------
-  var pal = $("pal"), q = $("pal-q"), ul = $("pal-list"), kb = $("kbtn");
-  if (!pal) return;
-  var items = [];
-  document.querySelectorAll("main section[id]").forEach(function (s) { var h = s.querySelector("h2"); if (h) items.push({ t: h.textContent, k: "Section", u: "#" + s.id }); });
-  document.querySelectorAll(".proj").forEach(function (p) {
-    var h = p.querySelector("h3"), a = p.querySelector('a[href^="projects/"]');
-    if (h && a) items.push({ t: h.textContent.trim(), k: "Project", u: a.getAttribute("href") });
-  });
-  document.querySelectorAll("#connect .clinks a").forEach(function (a) { items.push({ t: a.textContent.trim(), k: "Profile", u: a.href }); });
-  items.push({ t: "Toggle theme", k: "Action", f: function () { var b = $("theme"); if (b) b.click(); } });
-  items.push({ t: "Copy email", k: "Action", f: function () { try { navigator.clipboard.writeText("senvor@lazydeveloper.org"); } catch (e) {} } });
-  var sel = 0, shown = [];
-  var render = function () {
-    var s = q.value.toLowerCase().trim();
-    shown = items.filter(function (it) { return !s || (it.t + " " + it.k).toLowerCase().indexOf(s) > -1; }).slice(0, 9);
-    if (sel >= shown.length) sel = 0;
-    ul.innerHTML = "";
-    shown.forEach(function (it, n) {
-      var li = document.createElement("li"); li.setAttribute("role", "option"); li.className = n === sel ? "on" : "";
-      li.innerHTML = "<span></span><small></small>"; li.firstChild.textContent = it.t; li.lastChild.textContent = it.k;
-      li.addEventListener("mousemove", function () { if (sel !== n) { sel = n; render(); } });
-      li.addEventListener("click", function () { run(it); });
-      ul.appendChild(li);
-    });
-    if (!shown.length) ul.innerHTML = '<li class="none">Nothing matches</li>';
-  };
-  var open = function () { pal.hidden = false; q.value = ""; sel = 0; render(); setTimeout(function () { q.focus(); }, 0); };
-  var close = function () { pal.hidden = true; };
-  var run = function (it) {
-    close(); if (it.f) return it.f();
-    if (it.u.charAt(0) === "#") { var el = document.querySelector(it.u); if (el) el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); history.replaceState(null, "", it.u); }
-    else location.href = it.u;
-  };
-  if (kb) { kb.addEventListener("click", open); if (!/Mac|iPhone|iPad/.test(navigator.platform)) kb.querySelector("kbd").textContent = "Ctrl K"; }
-  addEventListener("keydown", function (e) {
-    var typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
-    if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey)) { e.preventDefault(); pal.hidden ? open() : close(); }
-    else if (e.key === "/" && !typing && pal.hidden) { e.preventDefault(); open(); }
-    else if (!pal.hidden) {
-      if (e.key === "Escape") close();
-      else if (e.key === "ArrowDown") { e.preventDefault(); sel = (sel + 1) % Math.max(1, shown.length); render(); }
-      else if (e.key === "ArrowUp") { e.preventDefault(); sel = (sel - 1 + shown.length) % Math.max(1, shown.length); render(); }
-      else if (e.key === "Enter" && shown[sel]) { e.preventDefault(); run(shown[sel]); }
-    }
-  });
-  q.addEventListener("input", function () { sel = 0; render(); });
-  pal.addEventListener("click", function (e) { if (e.target === pal) close(); });
 })();
 
 // ---------- restyle extras: clock, filters, More menu, active nav, sticker, copy email, GitHub activity ----------
