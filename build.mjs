@@ -16,6 +16,8 @@ const art = (p) => ART_BY_SLUG[p.slug]
   ?? (p.category === "Web" ? "particles" : p.category === "Game" ? "life" : "pcb");
 // Projects that keep their photo for cards but get an animated hero on their page.
 const ANIM_HERO = new Set(["cockroach-janta-party"]);
+// Same pixel card art as the Work cards on the home page.
+const CARD_ART = { starbie: "/assets/pixel/starbie-card.webp", devruler: "/assets/pixel/devruler-card.webp", "cockroach-janta-party": "/assets/pixel/cjp.webp" };
 const has = (v) => v && v.trim() && v.trim() !== "TODO";
 
 await Promise.all(projects.map((p, i) => {
@@ -51,7 +53,7 @@ await Promise.all(projects.map((p, i) => {
       const pool = [...same, ...projects.filter((q) => q.slug !== p.slug && q.category !== p.category)].slice(0, 3);
       return `<section class="pj-more"><h2>More ${same.length ? esc(p.category.toLowerCase()) + " " : ""}projects</h2><div class="pj-cards">` +
         pool.map((q) => `<a href="/projects/${q.slug}/">` +
-          (q.image ? `<img src="${esc(q.image)}" alt="" loading="lazy">` : `<span class="tile">${esc(q.title)}</span>`) +
+          `<img src="${CARD_ART[q.slug] ?? `/assets/pixel/${q.slug}.webp`}" alt="Pixel art of ${esc(q.title)}" width="1280" height="800" loading="lazy" decoding="async">` +
           `<b>${esc(q.title)}</b><small>${esc(q.tagline)}</small></a>`).join("") + `</div></section>`;
     })(),
     sections: secs.map(([h, v], k) => `<section><h2><i>${String(k + 1).padStart(2, "0")}</i>${h}</h2><p>${esc(v)}</p></section>`).join("\n      "),

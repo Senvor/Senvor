@@ -78,6 +78,7 @@
 .pj-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
 .pj-cards a{display:grid;gap:6px;align-content:start;text-decoration:none;color:var(--ink);border:1px dashed var(--line);border-radius:8px;padding:10px}
 .pj-cards a:hover b{color:var(--amber-text)}
+.pj-cards img{image-rendering:pixelated;object-fit:cover!important}
 .pj-cards img,.pj-cards .tile{display:block;width:100%;aspect-ratio:16/10;height:auto;object-fit:contain;background:var(--card);border:1px solid var(--line);border-radius:6px}
 .pj-cards .tile{display:grid;place-items:center;font:700 20px var(--display);color:var(--soft);background-image:radial-gradient(var(--line) 1px,transparent 1.2px);background-size:12px 12px}
 .pj-cards b{font:400 22px var(--serif)}
