@@ -148,6 +148,11 @@
     // Sound Galaxy: a spiral galaxy whose arms swell with a fake beat, an equalizer glowing underneath.
     S.st = []; for (var g0 = 0; g0 < 260; g0++) { var arm = g0 % 3; S.st.push({ arm: arm, d: R(3, 48), o: R(-.35, .35), h: 190 + arm * 60 + R(-20, 20) }); }
     S.bars = []; for (var b0 = 0; b0 < 30; b0++) S.bars.push(0);
+  } else if (kind === "roach") {
+    // CJP: a rally of cockroaches marches with placards; now and then a shoe stomps, they scatter, and march on unharmed.
+    S.r = []; for (var r0 = 0; r0 < 14; r0++) S.r.push({ x: R(-20, W), y: R(36, 66), v: R(14, 22), ph: R(0, 6), sign: r0 % 3 === 0, vy: 0, fast: 0 });
+    S.shoe = { x: 0, y: -40, st: 0, wait: 3 };
+    var CJP = ["###.###.###", "#.....#.#.#", "#.....#.###", "#...#.#.#..", "###.###.#.."];
   } else if (kind === "marbles") {
     // track: pairs of points are ramps, the gap between pairs is a straight drop
     S.path = [[20, 8], [212, 24], [220, 24], [220, 40], [28, 56], [20, 56], [20, 72], [212, 88], [220, 88], [220, 112]];
@@ -243,6 +248,37 @@
         var bh = Math.max(1, Math.round(S.bars[e])), bxp = 3 + e * 8;
         for (var hh = 0; hh < bh; hh++) { x.globalAlpha = .35 + .5 * hh / 16; x.fillStyle = "hsl(" + (200 + hh * 8) + " 90% 65%)"; x.fillRect(bxp, H - 2 - hh, 6, 1); }
       }
+    } else if (kind === "roach") {
+      x.globalAlpha = 1; x.fillStyle = "#1a1612"; x.fillRect(0, 70, W, H - 70); x.fillStyle = "#2a241c"; x.fillRect(0, 70, W, 1);
+      // banner
+      x.fillStyle = AMB; x.globalAlpha = .9; x.font = "7px monospace"; x.textAlign = "left"; x.fillText("JAI COCKROACH", 6, 12);
+      var sh = S.shoe;
+      if (sh.st === 0) { sh.wait -= dt; if (sh.wait <= 0) { sh.st = 1; sh.x = R(40, W - 40); sh.y = -40; } }
+      else if (sh.st === 1) { sh.y += 260 * dt; if (sh.y >= 52) { sh.y = 52; sh.st = 2; sh.hold = .5; sh.boom = .4;
+          S.r.forEach(function (r) { var dx = r.x - sh.x; if (Math.abs(dx) < 40) { r.fast = 1.2; r.vx = (dx < 0 ? -1 : 1) * R(50, 80); r.vy = R(-20, 20); } }); } }
+      else if (sh.st === 2) { sh.hold -= dt; if (sh.hold <= 0) sh.st = 3; }
+      else { sh.y -= 120 * dt; if (sh.y < -40) { sh.st = 0; sh.wait = R(3, 5); } }
+      S.r.sort(function (a, b) { return a.y - b.y; });
+      S.r.forEach(function (r) {
+        var sp = r.v; if (r.fast > 0) { r.fast -= dt; r.x += r.vx * dt; r.y = Math.max(34, Math.min(67, r.y + r.vy * dt)); sp = 40; } else r.x += sp * dt;
+        if (r.x > W + 14) { r.x = -14; r.y = R(36, 66); } if (r.x < -16) r.x = W + 12;
+        r.ph += dt * sp * .6; var X = Math.round(r.x), Y = Math.round(r.y), lg = Math.sin(r.ph) > 0 ? 1 : 0, face = r.fast > 0 && r.vx < 0 ? -1 : 1;
+        x.globalAlpha = 1;
+        if (r.sign && r.fast <= 0) { x.fillStyle = "#8a6a44"; x.fillRect(X, Y - 13, 1, 10); x.fillStyle = "#f2e6d0"; x.fillRect(X - 7, Y - 21, 15, 9);
+          for (var gy2 = 0; gy2 < 5; gy2++) for (var gx2 = 0; gx2 < 11; gx2++) if (CJP[gy2].charAt(gx2) === "#") { x.fillStyle = "#c0392b"; x.fillRect(X - 5 + gx2, Y - 19 + gy2, 1, 1); } }
+        x.fillStyle = "#2a1408";   // legs, three pairs, alternating
+        for (var l = 0; l < 3; l++) { var lx = X - 3 + l * 3 + ((l + lg) % 2 ? 1 : -1); x.fillRect(lx, Y + 2, 1, 2); x.fillRect(lx + (lg ? 1 : -1), Y - 3, 1, 1); }
+        x.fillStyle = "#6b3a1e"; x.fillRect(X - 4, Y - 2, 8, 4); x.fillRect(X - 3, Y - 3, 6, 1); x.fillRect(X - 3, Y + 2, 6, 1);
+        x.fillStyle = "#9a5a2e"; x.fillRect(X - 2, Y - 2, 4, 1); x.fillStyle = "#3a1e0e"; x.fillRect(X - 1 * face, Y - 2, 1, 4);
+        x.fillStyle = "#2a1408"; x.fillRect(X + 4 * face + (face < 0 ? -1 : 0), Y - 1, 2, 2);   // head
+        var hx2 = X + (face > 0 ? 6 : -7); x.fillRect(hx2, Y - 2 - lg, 1, 1); x.fillRect(hx2 + face, Y - 3 - lg, 1, 1); x.fillRect(hx2 + 2 * face, Y - 4, 1, 1);
+      });
+      if (sh.st) { var SX = Math.round(sh.x), SY = Math.round(sh.y);   // the shoe
+        x.globalAlpha = 1; x.fillStyle = "#3b2a6b"; x.fillRect(SX - 10, SY, 26, 10); x.fillRect(SX - 10, SY - 28, 12, 28);
+        x.fillStyle = "#f2f2f2"; x.fillRect(SX - 12, SY + 10, 30, 4); x.fillStyle = "#c9c9c9"; x.fillRect(SX - 12, SY + 13, 30, 1);
+        x.fillStyle = "#fff"; x.fillRect(SX - 2, SY + 2, 6, 1); x.fillRect(SX + 4, SY + 4, 6, 1); }
+      if (sh.boom > 0) { sh.boom -= dt; disc(sh.x + 3, 64, 34 * (1 - sh.boom / .4) + 4, AMB, .3 * sh.boom / .4);
+        x.globalAlpha = sh.boom / .4; x.fillStyle = "#fff"; x.font = "8px monospace"; x.textAlign = "center"; x.fillText("STOMP!", sh.x + 3, 26); }
     } else if (kind === "marbles") {
       // Marbles follow a fixed zig-zag track (ramp, drop, ramp back, drop, ...) so they can never get stuck.
       var P = S.path;
