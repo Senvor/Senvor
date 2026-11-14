@@ -11,7 +11,7 @@ const esc = (s) =>
     .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 // Which animated pixel hero a project without a photo gets.
 // Per-slug overrides first, so Tapdish keeps its food art and Sound Galaxy its sound art.
-const ART_BY_SLUG = { "pocket-gravity-lab": "orbit", marbew: "marbles", tapdish: "food", "sound-galaxy": "sound", "cockroach-janta-party": "roach" };
+const ART_BY_SLUG = { "pocket-gravity-lab": "orbit", marbew: "marbles", obsidian: "keys", tapdish: "food", "sound-galaxy": "sound", "cockroach-janta-party": "roach" };
 const art = (p) => ART_BY_SLUG[p.slug]
   ?? (p.category === "Web" ? "particles" : p.category === "Game" ? "life" : "pcb");
 // Projects that keep their photo for cards but get an animated hero on their page.
@@ -41,9 +41,6 @@ await Promise.all(projects.map((p, i) => {
     actions,
     hero: p.image && !ANIM_HERO.has(p.slug)
       ? `<figure class="pj-hero"><img src="${esc(p.image)}" alt="${esc(p.title)}" data-zoom></figure>`
-      // Hardware projects without a photo show their pixel render, not an animation.
-      : p.category === "Hardware"
-      ? `<figure class="pj-hero pix"><img src="/assets/pixel/${p.slug}.webp" alt="Pixel render of ${esc(p.title)}" width="1280" height="800" data-zoom></figure>`
       : `<div class="pj-hero art" data-art="${art(p)}" aria-hidden="true"><canvas width="240" height="100"></canvas><span>${esc(p.title)}</span></div>`,
     statusText: esc(p.status ? p.status[0].toUpperCase() + p.status.slice(1) : "Shipped"),
     toolCount: p.stack.length ? String(p.stack.length) : "—",

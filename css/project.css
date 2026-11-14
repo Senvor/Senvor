@@ -117,4 +117,3 @@
   .pj-hero.art span{left:16px;bottom:12px}
 }
 @media (prefers-reduced-motion:reduce){.pj-actions a:hover,.pj-actions a:active,.pj-gallery figure:hover img,.pj-frame button:hover{transform:none}.rv{opacity:1;transform:none}}
-.pj-hero.pix img{image-rendering:pixelated}

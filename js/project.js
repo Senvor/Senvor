@@ -131,6 +131,9 @@
 
   if (kind === "orbit") {
     S.p = [[18, .9, 1.4, "#ff7a59"], [30, .55, 2, SKY], [44, .36, 2.5, "#7cf29a"], [60, .24, 1.6, "#d58cff"]].map(function (a) { return { r: a[0], w: a[1], s: a[2], c: a[3], a: R(0, 6.28) }; });
+  } else if (kind === "keys") {
+    // Obsidian: a dark glassy 60% board; keys press as a line of text types itself above it.
+    S.rows = [14, 14, 13, 12, 8]; S.lit = {}; S.txt = ["hello world", "obsidian v1", "gg wp", "ship it"]; S.ti = 0; S.tc = 0; S.acc = 0;
   } else if (kind === "pcb") {
     S.traces = []; for (var k = 0; k < 10; k++) { var y0 = Math.round(R(8, H - 8)), pts = [[0, y0]], cx = 0, cy = y0;
       while (cx < W) { cx += Math.round(R(12, 40)); if (Math.random() < .5) { var ny = Math.max(6, Math.min(H - 6, cy + Math.round(R(-20, 20)))); pts.push([cx, cy]); cx += Math.abs(ny - cy); cy = ny; } pts.push([cx, cy]); }
@@ -158,7 +161,8 @@
     S.path = [[20, 8], [212, 24], [220, 24], [220, 40], [28, 56], [20, 56], [20, 72], [212, 88], [220, 88], [220, 112]];
     S.seg = []; S.len = 0;
     for (var k2 = 1; k2 < S.path.length; k2++) { var L2 = Math.hypot(S.path[k2][0] - S.path[k2 - 1][0], S.path[k2][1] - S.path[k2 - 1][1]); S.seg.push(L2); S.len += L2; }
-    S.ms = []; for (var m = 0; m < 7; m++) S.ms.push({ s: m * S.len / 7, v: 30 + m * 5, c: "hsl(" + Math.round(m * 51) + " 80% 62%)", r: R(2.5, 3.5) });
+    S.ms = []; for (var m = 0; m < 6; m++) S.ms.push({ s: m * S.len / 6, v: 30 + m * 5, c: "hsl(" + Math.round(m * 60) + " 80% 62%)", r: 3, tr: [] });
+    S.laps = 0; S.flash = 0;
   } else if (kind === "life") {
     S.cw = 60; S.ch = 25; S.g = []; for (var z = 0; z < S.cw * S.ch; z++) S.g.push(Math.random() < .3 ? 1 : 0); S.acc = 0;
   }
@@ -167,12 +171,28 @@
     t += dt; x.globalAlpha = 1; x.fillStyle = "#0a0a0a"; x.fillRect(0, 0, W, H);
     stars.forEach(function (s) { px(s[0], s[1], "#fff", Math.sin(s[2] + t * 1.5) > 0 ? .7 : .2); });
     if (kind === "orbit") {
-      var c0 = W / 2, c1 = H / 2;
-      disc(c0, c1, 14, AMB, .15); disc(c0, c1, 9, AMB, .35); disc(c0, c1, 5, "#fff6e0");
-      S.p.forEach(function (p) {
-        p.a += p.w * dt; for (var k = 1; k < 26; k++) { var b = p.a - k * .045; px(c0 + Math.cos(b) * p.r * 1.6, c1 + Math.sin(b) * p.r * .8, p.c, .7 - k * .027); }
-        disc(c0 + Math.cos(p.a) * p.r * 1.6, c1 + Math.sin(p.a) * p.r * .8, p.s, p.c);
-      });
+      // Pocket Gravity Lab: the handheld itself, its screen running the orbit sim over a warped gravity grid.
+      var dx0 = 52, dy0 = 6, dw = 136, dh = 70, sx0 = 82, sy0 = 12, sw = 76, sh2 = 50, c0 = sx0 + sw / 2, c1 = sy0 + sh2 / 2;
+      x.globalAlpha = 1; x.fillStyle = "#3a3f4a"; x.fillRect(dx0 + 2, dy0, dw - 4, dh); x.fillRect(dx0, dy0 + 2, dw, dh - 4);
+      x.fillStyle = "#4b5160"; x.fillRect(dx0 + 2, dy0, dw - 4, 2); x.fillStyle = "#262a32"; x.fillRect(dx0 + 2, dy0 + dh - 2, dw - 4, 2);
+      x.fillStyle = "#101216"; x.fillRect(sx0 - 2, sy0 - 2, sw + 4, sh2 + 4); x.fillStyle = "#05070a"; x.fillRect(sx0, sy0, sw, sh2);
+      // gravity grid bending toward the sun
+      for (var gy3 = 0; gy3 <= sh2; gy3 += 6) for (var gx3 = 0; gx3 <= sw; gx3 += 6) { var vx = sx0 + gx3 - c0, vy = sy0 + gy3 - c1, dd = Math.hypot(vx, vy) + 6, pull = 70 / dd;
+        px(c0 + vx * (1 - pull / dd * 1.6), c1 + vy * (1 - pull / dd * 1.6), "#2f6fa8", .55); }
+      disc(c0, c1, 6, AMB, .18); disc(c0, c1, 4, AMB, .45); disc(c0, c1, 2, "#fff6e0");
+      x.save(); x.beginPath(); x.rect(sx0, sy0, sw, sh2); x.clip();
+      S.p.forEach(function (p) { p.a += p.w * dt; var rx = p.r * .62, ry = p.r * .38;
+        for (var k = 1; k < 22; k++) { var b = p.a - k * .05; px(c0 + Math.cos(b) * rx, c1 + Math.sin(b) * ry, p.c, .65 - k * .028); }
+        disc(c0 + Math.cos(p.a) * rx, c1 + Math.sin(p.a) * ry, Math.max(1, p.s * .7), p.c); });
+      x.restore();
+      x.fillStyle = "#7cf29a"; x.globalAlpha = .8; x.font = "6px monospace"; x.textAlign = "left"; x.fillText("G " + (9.8 + Math.sin(t) * .02).toFixed(2), sx0 + 2, sy0 + 7);
+      // d-pad and two buttons that blink like they're being played
+      x.globalAlpha = 1; x.fillStyle = "#1b1e24"; x.fillRect(dx0 + 10, dy0 + 30, 15, 5); x.fillRect(dx0 + 15, dy0 + 25, 5, 15);
+      var bA = Math.sin(t * 3) > .6, bB = Math.sin(t * 2.3 + 1) > .7;
+      disc(dx0 + dw - 22, dy0 + 28, 3.2, bA ? AMB : "#8a5a1e"); disc(dx0 + dw - 13, dy0 + 36, 3.2, bB ? "#ff7a59" : "#7a3a2a");
+      x.fillStyle = "#262a32"; for (var sp2 = 0; sp2 < 4; sp2++) x.fillRect(dx0 + dw - 26 + sp2 * 4, dy0 + 54, 2, 6);
+      x.fillStyle = "#c9c9c9"; x.globalAlpha = .55; x.font = "6px monospace"; x.textAlign = "center"; x.fillText("PGL", c0, sy0 + sh2 + 9);
+      x.globalAlpha = 1;
     } else if (kind === "pcb") {
       S.traces.forEach(function (tr) {
         x.globalAlpha = .45; x.fillStyle = tr.c;
@@ -279,6 +299,29 @@
         x.fillStyle = "#fff"; x.fillRect(SX - 2, SY + 2, 6, 1); x.fillRect(SX + 4, SY + 4, 6, 1); }
       if (sh.boom > 0) { sh.boom -= dt; disc(sh.x + 3, 64, 34 * (1 - sh.boom / .4) + 4, AMB, .3 * sh.boom / .4);
         x.globalAlpha = sh.boom / .4; x.fillStyle = "#fff"; x.font = "8px monospace"; x.textAlign = "center"; x.fillText("STOMP!", sh.x + 3, 26); }
+    } else if (kind === "keys") {
+      var bx0 = 25, by0 = 26, bw = 190, kh = 7, pitch = 8;
+      S.acc += dt; var str = S.txt[S.ti];
+      if (S.acc > (S.tc >= str.length ? 1.4 : .13)) { S.acc = 0;
+        if (S.tc >= str.length) { S.tc = 0; S.ti = (S.ti + 1) % S.txt.length; }
+        else { var ch = str.charAt(S.tc++); S.lit[ch === " " ? "4,3" : Math.floor(R(0, 4)) + "," + Math.floor(R(0, 12))] = .22; } }
+      // typed line on a tiny screen strip
+      x.globalAlpha = 1; x.fillStyle = "#120c1a"; x.fillRect(bx0, 8, bw, 12); x.fillStyle = "#d58cff"; x.font = "8px monospace"; x.textAlign = "left";
+      var shown = str.slice(0, S.tc); x.fillText("> " + shown, bx0 + 4, 17); if (Math.sin(t * 8) > 0) x.fillRect(bx0 + 4 + x.measureText("> " + shown).width + 1, 10, 4, 8);
+      // case
+      x.fillStyle = "#0d0912"; x.fillRect(bx0 - 3, by0 - 3, bw + 6, S.rows.length * pitch + 5); x.fillStyle = "#3d2d55"; x.fillRect(bx0 - 3, by0 - 3, bw + 6, 1);
+      S.rows.forEach(function (n, ri) {
+        var ws = ri === 4 ? [1.25, 1.25, 1.25, 6.25, 1.25, 1.25, 1.25, 1.25] : null, tot = ws ? 15 : n, kx = bx0;
+        for (var ki = 0; ki < n; ki++) { var kw = (ws ? ws[ki] : 1) * bw / tot, id = ri + "," + ki, L = S.lit[id] || 0, X = Math.round(kx), Y = by0 + ri * pitch + (L > 0 ? 1 : 0), w = Math.round(kx + kw) - X - 1;
+          x.fillStyle = L > 0 ? AMB : (ri === 4 && ki === 3) || (ri === 0 && ki === 0) ? "#2e2142" : "#211833"; x.fillRect(X, Y, w, kh - 1);
+          x.fillStyle = L > 0 ? "#fff1cc" : "#3a2b52"; x.fillRect(X, Y, w, 1); x.fillStyle = "#0a0710"; x.fillRect(X, Y + kh - 1, w, 1);
+          if (L > 0) { S.lit[id] = L - dt; x.globalAlpha = .25; x.fillStyle = AMB; x.fillRect(X - 1, Y - 2, w + 2, kh + 3); x.globalAlpha = 1; }
+          kx += kw; }
+      });
+      // a slow glassy sheen sliding across the board
+      var sx = ((t * 40) % (bw + 80)) - 40 + bx0; x.globalAlpha = .04; x.fillStyle = "#fff";
+      for (var q2 = 0; q2 < S.rows.length * pitch; q2++) x.fillRect(Math.round(sx + q2 * .6), by0 + q2, 10, 1);
+      x.globalAlpha = 1;
     } else if (kind === "marbles") {
       // Marbles follow a fixed zig-zag track (ramp, drop, ramp back, drop, ...) so they can never get stuck.
       var P = S.path;
@@ -286,13 +329,22 @@
       for (var k = 0; k < P.length - 1; k++) { var A = P[k], B = P[k + 1], L = Math.abs(B[0] - A[0]); if (L < Math.abs(B[1] - A[1])) continue;   // ramps only
         for (var q = 0; q <= L; q++) x.fillRect(Math.round(A[0] + (B[0] - A[0]) * q / L), Math.round(A[1] + (B[1] - A[1]) * q / L) + 4, 1, 2); }
       x.fillStyle = AMB; x.fillRect(P[0][0] - 6, P[0][1] - 6, 12, 2);           // start funnel
+      // support posts under each ramp end, and a lift chain on the right carrying marbles back up
+      x.fillStyle = "#3a3f4a"; x.globalAlpha = 1;
+      for (var k3 = 0; k3 < P.length; k3 += 2) { x.fillRect(P[k3][0] - 1, P[k3][1] + 6, 2, 100); }
+      x.fillStyle = "#262a32"; x.fillRect(230, 4, 3, 96); x.fillStyle = "#6e7686"; for (var cy3 = (t * 30) % 6; cy3 < 96; cy3 += 6) x.fillRect(230, 4 + Math.round(cy3), 3, 1);
+      x.fillStyle = "#7cf29a"; x.fillRect(P[P.length - 1][0] - 7, P[P.length - 1][1] - 26, 1, 8); x.fillRect(P[P.length - 1][0] - 6, P[P.length - 1][1] - 26, 5, 3);   // finish flag
       S.ms.forEach(function (b) {
         b.v = Math.min(b.v + 40 * dt, 90); b.s += b.v * dt;
-        if (b.s > S.len) { b.s -= S.len; b.v = 15; }
+        if (b.s > S.len) { b.s -= S.len; b.v = 15; b.tr = []; S.laps++; S.flash = .4; }
         var d = b.s, X = P[0][0], Y = P[0][1];
         for (var k = 1; k < P.length; k++) { var sl = S.seg[k - 1]; if (d <= sl) { var f = d / sl; X = P[k - 1][0] + (P[k][0] - P[k - 1][0]) * f; Y = P[k - 1][1] + (P[k][1] - P[k - 1][1]) * f; break; } d -= sl; }
-        disc(X, Y, b.r, b.c); px(X - b.r * .4, Y - b.r * .4, "#fff", 1);
+        b.tr.push([X, Y]); if (b.tr.length > 9) b.tr.shift();
+        b.tr.forEach(function (q3, qi) { px(q3[0], q3[1], b.c, qi / 18); });
+        disc(X, Y, b.r + 1.5, b.c, .18); disc(X, Y, b.r, b.c); px(X - 1, Y - 1, "#fff", 1);
       });
+      if (S.flash > 0) S.flash -= dt;
+      x.globalAlpha = .9; x.fillStyle = S.flash > 0 ? "#fff" : "#7cf29a"; x.font = "7px monospace"; x.textAlign = "right"; x.fillText("LAPS " + S.laps, 224, 10);
     } else if (kind === "life") {
       S.acc += dt; if (S.acc > .18) { S.acc = 0; var n = S.g.slice(), cw = S.cw, ch = S.ch;
         for (var yy2 = 0; yy2 < ch; yy2++) for (var xx2 = 0; xx2 < cw; xx2++) { var c = 0;
