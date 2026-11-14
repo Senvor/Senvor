@@ -27,6 +27,7 @@
 .pj-stats li:last-child{border-right:0}
 .pj-stats small{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--subtle)}
 .pj-stats b{font:500 15px var(--mono);color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:480px){.pj-stats b{white-space:normal;overflow:visible;font-size:14px}}
 .pj-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:32px;align-items:start;padding-top:28px}
 .pj-body section{margin-bottom:28px;padding:0;border:0}
 .pj-body h2{font-size:30px;margin-bottom:12px;display:flex;align-items:baseline;gap:12px}
