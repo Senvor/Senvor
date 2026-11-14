@@ -41,6 +41,9 @@ await Promise.all(projects.map((p, i) => {
     actions,
     hero: p.image && !ANIM_HERO.has(p.slug)
       ? `<figure class="pj-hero"><img src="${esc(p.image)}" alt="${esc(p.title)}" data-zoom></figure>`
+      // Hardware projects without a photo show their pixel render, not an animation.
+      : p.category === "Hardware"
+      ? `<figure class="pj-hero pix"><img src="/assets/pixel/${p.slug}.webp" alt="Pixel render of ${esc(p.title)}" width="1280" height="800" data-zoom></figure>`
       : `<div class="pj-hero art" data-art="${art(p)}" aria-hidden="true"><canvas width="240" height="100"></canvas><span>${esc(p.title)}</span></div>`,
     statusText: esc(p.status ? p.status[0].toUpperCase() + p.status.slice(1) : "Shipped"),
     toolCount: p.stack.length ? String(p.stack.length) : "—",
