@@ -158,7 +158,7 @@
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(mail).then(done, fb); else fb();
   });
 
-  // GitHub activity: May 2026 to today, 7 rows, five shades; fails quietly
+  // GitHub activity: May 24, 2026 to today, 7 rows, five shades; fails quietly
   var grid = $("cgrid"), load = $("cload"), tot = $("ctotal");
   if (grid) {
     var fail = function () { if (load) load.textContent = "See my activity on GitHub"; };
@@ -168,8 +168,8 @@
     (got || fetch("https://github-contributions-api.jogruber.de/v4/Senvor?y=last").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} return d; }))
       .then(function (d) {
         var days = (d && d.contributions) || []; if (!days.length) return fail();
-        // start the grid on May 1, 2026 and run to the latest day
-        var START = "2026-05-01";
+        // start the grid on the day I started (May 24, 2026) and run to the latest day
+        var START = "2026-05-24";
         days = days.filter(function (x) { return x.date >= START; }); if (!days.length) return fail();
         var pad = new Date(days[0].date + "T00:00:00Z").getUTCDay();
         var frag = document.createDocumentFragment();
@@ -180,7 +180,7 @@
         });
         grid.appendChild(frag); if (load) load.remove();
         var total = days.reduce(function (a, x) { return a + x.count; }, 0);
-        if (tot) tot.textContent = total + " contributions since May 2026";
+        if (tot) tot.textContent = total + " contributions since May 24, 2026";
       }).catch(fail);
   }
 })();
