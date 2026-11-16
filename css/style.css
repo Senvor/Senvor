@@ -349,3 +349,22 @@ a,button{touch-action:manipulation}
   .totop{display:inline-flex;align-items:center;min-height:44px}
   .count{text-wrap:balance}
 }
+
+/* ===== A little of the old pixel design, kept quiet =====
+   One accent (amber), used sparingly, plus tactile feedback where you touch. */
+::selection{background:var(--amber);color:#111}
+.logo::after{content:"";display:inline-block;width:.42em;height:.42em;margin-left:.12em;background:var(--amber);vertical-align:baseline;animation:px-blink 1.2s steps(1) infinite}
+@keyframes px-blink{50%{opacity:0}}
+.sh .num{color:var(--amber-text)}
+.btn:not(.alt){box-shadow:3px 3px 0 var(--amber);transition:transform .15s ease,box-shadow .15s ease,background-color .15s,border-color .15s}
+.btn:not(.alt):active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--amber)}
+.proj .media{transition:transform .2s ease,box-shadow .2s ease}
+@media (hover:hover){
+  .proj:hover .media{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--amber)}
+  .btn:not(.alt):hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--amber)}
+}
+@media (prefers-reduced-motion:reduce){
+  .logo::after{animation:none}
+  .proj .media,.btn{transition:none}
+  .proj:hover .media,.btn:not(.alt):hover,.btn:not(.alt):active{transform:none}
+}
