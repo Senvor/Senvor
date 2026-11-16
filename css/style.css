@@ -358,13 +358,15 @@ a,button{touch-action:manipulation}
 .sh .num{color:var(--amber-text)}
 .btn:not(.alt){box-shadow:3px 3px 0 var(--amber);transition:transform .15s ease,box-shadow .15s ease,background-color .15s,border-color .15s}
 .btn:not(.alt):active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--amber)}
-.proj .media{transition:transform .2s ease,box-shadow .2s ease}
+.proj{padding:var(--s3) var(--s3) var(--s4);border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--card) 45%,var(--bg));transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.proj .body{padding:0 var(--s2)}
+.proj .media{border-radius:8px}
 @media (hover:hover){
-  .proj:hover .media{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--amber)}
+  .proj:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--amber);border-color:var(--amber)}
   .btn:not(.alt):hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--amber)}
 }
 @media (prefers-reduced-motion:reduce){
   .logo::after{animation:none}
-  .proj .media,.btn{transition:none}
-  .proj:hover .media,.btn:not(.alt):hover,.btn:not(.alt):active{transform:none}
+  .proj,.btn{transition:none}
+  .proj:hover,.btn:not(.alt):hover,.btn:not(.alt):active{transform:none}
 }
