@@ -158,19 +158,19 @@
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(mail).then(done, fb); else fb();
   });
 
-  // GitHub activity: 53 weeks x 7 days, five shades; fails quietly
+  // GitHub activity: May 2026 to today, 7 rows, five shades; fails quietly
   var grid = $("cgrid"), load = $("cload"), tot = $("ctotal");
   if (grid) {
     var fail = function () { if (load) load.textContent = "See my activity on GitHub"; };
-    var key = "gh:contrib";
+    var key = "gh:contrib2";
     var got = null;
     try { var c0 = JSON.parse(localStorage.getItem(key)); if (c0 && Date.now() - c0.t < 6 * 36e5) got = Promise.resolve(c0.d); } catch (e) {}
     (got || fetch("https://github-contributions-api.jogruber.de/v4/Senvor?y=last").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} return d; }))
       .then(function (d) {
         var days = (d && d.contributions) || []; if (!days.length) return fail();
-        // 53 columns: 52 full weeks plus the current week, ending on the latest day
-        var wd = new Date(days[days.length - 1].date + "T00:00:00Z").getUTCDay();
-        days = days.slice(-(52 * 7 + wd + 1));
+        // start the grid on May 1, 2026 and run to the latest day
+        var START = "2026-05-01";
+        days = days.filter(function (x) { return x.date >= START; }); if (!days.length) return fail();
         var pad = new Date(days[0].date + "T00:00:00Z").getUTCDay();
         var frag = document.createDocumentFragment();
         for (var p = 0; p < pad; p++) { var e0 = document.createElement("i"); e0.className = "pad"; frag.appendChild(e0); }
@@ -179,9 +179,8 @@
           i.title = x.count + (x.count === 1 ? " contribution on " : " contributions on ") + x.date; frag.appendChild(i);
         });
         grid.appendChild(frag); if (load) load.remove();
-        var total = d.total && (d.total.lastYear != null ? d.total.lastYear : null);
-        if (total == null) total = days.reduce(function (a, x) { return a + x.count; }, 0);
-        if (tot) tot.textContent = total + " contributions in the last year";
+        var total = days.reduce(function (a, x) { return a + x.count; }, 0);
+        if (tot) tot.textContent = total + " contributions since May 2026";
       }).catch(fail);
   }
 })();
