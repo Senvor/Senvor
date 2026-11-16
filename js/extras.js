@@ -14,7 +14,8 @@ try {
   const list = await (await fetch("projects.json")).json();
   const by = {};
   for (const p of list) by[p.status] = (by[p.status] || 0) + 1;
+  // Non-breaking spaces keep each stat on one line ("4 in progress"), so a narrow screen only wraps between stats.
+  const nb = (t) => t.replace(/ /g, "\u00a0");
   document.getElementById("project-count").textContent =
-    `${list.length} projects · ` +
-    Object.entries(by).map(([s, n]) => `${n} ${s || "live"}`).join(" · ");
+    [`${list.length} projects`, ...Object.entries(by).map(([s, n]) => `${n} ${s || "live"}`)].map(nb).join(" · ");
 } catch { /* leave empty */ }

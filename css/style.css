@@ -327,3 +327,25 @@ a,button{touch-action:manipulation}
   .btn:hover,.btn:active{transform:none}
   ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
 }
+
+/* ---------- touch screens and phones: comfortable tap targets (about 44px) ---------- */
+@media (pointer:coarse),(max-width:600px){
+  .logo{display:inline-flex;align-items:center;min-height:44px}
+  nav a,.more-btn{display:inline-flex;align-items:center;min-height:44px}
+  .theme{width:44px;height:44px;margin-left:0}
+  a.pill{min-height:40px}
+  .btn{min-height:44px}
+  .clinks a,.cmail{min-height:44px}
+  .tabs button{min-height:40px}
+  .mini{min-height:40px;padding:0 var(--s4)}
+  .orbit-btns{gap:8px}
+  .orbit-ctl label{min-height:44px}
+  .orbit-ctl select{min-height:40px;padding:0 var(--s3)}
+  .orbit-ctl input[type=range]{height:32px}
+  .orbit-ctl input[type=checkbox]{width:22px;height:22px}
+  .links a{display:inline-flex;align-items:center;min-height:44px;padding:0}
+  .conv summary{min-height:44px}
+  .conv select,.conv input,.conv .mini{min-height:44px}
+  .totop{display:inline-flex;align-items:center;min-height:44px}
+  .count{text-wrap:balance}
+}

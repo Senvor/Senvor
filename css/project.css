@@ -117,3 +117,13 @@
   .pj-hero.art span{left:16px;bottom:12px}
 }
 @media (prefers-reduced-motion:reduce){.pj-actions a:hover,.pj-actions a:active,.pj-gallery figure:hover img,.pj-frame button:hover{transform:none}.rv{opacity:1;transform:none}}
+
+/* ---------- touch screens and phones: comfortable tap targets (about 44px) ---------- */
+@media (pointer:coarse),(max-width:600px){
+  .crumb{min-height:44px;margin-bottom:8px}
+  .pj-actions a,.pj-share{min-height:44px}
+  .pj-repo{display:inline-flex;align-items:center;min-height:44px}
+  .top .kbtn{width:44px;height:44px}
+  .pj-frame button{min-height:44px}
+  .pj-hire a{display:inline-flex;align-items:center;min-height:44px}
+}
