@@ -43,6 +43,7 @@ index.html               home page
 project.template.html    template for project pages
 projects.json            project data (order matches the home page)
 build.mjs                node build.mjs → projects/*/index.html + sitemap.xml
+shorts.mjs               node shorts.mjs → refreshes the Shorts cards in index.html (runs daily via .github/workflows/shorts.yml)
 projects/<slug>/         generated project pages (don't edit by hand)
 css/                     style.css (site), project.css (project pages)
 js/                      theme.js, script.js, home.js, extras.js, github-status.js, project.js

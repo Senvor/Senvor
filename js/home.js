@@ -123,15 +123,15 @@
   // active section: 4px dot under its nav link
   var links = document.querySelectorAll("nav [data-sec]");
   if (links.length && "IntersectionObserver" in window) {
-    var map = { top: "top", work: "work", connect: "connect", about: "about", skills: "skills", building: "building" };
+    var map = { top: "top", work: "work", connect: "connect", about: "about", skills: "skills", building: "building", shorts: "shorts" };
     var mark = function (id) {
       links.forEach(function (a) { a.classList.toggle("active", a.getAttribute("data-sec") === id); });
-      if (mb) mb.classList.toggle("active", id === "about" || id === "skills" || id === "building");
+      if (mb) mb.classList.toggle("active", id === "about" || id === "skills" || id === "building" || id === "shorts");
     };
     var vis = {};
     var io = new IntersectionObserver(function (en) {
       en.forEach(function (x) { vis[x.target.id || "top"] = x.isIntersecting; });
-      var order = ["top", "about", "bloodline", "connect", "building", "work", "skills", "activity", "still"], cur = null;
+      var order = ["top", "about", "bloodline", "connect", "building", "work", "shorts", "skills", "activity", "still"], cur = null;
       order.forEach(function (id) { if (vis[id] && !cur) cur = id; });
       mark(map[cur] || null);
     }, { rootMargin: "-45% 0px -50% 0px" });
