@@ -39,7 +39,7 @@
     <nav aria-label="Main">
       <a href="#top" data-sec="top">Home</a><a href="#work" data-sec="work">Work</a><a href="#connect" data-sec="connect">Connect</a>
       <div class="more"><button class="more-btn" id="more-btn" type="button" aria-expanded="false" aria-controls="more-menu">More</button>
-        <div class="more-menu" id="more-menu" hidden><a href="#about" data-sec="about">About</a><a href="#skills" data-sec="skills">Skills</a><a href="#building" data-sec="building">Currently building</a></div>
+        <div class="more-menu" id="more-menu" hidden><a href="#about" data-sec="about">About</a><a href="#shorts" data-sec="shorts">Shorts</a><a href="#skills" data-sec="skills">Skills</a><a href="#building" data-sec="building">Currently building</a></div>
       </div>
       <button class="kbtn" id="kbtn" type="button" aria-label="Open command menu" title="Command menu (Ctrl+K)"><kbd>⌘K</kbd></button>
       <button class="theme" id="theme" type="button" aria-label="Toggle light and dark theme"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
@@ -264,15 +264,31 @@
     </div>
   </section>
 
+  <section id="shorts" class="reveal">
+    <div class="sh"><span class="num" aria-hidden="true">05</span><h2>Shorts</h2></div>
+    <p class="lead">CS explained in 25 seconds. Small videos about the things your computer does behind your back.</p>
+    <div class="shorts" id="shorts-list">
+      <!-- shorts:start -->
+      <a class="short" href="https://youtube.com/shorts/alOrCfVDt7U"><span class="sthumb"><img src="https://i.ytimg.com/vi/alOrCfVDt7U/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><i aria-hidden="true">▶</i></span><b>Why Zipping a Zip Does Nothing 🤯</b><small>20 Nov</small></a>
+      <a class="short" href="https://youtube.com/shorts/aw3H_Li_eGs"><span class="sthumb"><img src="https://i.ytimg.com/vi/aw3H_Li_eGs/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><i aria-hidden="true">▶</i></span><b>Why 0.1 + 0.2 ≠ 0.3 in Code 🤯</b><small>12 Nov</small></a>
+      <a class="short" href="https://youtube.com/shorts/lE5iZmJzkzg"><span class="sthumb"><img src="https://i.ytimg.com/vi/lE5iZmJzkzg/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><i aria-hidden="true">▶</i></span><b>Can a Program Detect If Any Program Stops? Turing Says No 🧠</b><small>11 Nov</small></a>
+      <a class="short" href="https://youtube.com/shorts/VLc95bebxeg"><span class="sthumb"><img src="https://i.ytimg.com/vi/VLc95bebxeg/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><i aria-hidden="true">▶</i></span><b>How Google Searches Billions in Milliseconds 🤯</b><small>11 Nov</small></a>
+      <a class="short" href="https://youtube.com/shorts/UJmn0qo8ThM"><span class="sthumb"><img src="https://i.ytimg.com/vi/UJmn0qo8ThM/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><i aria-hidden="true">▶</i></span><b>The Two Generals Problem: Why Computers Can Never Be Sure 🏰</b><small>8 Nov</small></a>
+      <a class="short" href="https://youtube.com/shorts/30x2qHxG720"><span class="sthumb"><img src="https://i.ytimg.com/vi/30x2qHxG720/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><i aria-hidden="true">▶</i></span><b>Computers Can't Be Random 🤯 Here's How They Cheat</b><small>7 Nov</small></a>
+      <!-- shorts:end -->
+    </div>
+    <div class="cta"><a class="btn" href="https://www.youtube.com/@s3nvor/shorts">All Shorts on YouTube ↗</a><a class="btn alt" href="https://www.instagram.com/codewithsenvor/">@codewithsenvor on Instagram ↗</a></div>
+  </section>
+
   <section id="skills" class="reveal">
-    <div class="sh"><span class="num" aria-hidden="true">05</span><h2>Skills</h2></div>
+    <div class="sh"><span class="num" aria-hidden="true">06</span><h2>Skills</h2></div>
     <div class="tabs" role="group" aria-label="Filter skills" data-for="skill-chips"><button type="button" aria-pressed="true" data-f="all">All</button><button type="button" aria-pressed="false" data-f="code">Code</button><button type="button" aria-pressed="false" data-f="hardware">Hardware</button><button type="button" aria-pressed="false" data-f="design">Design</button></div>
     <ul class="chips" id="skill-chips"><li class="solid" data-cat="code">HTML</li><li class="solid" data-cat="code">CSS</li><li class="solid" data-cat="code">JavaScript</li><li class="solid" data-cat="code">Java</li><li class="solid" data-cat="code">GDScript</li><li class="learning" data-cat="code">Python</li><li class="learning" data-cat="code">C++</li><li class="solid" data-cat="hardware">KiCad</li><li class="learning" data-cat="hardware">EasyEDA</li><li class="learning" data-cat="hardware">Arduino</li><li class="solid" data-cat="design">Aseprite</li><li class="solid" data-cat="design">Canva</li><li class="solid" data-cat="design">CapCut</li></ul>
     <p class="legend"><b><span class="s"></span>Comfortable</b><b><span class="l"></span>Still learning</b></p>
   </section>
 
   <section id="activity" class="reveal">
-    <div class="sh"><span class="num" aria-hidden="true">06</span><h2>GitHub Activity</h2></div>
+    <div class="sh"><span class="num" aria-hidden="true">07</span><h2>GitHub Activity</h2></div>
     <a class="contrib" id="contrib" href="https://github.com/Senvor" aria-label="Senvor's GitHub contributions since May 24, 2026">
       <div class="cgrid-wrap"><div class="cgrid" id="cgrid"></div><p class="cload" id="cload">Loading contributions…</p></div>
       <div class="clegend"><span id="ctotal"></span><span class="cl">Less <i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i> More</span></div>
@@ -280,7 +296,7 @@
   </section>
 
   <section id="still" class="reveal">
-    <div class="sh"><span class="num" aria-hidden="true">07</span><h2>Still here?</h2></div>
+    <div class="sh"><span class="num" aria-hidden="true">08</span><h2>Still here?</h2></div>
     <p class="lead">You scrolled all the way down, that's basically a handshake. Let's build something together.</p>
     <div class="cta"><a class="btn" href="mailto:senvor@lazydeveloper.org">Say hi</a><button class="btn alt" id="copy-email" type="button">Copy email</button></div>
     <blockquote class="quote"><p>“Fake it until you Make it”</p><cite>Senvor, probably</cite></blockquote>

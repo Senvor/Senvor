@@ -1,0 +1,29 @@
+name: Refresh Shorts
+
+# Pulls the newest public Shorts from YouTube into the Shorts section of index.html.
+# 03:45 UTC = 09:15 IST, just after the daily 9:00 IST Short goes public.
+on:
+  schedule:
+    - cron: '45 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node shorts.mjs
+      - name: Commit if changed
+        run: |
+          if git diff --quiet; then echo "No new Shorts."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Shorts: refresh from YouTube feed"
+          git pull --rebase origin main
+          git push origin HEAD:main
