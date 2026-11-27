@@ -22,11 +22,6 @@
   };
   var actions = [
     { t: "Toggle theme", k: "Action", f: function () { var b = $("theme"); if (b) b.click(); } },
-    { t: "Theme: Dark", k: "Theme", f: function () { window.senvorTheme && senvorTheme.set("dark"); } },
-    { t: "Theme: Light", k: "Theme", f: function () { window.senvorTheme && senvorTheme.set("light"); } },
-    { t: "Theme: Whitewash", k: "Theme", f: function () { window.senvorTheme && senvorTheme.set("whitewash"); } },
-    { t: "Theme: Olive Green", k: "Theme", f: function () { window.senvorTheme && senvorTheme.set("olive"); } },
-    { t: "Theme: Bougainvillea Pink", k: "Theme", f: function () { window.senvorTheme && senvorTheme.set("bougainvillea"); } },
     { t: "Copy email", k: "Action", f: function () { try { navigator.clipboard.writeText("senvor@lazydeveloper.org"); } catch (e) {} } }
   ];
   if (home) items = collect(document).concat(actions);
