@@ -382,3 +382,9 @@ a,button{touch-action:manipulation}
 .short small{font:400 var(--t-xs) var(--mono);color:var(--subtle);padding:0 var(--s1)}
 @media (hover:hover){.short:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--amber);border-color:var(--amber)}}
 @media (prefers-reduced-motion:reduce){.short{transition:none}.short:hover{transform:none}}
+
+/* Back-to-top button */
+.to-top{position:fixed;right:16px;bottom:16px;z-index:40;width:40px;height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 18px/1 var(--body);cursor:pointer;box-shadow:var(--shadow)}
+.to-top[hidden]{display:none}
+.to-top:hover{border-color:var(--soft)}
+.to-top:focus-visible{outline:2px solid var(--ink);outline-offset:2px}

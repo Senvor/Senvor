@@ -19,3 +19,19 @@ try {
   document.getElementById("project-count").textContent =
     [`${list.length} projects`, ...Object.entries(by).map(([s, n]) => `${n} ${s || "live"}`)].map(nb).join(" · ");
 } catch { /* leave empty */ }
+
+// Back-to-top button: appears after scrolling down a screen or so.
+const topBtn = document.createElement("button");
+topBtn.type = "button";
+topBtn.className = "to-top";
+topBtn.setAttribute("aria-label", "Back to top");
+topBtn.textContent = "↑";
+topBtn.hidden = true;
+document.body.appendChild(topBtn);
+const toggleTop = () => { topBtn.hidden = window.scrollY < 800; };
+addEventListener("scroll", toggleTop, { passive: true });
+toggleTop();
+topBtn.addEventListener("click", () => {
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: 0, behavior: calm ? "auto" : "smooth" });
+});
