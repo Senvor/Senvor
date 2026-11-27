@@ -18,6 +18,27 @@
   --amber:#ffb84d; --amber-text:#9a5400; --sky:#2f8fd6; --green:#00a06d;
   --hdr:rgba(255,255,255,.85); --shadow:0 6px 18px rgba(0,0,0,.08);
 }
+:root[data-theme="whitewash"]{
+  color-scheme:light;
+  --bg:#f6f3ec; --card:#eeeae0; --line:#dcd6c8; --ink:#1d1b17; --soft:#57524a;
+  --subtle:#6c675d;
+  --amber:#d9a441; --amber-text:#8a5a00; --sky:#2f6f9f; --green:#2f7a4c;
+  --hdr:rgba(246,243,236,.85); --shadow:0 6px 18px rgba(60,50,30,.08);
+}
+:root[data-theme="olive"]{
+  color-scheme:dark;
+  --bg:#1e2416; --card:#272f1d; --line:#3b4530; --ink:#eef0e2; --soft:#b9bfa6;
+  --subtle:#9aa185;
+  --amber:#e0c068; --amber-text:#e0c068; --sky:#b5d68a; --green:#9cc46a;
+  --hdr:rgba(30,36,22,.85); --shadow:0 6px 18px rgba(0,0,0,.4);
+}
+:root[data-theme="bougainvillea"]{
+  color-scheme:light;
+  --bg:#fdeef4; --card:#f9e0ea; --line:#efc3d5; --ink:#2b0f1d; --soft:#6a3550;
+  --subtle:#7c4560;
+  --amber:#e0338a; --amber-text:#a8125a; --sky:#b0125b; --green:#2e7d4f;
+  --hdr:rgba(253,238,244,.85); --shadow:0 6px 18px rgba(120,20,70,.1);
+}
 :root{
   /* old token names kept as aliases so older rules and the project pages keep working */
   --panel:var(--card);
@@ -70,9 +91,10 @@ nav a.active::after,.more-btn.active::after{content:"";position:absolute;left:50
 .theme:hover{background:var(--card)}
 .theme svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .theme .i-sun{display:none}
-:root[data-theme="dark"] .theme .i-sun{display:block}
-:root[data-theme="dark"] .theme .i-moon{display:none}
-:root[data-theme="light"] .theme .i-moon{display:block}
+:root[data-theme="dark"] .theme .i-sun,:root[data-scheme="dark"] .theme .i-sun{display:block}
+:root[data-theme="dark"] .theme .i-moon,:root[data-scheme="dark"] .theme .i-moon{display:none}
+:root[data-theme="light"] .theme .i-moon,:root[data-scheme="light"] .theme .i-moon{display:block}
+:root[data-theme="whitewash"] .theme,:root[data-theme="olive"] .theme,:root[data-theme="bougainvillea"] .theme{box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--amber) 70%,transparent)}
 @media (max-width:600px){
   .top .wrap{padding:0 var(--s3) 0 var(--s5);gap:var(--s2)}
   .logo{font-size:20px}
